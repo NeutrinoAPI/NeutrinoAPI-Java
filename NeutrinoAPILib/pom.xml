@@ -1,0 +1,79 @@
+<!--
+ - NeutrinoAPILib
+ -
+ - This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>NeutrinoAPILib</groupId>
+  <artifactId>NeutrinoAPILib</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>NeutrinoAPILib</name>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source/>
+          <target/>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <repositories>
+	<repository>
+		<id>custom-unirest-repo</id>
+		<name>APIMATIC's Custom Unirest Repo</name>
+		<url>https://raw.github.com/apimatic/unirest-java/mvn-repo</url>
+	</repository>
+  </repositories>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.mashape.unirest</groupId>
+  		<artifactId>unirest-java</artifactId>
+  		<version>1.0.7</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-databind</artifactId>
+  		<version>2.2.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-core</artifactId>
+  		<version>2.2.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-annotations</artifactId>
+  		<version>2.2.3</version>
+  	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpasyncclient</artifactId>
+		<version>4.0.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>4.3.4</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpcore</artifactId>
+		<version>4.3.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpmime</artifactId>
+		<version>4.3.4</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpcore-nio</artifactId>
+		<version>4.3.2</version>
+	</dependency>
+  </dependencies>
+</project>
