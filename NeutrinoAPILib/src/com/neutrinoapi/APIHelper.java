@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi;
 
@@ -17,6 +17,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
  
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,6 +32,8 @@ public class APIHelper {
         private static final long serialVersionUID = -174113593500315394L;
         {
             configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
         }
     };
 

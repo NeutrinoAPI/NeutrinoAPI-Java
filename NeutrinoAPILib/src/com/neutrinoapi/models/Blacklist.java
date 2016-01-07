@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.models;
 
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class Blacklist 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5295624424157262355L;
+    private static final long serialVersionUID = 4845261164460322934L;
     private boolean isListed;
     private String listHost;
     private String listName;

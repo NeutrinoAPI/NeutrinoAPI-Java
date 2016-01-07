@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.controllers;
 
@@ -47,7 +47,7 @@ public class TelephonyController extends BaseController {
      * @param    audioUrl    Required parameter: A URL to a valid audio file. Accepted audio formats are: MP3, WAV, OGG
      * @param    number    Required parameter: The phone number to call. Must be valid international format
 	 * @return	Returns the PhonePlaybackResponse response from the API call*/
-    public PhonePlaybackResponse createPhonePlayback(
+    public PhonePlaybackResponse phonePlayback(
             final String audioUrl,
             final String number
     ) throws IOException, APIException {
@@ -60,7 +60,7 @@ public class TelephonyController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4807947704267591789L;
+            private static final long serialVersionUID = 4779653406190132786L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -70,7 +70,7 @@ public class TelephonyController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4754904371644639142L;
+            private static final long serialVersionUID = 4908060614241856493L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -79,7 +79,7 @@ public class TelephonyController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5242237391003456965L;
+            private static final long serialVersionUID = 4932001722797109285L;
             {
                     put( "audio-url", audioUrl );
                     put( "number", number );
@@ -109,7 +109,7 @@ public class TelephonyController extends BaseController {
      * Check if a security code from one of the verify APIs is valid. See: https://www.neutrinoapi.com/api/verify-security-code/
      * @param    securityCode    Required parameter: The security code to verify
 	 * @return	Returns the VerifySecurityCodeResponse response from the API call*/
-    public VerifySecurityCodeResponse createVerifySecurityCode(
+    public VerifySecurityCodeResponse verifySecurityCode(
             final int securityCode
     ) throws IOException, APIException {
         //the base uri for api requests
@@ -121,7 +121,7 @@ public class TelephonyController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5375784031765034751L;
+            private static final long serialVersionUID = 5188851757020101288L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -131,7 +131,7 @@ public class TelephonyController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5489473665395638406L;
+            private static final long serialVersionUID = 4841712404989798206L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -140,7 +140,7 @@ public class TelephonyController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4712580562862968441L;
+            private static final long serialVersionUID = 4647650483405759433L;
             {
                     put( "output-case", "camel" );
                     put( "security-code", securityCode );
@@ -170,7 +170,7 @@ public class TelephonyController extends BaseController {
      * @param    number    Required parameter: A phone number
      * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
 	 * @return	Returns the HLRLookupResponse response from the API call*/
-    public HLRLookupResponse createHLRLookup(
+    public HLRLookupResponse hLRLookup(
             final String number,
             final String countryCode
     ) throws IOException, APIException {
@@ -183,7 +183,7 @@ public class TelephonyController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5422384821175648025L;
+            private static final long serialVersionUID = 4877837948861621448L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -193,7 +193,7 @@ public class TelephonyController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4710922006719094209L;
+            private static final long serialVersionUID = 4633789491230078875L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -202,7 +202,7 @@ public class TelephonyController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4643823066132516989L;
+            private static final long serialVersionUID = 5052705177438982290L;
             {
                     put( "number", number );
                     put( "output-case", "camel" );
@@ -237,7 +237,7 @@ public class TelephonyController extends BaseController {
      * @param    playbackDelay    Optional parameter: The delay in milliseconds between the playback of each security code
      * @param    securityCode    Optional parameter: Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code (only numerical security codes are currently supported)
 	 * @return	Returns the PhoneVerifyResponse response from the API call*/
-    public PhoneVerifyResponse createPhoneVerify(
+    public PhoneVerifyResponse phoneVerify(
             final String number,
             final Integer codeLength,
             final String countryCode,
@@ -254,7 +254,7 @@ public class TelephonyController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4943858085463519089L;
+            private static final long serialVersionUID = 5048749228349301472L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -264,7 +264,7 @@ public class TelephonyController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5529524177720220523L;
+            private static final long serialVersionUID = 5205954295161647030L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -273,7 +273,7 @@ public class TelephonyController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5408781998706942349L;
+            private static final long serialVersionUID = 4911088336921569205L;
             {
                     put( "number", number );
                     put( "output-case", "camel" );
@@ -311,7 +311,7 @@ public class TelephonyController extends BaseController {
      * @param    languageCode    Optional parameter: The language to send the verification code in, available languages are: de - German, en - English, es - Spanish, fr - Fench, it - Italian, pt - Portuguese, ru - Russian
      * @param    securityCode    Optional parameter: ass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code (only numerical security codes are currently supported)
 	 * @return	Returns the SMSVerifyResponse response from the API call*/
-    public SMSVerifyResponse createSMSVerify(
+    public SMSVerifyResponse sMSVerify(
             final String number,
             final Integer codeLength,
             final String countryCode,
@@ -327,7 +327,7 @@ public class TelephonyController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5280796237508934297L;
+            private static final long serialVersionUID = 5146480982624760990L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -337,7 +337,7 @@ public class TelephonyController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5507594662561011907L;
+            private static final long serialVersionUID = 5630054183352636379L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -346,7 +346,7 @@ public class TelephonyController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5677739205470137607L;
+            private static final long serialVersionUID = 5449818634577133591L;
             {
                     put( "number", number );
                     put( "output-case", "camel" );

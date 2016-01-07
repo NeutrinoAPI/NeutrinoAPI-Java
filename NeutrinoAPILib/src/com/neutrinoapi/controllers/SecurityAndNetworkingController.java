@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.controllers;
 
@@ -47,7 +47,7 @@ public class SecurityAndNetworkingController extends BaseController {
      * @param    fetchContent    Required parameter: If this URL responds with html, text, json or xml then return the response. This option is useful if you want to perform further processing on the URL content
      * @param    url    Required parameter: The URL to process
 	 * @return	Returns the URLInfoResponse response from the API call*/
-    public URLInfoResponse createURLInfo(
+    public URLInfoResponse uRLInfo(
             final boolean fetchContent,
             final String url
     ) throws IOException, APIException {
@@ -60,7 +60,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4854476100883045052L;
+            private static final long serialVersionUID = 5218967069338825586L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -70,7 +70,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5305888223912163097L;
+            private static final long serialVersionUID = 5639641297756084643L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -79,7 +79,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5685841183665573291L;
+            private static final long serialVersionUID = 5400071442005486192L;
             {
                     put( "fetch-content", fetchContent );
                     put( "output-case", "camel" );
@@ -109,7 +109,7 @@ public class SecurityAndNetworkingController extends BaseController {
      * Check the reputation of an IP address or domain against a comprehensive list of blacklists and blocklists (DNSBLs). See: https://www.neutrinoapi.com/api/host-reputation/
      * @param    host    Required parameter: An IPv4 address or a domain name. If you supply a domain name it will be checked against the URI DNSBL list
 	 * @return	Returns the HostReputationResponse response from the API call*/
-    public HostReputationResponse createHostReputation(
+    public HostReputationResponse hostReputation(
             final String host
     ) throws IOException, APIException {
         //the base uri for api requests
@@ -121,7 +121,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5563377396205515940L;
+            private static final long serialVersionUID = 4654378948348025589L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -131,7 +131,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5294979844876198768L;
+            private static final long serialVersionUID = 4873908000913110365L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -140,7 +140,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5393859310647734697L;
+            private static final long serialVersionUID = 5083166578820269819L;
             {
                     put( "host", host );
                     put( "output-case", "camel" );
@@ -169,7 +169,7 @@ public class SecurityAndNetworkingController extends BaseController {
      * The IP Blocklist API will detect potentially malicious or dangerous IP addresses. See: https://www.neutrinoapi.com/api/ip-blocklist/
      * @param    ip    Required parameter: An IPv4 address
 	 * @return	Returns the IPBlocklistResponse response from the API call*/
-    public IPBlocklistResponse createIPBlocklist(
+    public IPBlocklistResponse iPBlocklist(
             final String ip
     ) throws IOException, APIException {
         //the base uri for api requests
@@ -181,7 +181,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5693608786042225671L;
+            private static final long serialVersionUID = 5617855085194384020L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -191,7 +191,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5098953849579245639L;
+            private static final long serialVersionUID = 5704048989207901452L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -200,7 +200,7 @@ public class SecurityAndNetworkingController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5040743534535253768L;
+            private static final long serialVersionUID = 5357875335849149672L;
             {
                     put( "ip", ip );
                     put( "output-case", "camel" );

@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.controllers;
 
@@ -49,7 +49,7 @@ public class ImagingController extends BaseController {
      * @param    height    Optional parameter: The height of the QR code (in px)
      * @param    width    Optional parameter: The width of the QR code (in px)
 	 * @return	Returns the InputStream response from the API call*/
-    public InputStream createQRCode(
+    public InputStream qRCode(
             final String content,
             final String bgColor,
             final String fgColor,
@@ -65,7 +65,7 @@ public class ImagingController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4997532735382488569L;
+            private static final long serialVersionUID = 4921242179184383748L;
             {
                     put( "width", (null != width) ? width : 250 );
                     put( "user-id", userId );
@@ -76,7 +76,7 @@ public class ImagingController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5256148039764448939L;
+            private static final long serialVersionUID = 5394222398561739592L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -84,7 +84,7 @@ public class ImagingController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5450408538139143192L;
+            private static final long serialVersionUID = 5674145936931847758L;
             {
                     put( "content", content );
                     put( "bg-color", (null != bgColor) ? bgColor : "#ffffff" );
@@ -116,7 +116,7 @@ public class ImagingController extends BaseController {
      * @param    margin    Optional parameter: The PDF document margin (in mm)
      * @param    title    Optional parameter: The PDF document title
 	 * @return	Returns the InputStream response from the API call*/
-    public InputStream createHTMLToPDF(
+    public InputStream hTMLToPDF(
             final String content,
             final Integer htmlWidth,
             final Integer margin,
@@ -131,7 +131,7 @@ public class ImagingController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4770042459834052074L;
+            private static final long serialVersionUID = 4826313022602492889L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -141,7 +141,7 @@ public class ImagingController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5347682667188275886L;
+            private static final long serialVersionUID = 5108675004673283499L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -149,7 +149,7 @@ public class ImagingController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5701624416809731331L;
+            private static final long serialVersionUID = 5009188509269787123L;
             {
                     put( "content", content );
                     put( "html-width", (null != htmlWidth) ? htmlWidth : 1024 );
@@ -181,7 +181,7 @@ public class ImagingController extends BaseController {
      * @param    width    Required parameter: Width to resize to (in px)
      * @param    format    Optional parameter: The output image format, can be either png or jpg
 	 * @return	Returns the InputStream response from the API call*/
-    public InputStream createImageResize(
+    public InputStream imageResize(
             final int height,
             final String imageUrl,
             final int width,
@@ -196,7 +196,7 @@ public class ImagingController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5501925533187350149L;
+            private static final long serialVersionUID = 4667410743129945617L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -206,7 +206,7 @@ public class ImagingController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5654156307544615933L;
+            private static final long serialVersionUID = 4715807447233632220L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -214,7 +214,7 @@ public class ImagingController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4846783632228337982L;
+            private static final long serialVersionUID = 5162083410533099580L;
             {
                     put( "height", height );
                     put( "image-url", imageUrl );
@@ -249,7 +249,7 @@ public class ImagingController extends BaseController {
      * @param    position    Optional parameter: The position of the watermark image, possible values are: center, top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
      * @param    width    Optional parameter: If set resize the resulting image to this width (preserving aspect ratio)
 	 * @return	Returns the InputStream response from the API call*/
-    public InputStream createImageWatermark(
+    public InputStream imageWatermark(
             final String imageUrl,
             final String watermarkUrl,
             final String format,
@@ -267,7 +267,7 @@ public class ImagingController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5108103487726376612L;
+            private static final long serialVersionUID = 5712537149555216023L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -277,7 +277,7 @@ public class ImagingController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5189406911922455358L;
+            private static final long serialVersionUID = 4845967507343028993L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -285,7 +285,7 @@ public class ImagingController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5676133075879430857L;
+            private static final long serialVersionUID = 5516473822879260441L;
             {
                     put( "image-url", imageUrl );
                     put( "watermark-url", watermarkUrl );

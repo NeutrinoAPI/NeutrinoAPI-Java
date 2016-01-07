@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.controllers;
 
@@ -47,7 +47,7 @@ public class DataToolsController extends BaseController {
      * @param    number    Required parameter: The phone number
      * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
 	 * @return	Returns the PhoneValidateResponse response from the API call*/
-    public PhoneValidateResponse createPhoneValidate(
+    public PhoneValidateResponse phoneValidate(
             final String number,
             final String countryCode
     ) throws IOException, APIException {
@@ -60,7 +60,7 @@ public class DataToolsController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5549816233973197270L;
+            private static final long serialVersionUID = 5507094818338969335L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -70,7 +70,7 @@ public class DataToolsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5584691253307710882L;
+            private static final long serialVersionUID = 4615068423559239690L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -79,7 +79,7 @@ public class DataToolsController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5312248530997901051L;
+            private static final long serialVersionUID = 5031432547326958890L;
             {
                     put( "number", number );
                     put( "output-case", "camel" );
@@ -109,7 +109,7 @@ public class DataToolsController extends BaseController {
      * Parse, validate and get detailed user-agent information from a user-agent string. See: https://www.neutrinoapi.com/api/user-agent-info/
      * @param    userAgent    Required parameter: A user-agent string
 	 * @return	Returns the UserAgentInfoResponse response from the API call*/
-    public UserAgentInfoResponse createUserAgentInfo(
+    public UserAgentInfoResponse userAgentInfo(
             final String userAgent
     ) throws IOException, APIException {
         //the base uri for api requests
@@ -121,7 +121,7 @@ public class DataToolsController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4947172641340076858L;
+            private static final long serialVersionUID = 5576028034718776852L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -131,7 +131,7 @@ public class DataToolsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5169562812434934484L;
+            private static final long serialVersionUID = 5272023642106156985L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -140,7 +140,7 @@ public class DataToolsController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5694135826381566574L;
+            private static final long serialVersionUID = 5509052137984110462L;
             {
                     put( "output-case", "camel" );
                     put( "user-agent", userAgent );
@@ -171,7 +171,7 @@ public class DataToolsController extends BaseController {
      * @param    type    Required parameter: The code type. See the API docs for all supported types
      * @param    addKeywordLinks    Optional parameter: Add links on source code keywords to the relevant language documentation
 	 * @return	Returns the InputStream response from the API call*/
-    public InputStream createCodeHighlight(
+    public InputStream codeHighlight(
             final String content,
             final String type,
             final Boolean addKeywordLinks
@@ -185,7 +185,7 @@ public class DataToolsController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4655164270480879307L;
+            private static final long serialVersionUID = 5396311559652876203L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -195,7 +195,7 @@ public class DataToolsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5448743273930651466L;
+            private static final long serialVersionUID = 5513896703531135284L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -203,7 +203,7 @@ public class DataToolsController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5044989580566230484L;
+            private static final long serialVersionUID = 5735216534379747280L;
             {
                     put( "content", content );
                     put( "type", type );
@@ -232,7 +232,7 @@ public class DataToolsController extends BaseController {
      * @param    content    Required parameter: The text content to check. This can be either a URL to load content from or an actual content string
      * @param    censorCharacter    Optional parameter: The character to use to censor out the bad words found
 	 * @return	Returns the BadWordFilterResponse response from the API call*/
-    public BadWordFilterResponse createBadWordFilter(
+    public BadWordFilterResponse badWordFilter(
             final String content,
             final String censorCharacter
     ) throws IOException, APIException {
@@ -245,7 +245,7 @@ public class DataToolsController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4986387881720983855L;
+            private static final long serialVersionUID = 4848647571672534728L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -255,7 +255,7 @@ public class DataToolsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5526284915813314088L;
+            private static final long serialVersionUID = 5023838455596092810L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -264,7 +264,7 @@ public class DataToolsController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5542942139225199734L;
+            private static final long serialVersionUID = 5560620786800772772L;
             {
                     put( "content", content );
                     put( "output-case", "camel" );
@@ -296,7 +296,7 @@ public class DataToolsController extends BaseController {
      * @param    fromValue    Required parameter: The value to convert from
      * @param    toType    Required parameter: The type to convert to
 	 * @return	Returns the ConvertResponse response from the API call*/
-    public ConvertResponse createConvert(
+    public ConvertResponse convert(
             final String fromType,
             final String fromValue,
             final String toType
@@ -310,7 +310,7 @@ public class DataToolsController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5188701598738718897L;
+            private static final long serialVersionUID = 5144133463691927611L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -320,7 +320,7 @@ public class DataToolsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5225497259031828727L;
+            private static final long serialVersionUID = 5704482113025606432L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -329,7 +329,7 @@ public class DataToolsController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5531057083481345086L;
+            private static final long serialVersionUID = 5737218562812199684L;
             {
                     put( "from-type", fromType );
                     put( "from-value", fromValue );
@@ -361,7 +361,7 @@ public class DataToolsController extends BaseController {
      * @param    email    Required parameter: The email address
      * @param    fixTypos    Optional parameter: Automatically attempt to fix typos in the address
 	 * @return	Returns the EmailValidateResponse response from the API call*/
-    public EmailValidateResponse createEmailValidate(
+    public EmailValidateResponse emailValidate(
             final String email,
             final Boolean fixTypos
     ) throws IOException, APIException {
@@ -374,7 +374,7 @@ public class DataToolsController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5575084175095389235L;
+            private static final long serialVersionUID = 5544175623117140556L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -384,7 +384,7 @@ public class DataToolsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5173015897236871912L;
+            private static final long serialVersionUID = 5433012974084676353L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -393,7 +393,7 @@ public class DataToolsController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5319377251347345037L;
+            private static final long serialVersionUID = 4636078495181613162L;
             {
                     put( "email", email );
                     put( "output-case", "camel" );
@@ -424,7 +424,7 @@ public class DataToolsController extends BaseController {
      * @param    content    Required parameter: The HTML content. This can be either a URL to load HTML from or an actual HTML content string
      * @param    outputType    Required parameter: The level of sanitization, possible values are: plain-text, simple-text, basic-html, basic-html-with-images, advanced-html
 	 * @return	Returns the InputStream response from the API call*/
-    public InputStream createHTMLClean(
+    public InputStream hTMLClean(
             final String content,
             final String outputType
     ) throws IOException, APIException {
@@ -437,7 +437,7 @@ public class DataToolsController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5564090863567713265L;
+            private static final long serialVersionUID = 5235875194142874839L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -447,7 +447,7 @@ public class DataToolsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5019360387347655159L;
+            private static final long serialVersionUID = 4940466280646426426L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -455,7 +455,7 @@ public class DataToolsController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5255108712768827448L;
+            private static final long serialVersionUID = 4668561811535236495L;
             {
                     put( "content", content );
                     put( "output-type", outputType );
@@ -485,7 +485,7 @@ public class DataToolsController extends BaseController {
      * @param    attribute    Optional parameter: If set, then extract data from the specified tag attribute. If not set, then data will be extracted from the tags inner content
      * @param    baseUrl    Optional parameter: The base URL to replace into realive links
 	 * @return	Returns the HTMLExtractResponse response from the API call*/
-    public HTMLExtractResponse createHTMLExtract(
+    public HTMLExtractResponse hTMLExtract(
             final String content,
             final String tag,
             final String attribute,
@@ -500,7 +500,7 @@ public class DataToolsController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4715509806015120561L;
+            private static final long serialVersionUID = 5546165468742533728L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -510,7 +510,7 @@ public class DataToolsController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5738360626539047652L;
+            private static final long serialVersionUID = 4745325002672897082L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -519,7 +519,7 @@ public class DataToolsController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4804256685449251161L;
+            private static final long serialVersionUID = 5364540962659633696L;
             {
                     put( "content", content );
                     put( "output-case", "camel" );

@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.controllers;
 
@@ -47,7 +47,7 @@ public class GeolocationController extends BaseController {
      * @param    ip    Required parameter: The IP address
      * @param    reverseLookup    Optional parameter: Do reverse DNS (PTR) lookup. This option can add extra delay to the request so only use it if you need it
 	 * @return	Returns the IPInfoResponse response from the API call*/
-    public IPInfoResponse createIPInfo(
+    public IPInfoResponse iPInfo(
             final String ip,
             final Boolean reverseLookup
     ) throws IOException, APIException {
@@ -60,7 +60,7 @@ public class GeolocationController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5174676399304684731L;
+            private static final long serialVersionUID = 5424291408326722900L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -70,7 +70,7 @@ public class GeolocationController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5729513037714627576L;
+            private static final long serialVersionUID = 5742714785282063696L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -79,7 +79,7 @@ public class GeolocationController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5600606352457069323L;
+            private static final long serialVersionUID = 4679786682820422144L;
             {
                     put( "ip", ip );
                     put( "output-case", "camel" );
@@ -111,7 +111,7 @@ public class GeolocationController extends BaseController {
      * @param    countryCode    Optional parameter: The ISO 2-letter country code to be biased towards (default is no country bias)
      * @param    languageCode    Optional parameter: The language to display results in
 	 * @return	Returns the GeocodeAddressResponse response from the API call*/
-    public GeocodeAddressResponse createGeocodeAddress(
+    public GeocodeAddressResponse geocodeAddress(
             final String address,
             final String countryCode,
             final String languageCode
@@ -125,7 +125,7 @@ public class GeolocationController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4915878302864976713L;
+            private static final long serialVersionUID = 4905969755739953849L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -135,7 +135,7 @@ public class GeolocationController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4832181844751032598L;
+            private static final long serialVersionUID = 5660638524643014467L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -144,7 +144,7 @@ public class GeolocationController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5107590142780792134L;
+            private static final long serialVersionUID = 4981198192108117869L;
             {
                     put( "address", address );
                     put( "output-case", "camel" );
@@ -177,7 +177,7 @@ public class GeolocationController extends BaseController {
      * @param    longitude    Required parameter: The location longitude
      * @param    languageCode    Optional parameter: The language to display results in
 	 * @return	Returns the GeocodeReverseResponse response from the API call*/
-    public GeocodeReverseResponse createGeocodeReverse(
+    public GeocodeReverseResponse geocodeReverse(
             final double latitude,
             final double longitude,
             final String languageCode
@@ -191,7 +191,7 @@ public class GeolocationController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5555668330414396684L;
+            private static final long serialVersionUID = 5294436135684095134L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -201,7 +201,7 @@ public class GeolocationController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4712177050891313644L;
+            private static final long serialVersionUID = 5247227468839897834L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -210,7 +210,7 @@ public class GeolocationController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4815157657873463970L;
+            private static final long serialVersionUID = 5045523157796309994L;
             {
                     put( "latitude", latitude );
                     put( "longitude", longitude );

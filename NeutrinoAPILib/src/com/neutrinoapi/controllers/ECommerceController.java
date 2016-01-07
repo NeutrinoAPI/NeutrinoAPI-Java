@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.controllers;
 
@@ -47,7 +47,7 @@ public class ECommerceController extends BaseController {
      * @param    binNumber    Required parameter: The BIN or IIN number (the first 6 digits of a credit card number)
      * @param    customerIp    Optional parameter: Pass in a customers remote IP address. The API will then determine the country of the IP address and match it against the BIN country. This feature is designed for fraud prevention and detection checks.
 	 * @return	Returns the BINLookupResponse response from the API call*/
-    public BINLookupResponse createBINLookup(
+    public BINLookupResponse bINLookup(
             final String binNumber,
             final String customerIp
     ) throws IOException, APIException {
@@ -60,7 +60,7 @@ public class ECommerceController extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4835406080352397776L;
+            private static final long serialVersionUID = 5285733244564749373L;
             {
                     put( "user-id", userId );
                     put( "api-key", apiKey );
@@ -70,7 +70,7 @@ public class ECommerceController extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4864206790531008753L;
+            private static final long serialVersionUID = 5152856795559677637L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -79,7 +79,7 @@ public class ECommerceController extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5374845952118777746L;
+            private static final long serialVersionUID = 4721968899277618924L;
             {
                     put( "bin-number", binNumber );
                     put( "output-case", "camel" );

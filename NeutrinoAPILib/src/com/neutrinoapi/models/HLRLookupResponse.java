@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.models;
 
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class HLRLookupResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5554409629509760171L;
+    private static final long serialVersionUID = 5127867909054358306L;
     private String countryCode;
     private String hlrStatus;
     private boolean hlrValid;

@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.models;
 
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class IPBlocklistResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4642128114535082579L;
+    private static final long serialVersionUID = 4883846567988299388L;
     private boolean isBot;
     private boolean isDshield;
     private boolean isExploitBot;

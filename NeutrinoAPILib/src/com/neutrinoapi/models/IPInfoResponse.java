@@ -1,7 +1,7 @@
 /*
  * NeutrinoAPILib
  *
- * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 12/10/2015
+ * This file was automatically generated for NeutrinoAPI.com by APIMATIC BETA v2.0 on 01/07/2016
  */
 package com.neutrinoapi.models;
 
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class IPInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5256636624173942091L;
+    private static final long serialVersionUID = 5288883751010880524L;
     private String city;
     private String country;
     private String countryCode;
