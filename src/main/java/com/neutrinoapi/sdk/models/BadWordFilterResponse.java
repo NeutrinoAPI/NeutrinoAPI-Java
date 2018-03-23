@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class BadWordFilterResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5205401783415516206L;
+    private static final long serialVersionUID = 5012000721558972440L;
     private List<String> badWordsList;
     private int badWordsTotal;
     private String censoredContent;

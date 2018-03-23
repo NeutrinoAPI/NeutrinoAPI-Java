@@ -10,35 +10,11 @@ import com.neutrinoapi.sdk.http.client.HttpClient;
 
 public class NeutrinoAPIClient {
     /**
-     * Singleton access to DataTools controller
-     * @return	Returns the DataTools instance 
+     * Singleton access to Imaging controller
+     * @return	Returns the Imaging instance 
      */
-    public DataTools getDataTools() {
-        return DataTools.getInstance();
-    }
-
-    /**
-     * Singleton access to ECommerce controller
-     * @return	Returns the ECommerce instance 
-     */
-    public ECommerce getECommerce() {
-        return ECommerce.getInstance();
-    }
-
-    /**
-     * Singleton access to Geolocation controller
-     * @return	Returns the Geolocation instance 
-     */
-    public Geolocation getGeolocation() {
-        return Geolocation.getInstance();
-    }
-
-    /**
-     * Singleton access to SecurityAndNetworking controller
-     * @return	Returns the SecurityAndNetworking instance 
-     */
-    public SecurityAndNetworking getSecurityAndNetworking() {
-        return SecurityAndNetworking.getInstance();
+    public Imaging getImaging() {
+        return Imaging.getInstance();
     }
 
     /**
@@ -50,11 +26,35 @@ public class NeutrinoAPIClient {
     }
 
     /**
-     * Singleton access to Imaging controller
-     * @return	Returns the Imaging instance 
+     * Singleton access to DataTools controller
+     * @return	Returns the DataTools instance 
      */
-    public Imaging getImaging() {
-        return Imaging.getInstance();
+    public DataTools getDataTools() {
+        return DataTools.getInstance();
+    }
+
+    /**
+     * Singleton access to SecurityAndNetworking controller
+     * @return	Returns the SecurityAndNetworking instance 
+     */
+    public SecurityAndNetworking getSecurityAndNetworking() {
+        return SecurityAndNetworking.getInstance();
+    }
+
+    /**
+     * Singleton access to Geolocation controller
+     * @return	Returns the Geolocation instance 
+     */
+    public Geolocation getGeolocation() {
+        return Geolocation.getInstance();
+    }
+
+    /**
+     * Singleton access to ECommerce controller
+     * @return	Returns the ECommerce instance 
+     */
+    public ECommerce getECommerce() {
+        return ECommerce.getInstance();
     }
 
     /**
@@ -76,8 +76,8 @@ public class NeutrinoAPIClient {
     /**
      * Default constructor 
      */     
-    public NeutrinoAPIClient() {	
-	}
+    public NeutrinoAPIClient() {
+    }
 
     /**
      * Client initialization constructor 

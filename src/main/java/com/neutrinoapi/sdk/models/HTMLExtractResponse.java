@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class HTMLExtractResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5654901580289257635L;
+    private static final long serialVersionUID = 5235323527404771697L;
     private int total;
     private List<String> values;
     /** GETTER

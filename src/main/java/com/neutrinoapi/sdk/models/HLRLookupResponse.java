@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class HLRLookupResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5060967663204612266L;
+    private static final long serialVersionUID = 5521536290157527191L;
     private boolean numberValid;
     private String internationalCallingCode;
     private String mnc;

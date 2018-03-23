@@ -80,7 +80,7 @@ public class Geolocation extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4673293969891106872L;
+            private static final long serialVersionUID = 5510034434686363524L;
             {
                     put( "user-id", Configuration.userId );
                     put( "api-key", Configuration.apiKey );
@@ -90,7 +90,7 @@ public class Geolocation extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5723556464626111174L;
+            private static final long serialVersionUID = 5750230124114825698L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -99,7 +99,7 @@ public class Geolocation extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5195952863088925928L;
+            private static final long serialVersionUID = 5442977541544519130L;
             {
                     put( "output-case", "camel" );
                     put( "latitude", latitude );
@@ -154,8 +154,134 @@ public class Geolocation extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
+                        if (getHttpCallBack() != null)
+                        {
+                            getHttpCallBack().OnAfterResponse(_context);
+                        }
+
+                        //let the caller know of the failure
+                        callBack.onFailure(_context, _error);
+                    }
+                });
+            }
+        };
+
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Get location information about an IP address and do reverse DNS (PTR) lookups.
+     * @param    ip    Required parameter: The IP address
+     * @param    reverseLookup    Optional parameter: Do a reverse DNS (PTR) lookup. This option can add extra delay to the request so only use it if you need it
+     * @return    Returns the IPInfoResponse response from the API call 
+     */
+    public IPInfoResponse iPInfo(
+                final String ip,
+                final Boolean reverseLookup
+    ) throws Throwable {
+        APICallBackCatcher<IPInfoResponse> callback = new APICallBackCatcher<IPInfoResponse>();
+        iPInfoAsync(ip, reverseLookup, callback);
+        if(!callback.isSuccess())
+            throw callback.getError();
+        return callback.getResult();
+    }
+
+    /**
+     * Get location information about an IP address and do reverse DNS (PTR) lookups.
+     * @param    ip    Required parameter: The IP address
+     * @param    reverseLookup    Optional parameter: Do a reverse DNS (PTR) lookup. This option can add extra delay to the request so only use it if you need it
+     * @return    Returns the void response from the API call 
+     */
+    public void iPInfoAsync(
+                final String ip,
+                final Boolean reverseLookup,
+                final APICallBack<IPInfoResponse> callBack
+    ) {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+        
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
+        _queryBuilder.append("/ip-info");
+
+        //process query parameters
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
+            private static final long serialVersionUID = 5545673599955422265L;
+            {
+                    put( "user-id", Configuration.userId );
+                    put( "api-key", Configuration.apiKey );
+            }});
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>() {
+            private static final long serialVersionUID = 5223387809697060186L;
+            {
+                    put( "user-agent", "APIMATIC 2.0" );
+                    put( "accept", "application/json" );
+            }
+        };
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 5247585324516490752L;
+            {
+                    put( "output-case", "camel" );
+                    put( "ip", ip );
+                    put( "reverse-lookup", (reverseLookup != null) ? reverseLookup : false );
+            }
+        };
+
+        //prepare and invoke the API call request to fetch the response
+        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        //invoke the callback before request if its not null
+        if (getHttpCallBack() != null)
+        {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        //invoke request and get response
+        Runnable _responseTask = new Runnable() {
+            public void run() {
+                //make the API call
+                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext _context, HttpResponse _response) {
+                        try {
+
+                            //invoke the callback after response if its not null
+                            if (getHttpCallBack() != null)	
                             {
+                                getHttpCallBack().OnAfterResponse(_context);
+                            }
+
+                            //handle errors defined at the API level
+                            validateResponse(_response, _context);
+
+                            //extract result from the http response
+                            String _responseBody = ((HttpStringResponse)_response).getBody();
+                            IPInfoResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<IPInfoResponse>(){});
+
+                            //let the caller know of the success
+                            callBack.onSuccess(_context, _result);
+                        } catch (APIException error) {
+                            //let the caller know of the error
+                            callBack.onFailure(_context, error);
+                        } catch (IOException ioException) {
+                            //let the caller know of the caught IO Exception
+                            callBack.onFailure(_context, ioException);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(_context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext _context, Throwable _error) {
+                        //invoke the callback after response if its not null
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -215,7 +341,7 @@ public class Geolocation extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5563445394497218224L;
+            private static final long serialVersionUID = 5533230198137061800L;
             {
                     put( "user-id", Configuration.userId );
                     put( "api-key", Configuration.apiKey );
@@ -225,7 +351,7 @@ public class Geolocation extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5526517310900962775L;
+            private static final long serialVersionUID = 4917767620138810607L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -234,7 +360,7 @@ public class Geolocation extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5566219498970725929L;
+            private static final long serialVersionUID = 5099662873175878563L;
             {
                     put( "output-case", "camel" );
                     put( "address", address );
@@ -290,134 +416,8 @@ public class Geolocation extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
-
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
-                    }
-                });
-            }
-        };
-
-        //execute async using thread pool
-        APIHelper.getScheduler().execute(_responseTask);
-    }
-
-    /**
-     * Get location information about an IP address and do reverse DNS (PTR) lookups.
-     * @param    ip    Required parameter: The IP address
-     * @param    reverseLookup    Optional parameter: Do a reverse DNS (PTR) lookup. This option can add extra delay to the request so only use it if you need it
-     * @return    Returns the IPInfoResponse response from the API call 
-     */
-    public IPInfoResponse iPInfo(
-                final String ip,
-                final Boolean reverseLookup
-    ) throws Throwable {
-        APICallBackCatcher<IPInfoResponse> callback = new APICallBackCatcher<IPInfoResponse>();
-        iPInfoAsync(ip, reverseLookup, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
-    }
-
-    /**
-     * Get location information about an IP address and do reverse DNS (PTR) lookups.
-     * @param    ip    Required parameter: The IP address
-     * @param    reverseLookup    Optional parameter: Do a reverse DNS (PTR) lookup. This option can add extra delay to the request so only use it if you need it
-     * @return    Returns the void response from the API call 
-     */
-    public void iPInfoAsync(
-                final String ip,
-                final Boolean reverseLookup,
-                final APICallBack<IPInfoResponse> callBack
-    ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/ip-info");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5319889952033829380L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5146575656928698679L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5523075168600120168L;
-            {
-                    put( "output-case", "camel" );
-                    put( "ip", ip );
-                    put( "reverse-lookup", (reverseLookup != null) ? reverseLookup : false );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
-        Runnable _responseTask = new Runnable() {
-            public void run() {
-                //make the API call
-                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
-                    public void onSuccess(HttpContext _context, HttpResponse _response) {
-                        try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            String _responseBody = ((HttpStringResponse)_response).getBody();
-                            IPInfoResponse _result = APIHelper.deserialize(_responseBody,
-                                                        new TypeReference<IPInfoResponse>(){});
-
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
-                        }
-                    }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

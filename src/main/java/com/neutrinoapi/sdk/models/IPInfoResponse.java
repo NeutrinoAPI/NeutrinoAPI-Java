@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class IPInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5320788508518735265L;
+    private static final long serialVersionUID = 5292011842924060316L;
     private boolean valid;
     private String country;
     private String hostname;
@@ -20,6 +20,7 @@ public class IPInfoResponse
     private double latitude;
     private String region;
     private double longitude;
+    private String continentCode;
     /** GETTER
      * Is this a valid IP address
      */
@@ -146,6 +147,22 @@ public class IPInfoResponse
     @JsonSetter("longitude")
     public void setLongitude (double value) { 
         this.longitude = value;
+    }
+ 
+    /** GETTER
+     * ISO 2-letter continent code
+     */
+    @JsonGetter("continentCode")
+    public String getContinentCode ( ) { 
+        return this.continentCode;
+    }
+    
+    /** SETTER
+     * ISO 2-letter continent code
+     */
+    @JsonSetter("continentCode")
+    public void setContinentCode (String value) { 
+        this.continentCode = value;
     }
  
 }

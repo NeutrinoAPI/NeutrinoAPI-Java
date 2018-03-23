@@ -81,6 +81,22 @@ public class EmailValidateResponseBuilder {
         emailValidateResponse.setTyposFixed(typosFixed);
         return this;
     }
+
+    /**
+     * True if this address belongs to a person. False if this is a role based address, e.g. admin@, help@, office@, etc.
+     */
+    public EmailValidateResponseBuilder isPersonal(boolean isPersonal) {
+        emailValidateResponse.setIsPersonal(isPersonal);
+        return this;
+    }
+
+    /**
+     * The email service provider domain
+     */
+    public EmailValidateResponseBuilder provider(String provider) {
+        emailValidateResponse.setProvider(provider);
+        return this;
+    }
     /**
      * Build the instance with the given values
      */

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class Blacklist 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5032315357190866479L;
+    private static final long serialVersionUID = 5634578064850152347L;
     private boolean isListed;
     private String listHost;
     private int listRating;

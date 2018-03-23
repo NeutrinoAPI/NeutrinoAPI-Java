@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class URLInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5451313171460993544L;
+    private static final long serialVersionUID = 5416808471048729505L;
     private String httpStatusMessage;
     private String serverRegion;
     private LinkedHashMap<String, Object> query;

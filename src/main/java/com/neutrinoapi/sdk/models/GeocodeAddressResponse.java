@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class GeocodeAddressResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5692851488580495091L;
+    private static final long serialVersionUID = 5498659045509203144L;
     private int found;
     private List<Location> locations;
     /** GETTER

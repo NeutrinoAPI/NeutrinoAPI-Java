@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class EmailValidateResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5147994766034978878L;
+    private static final long serialVersionUID = 5445631352936809743L;
     private boolean valid;
     private boolean syntaxError;
     private String domain;
@@ -20,6 +20,8 @@ public class EmailValidateResponse
     private String email;
     private boolean isDisposable;
     private boolean typosFixed;
+    private boolean isPersonal;
+    private String provider;
     /** GETTER
      * Is this a valid email
      */
@@ -146,6 +148,38 @@ public class EmailValidateResponse
     @JsonSetter("typosFixed")
     public void setTyposFixed (boolean value) { 
         this.typosFixed = value;
+    }
+ 
+    /** GETTER
+     * True if this address belongs to a person. False if this is a role based address, e.g. admin@, help@, office@, etc.
+     */
+    @JsonGetter("isPersonal")
+    public boolean getIsPersonal ( ) { 
+        return this.isPersonal;
+    }
+    
+    /** SETTER
+     * True if this address belongs to a person. False if this is a role based address, e.g. admin@, help@, office@, etc.
+     */
+    @JsonSetter("isPersonal")
+    public void setIsPersonal (boolean value) { 
+        this.isPersonal = value;
+    }
+ 
+    /** GETTER
+     * The email service provider domain
+     */
+    @JsonGetter("provider")
+    public String getProvider ( ) { 
+        return this.provider;
+    }
+    
+    /** SETTER
+     * The email service provider domain
+     */
+    @JsonSetter("provider")
+    public void setProvider (String value) { 
+        this.provider = value;
     }
  
 }

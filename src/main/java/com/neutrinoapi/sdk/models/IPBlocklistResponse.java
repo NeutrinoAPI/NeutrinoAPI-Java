@@ -11,7 +11,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class IPBlocklistResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4999628344841832535L;
+    private static final long serialVersionUID = 4954316217036140533L;
+    private String ip;
     private boolean isBot;
     private boolean isExploitBot;
     private boolean isMalware;
@@ -26,6 +27,23 @@ public class IPBlocklistResponse
     private boolean isListed;
     private boolean isVpn;
     private int lastSeen;
+    private List<String> blocklists;
+    /** GETTER
+     * The IP address
+     */
+    @JsonGetter("ip")
+    public String getIp ( ) { 
+        return this.ip;
+    }
+    
+    /** SETTER
+     * The IP address
+     */
+    @JsonSetter("ip")
+    public void setIp (String value) { 
+        this.ip = value;
+    }
+ 
     /** GETTER
      * IP is hosting a malicious bot or is part of a botnet
      */
@@ -248,6 +266,22 @@ public class IPBlocklistResponse
     @JsonSetter("lastSeen")
     public void setLastSeen (int value) { 
         this.lastSeen = value;
+    }
+ 
+    /** GETTER
+     * An array of strings indicating which blocklists this IP is listed on (empty if not listed)
+     */
+    @JsonGetter("blocklists")
+    public List<String> getBlocklists ( ) { 
+        return this.blocklists;
+    }
+    
+    /** SETTER
+     * An array of strings indicating which blocklists this IP is listed on (empty if not listed)
+     */
+    @JsonSetter("blocklists")
+    public void setBlocklists (List<String> value) { 
+        this.blocklists = value;
     }
  
 }

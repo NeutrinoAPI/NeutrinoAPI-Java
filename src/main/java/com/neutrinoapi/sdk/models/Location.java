@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class Location 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5358935840032132919L;
+    private static final long serialVersionUID = 5150468361837436280L;
     private String country;
     private String address;
     private String city;

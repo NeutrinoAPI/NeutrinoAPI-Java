@@ -137,6 +137,22 @@ public class UserAgentInfoResponseBuilder {
         userAgentInfoResponse.setOperatingSystemVersion(operatingSystemVersion);
         return this;
     }
+
+    /**
+     * The browser engine name
+     */
+    public UserAgentInfoResponseBuilder engine(String engine) {
+        userAgentInfoResponse.setEngine(engine);
+        return this;
+    }
+
+    /**
+     * The browser engine version (if detectable)
+     */
+    public UserAgentInfoResponseBuilder engineVersion(String engineVersion) {
+        userAgentInfoResponse.setEngineVersion(engineVersion);
+        return this;
+    }
     /**
      * Build the instance with the given values
      */

@@ -13,7 +13,7 @@ import com.neutrinoapi.sdk.http.client.HttpContext;
 public class APIErrorException 
         extends APIException
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5395983677041333661L;
+    private static final long serialVersionUID = 5227961113515149891L;
     private int apiError;
     private String apiErrorMsg;
     /** GETTER

@@ -83,7 +83,7 @@ public class Imaging extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4990754637224381487L;
+            private static final long serialVersionUID = 5531773834827436827L;
             {
                     put( "user-id", Configuration.userId );
                     put( "api-key", Configuration.apiKey );
@@ -93,7 +93,7 @@ public class Imaging extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5219885149039972770L;
+            private static final long serialVersionUID = 4615434247818177719L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -101,7 +101,7 @@ public class Imaging extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4640557220691452408L;
+            private static final long serialVersionUID = 5682038337981389661L;
             {
                     put( "image-url", imageUrl );
                     put( "width", width );
@@ -150,8 +150,8 @@ public class Imaging extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -215,7 +215,7 @@ public class Imaging extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4706655228343937293L;
+            private static final long serialVersionUID = 5268120146435583045L;
             {
                     put( "width", (width != null) ? width : 250 );
                     put( "user-id", Configuration.userId );
@@ -226,7 +226,7 @@ public class Imaging extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4983824304240848017L;
+            private static final long serialVersionUID = 5460934021182062730L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -234,7 +234,7 @@ public class Imaging extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5455982100319134618L;
+            private static final long serialVersionUID = 5639558844724581753L;
             {
                     put( "content", content );
                     put( "height", (height != null) ? height : 250 );
@@ -283,8 +283,8 @@ public class Imaging extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -356,7 +356,7 @@ public class Imaging extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4622104994564799002L;
+            private static final long serialVersionUID = 5436081135066723412L;
             {
                     put( "user-id", Configuration.userId );
                     put( "api-key", Configuration.apiKey );
@@ -366,7 +366,7 @@ public class Imaging extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5278618347445602057L;
+            private static final long serialVersionUID = 5713327015007829948L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -374,7 +374,7 @@ public class Imaging extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4653464629292833383L;
+            private static final long serialVersionUID = 5284992863967352557L;
             {
                     put( "image-url", imageUrl );
                     put( "watermark-url", watermarkUrl );
@@ -426,8 +426,8 @@ public class Imaging extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -462,6 +462,23 @@ public class Imaging extends BaseController {
      * @param    css    Optional parameter: Inject custom CSS into the HTML. e.g. 'body { background-color: red;}'
      * @param    imageWidth    Optional parameter: If rendering to an image format (PNG or JPG) use this image width (in pixels)
      * @param    imageHeight    Optional parameter: If rendering to an image format (PNG or JPG) use this image height (in pixels). The default is automatic which dynamically sets the image height based on the content
+     * @param    renderDelay    Optional parameter: Number of milliseconds to wait before rendering the page (can be useful for pages with animations etc)
+     * @param    headerTextLeft    Optional parameter: Text to print to the left-hand side header of each page. e.g. 'My header - Page {page_number} of {total_pages}'
+     * @param    headerTextCenter    Optional parameter: Text to print to the center header of each page
+     * @param    headerTextRight    Optional parameter: Text to print to the right-hand side header of each page
+     * @param    headerSize    Optional parameter: The height of your header (in mm)
+     * @param    headerFont    Optional parameter: Set the header font. Fonts available: Times, Courier, Helvetica, Arial
+     * @param    headerFontSize    Optional parameter: Set the header font size (in pt)
+     * @param    headerLine    Optional parameter: Draw a full page width horizontal line under your header
+     * @param    footerTextLeft    Optional parameter: Text to print to the left-hand side footer of each page. e.g. 'My footer - Page {page_number} of {total_pages}'
+     * @param    footerTextCenter    Optional parameter: Text to print to the center header of each page
+     * @param    footerTextRight    Optional parameter: Text to print to the right-hand side header of each page
+     * @param    footerSize    Optional parameter: The height of your footer (in mm)
+     * @param    footerFont    Optional parameter: Set the footer font. Fonts available: Times, Courier, Helvetica, Arial
+     * @param    footerFontSize    Optional parameter: Set the footer font size (in pt)
+     * @param    footerLine    Optional parameter: Draw a full page width horizontal line above your footer
+     * @param    pageWidth    Optional parameter: Set the PDF page width explicitly (in mm)
+     * @param    pageHeight    Optional parameter: Set the PDF page height explicitly (in mm)
      * @return    Returns the InputStream response from the API call 
      */
     public InputStream hTML5Render(
@@ -482,10 +499,27 @@ public class Imaging extends BaseController {
                 final Boolean forms,
                 final String css,
                 final Integer imageWidth,
-                final Integer imageHeight
+                final Integer imageHeight,
+                final Integer renderDelay,
+                final String headerTextLeft,
+                final String headerTextCenter,
+                final String headerTextRight,
+                final Integer headerSize,
+                final String headerFont,
+                final String headerFontSize,
+                final Boolean headerLine,
+                final String footerTextLeft,
+                final String footerTextCenter,
+                final String footerTextRight,
+                final Integer footerSize,
+                final String footerFont,
+                final Integer footerFontSize,
+                final Boolean footerLine,
+                final Integer pageWidth,
+                final Integer pageHeight
     ) throws Throwable {
         APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
-        hTML5RenderAsync(content, format, pageSize, title, margin, marginLeft, marginRight, marginTop, marginBottom, landscape, zoom, grayscale, mediaPrint, mediaQueries, forms, css, imageWidth, imageHeight, callback);
+        hTML5RenderAsync(content, format, pageSize, title, margin, marginLeft, marginRight, marginTop, marginBottom, landscape, zoom, grayscale, mediaPrint, mediaQueries, forms, css, imageWidth, imageHeight, renderDelay, headerTextLeft, headerTextCenter, headerTextRight, headerSize, headerFont, headerFontSize, headerLine, footerTextLeft, footerTextCenter, footerTextRight, footerSize, footerFont, footerFontSize, footerLine, pageWidth, pageHeight, callback);
         if(!callback.isSuccess())
             throw callback.getError();
         return callback.getResult();
@@ -511,6 +545,23 @@ public class Imaging extends BaseController {
      * @param    css    Optional parameter: Inject custom CSS into the HTML. e.g. 'body { background-color: red;}'
      * @param    imageWidth    Optional parameter: If rendering to an image format (PNG or JPG) use this image width (in pixels)
      * @param    imageHeight    Optional parameter: If rendering to an image format (PNG or JPG) use this image height (in pixels). The default is automatic which dynamically sets the image height based on the content
+     * @param    renderDelay    Optional parameter: Number of milliseconds to wait before rendering the page (can be useful for pages with animations etc)
+     * @param    headerTextLeft    Optional parameter: Text to print to the left-hand side header of each page. e.g. 'My header - Page {page_number} of {total_pages}'
+     * @param    headerTextCenter    Optional parameter: Text to print to the center header of each page
+     * @param    headerTextRight    Optional parameter: Text to print to the right-hand side header of each page
+     * @param    headerSize    Optional parameter: The height of your header (in mm)
+     * @param    headerFont    Optional parameter: Set the header font. Fonts available: Times, Courier, Helvetica, Arial
+     * @param    headerFontSize    Optional parameter: Set the header font size (in pt)
+     * @param    headerLine    Optional parameter: Draw a full page width horizontal line under your header
+     * @param    footerTextLeft    Optional parameter: Text to print to the left-hand side footer of each page. e.g. 'My footer - Page {page_number} of {total_pages}'
+     * @param    footerTextCenter    Optional parameter: Text to print to the center header of each page
+     * @param    footerTextRight    Optional parameter: Text to print to the right-hand side header of each page
+     * @param    footerSize    Optional parameter: The height of your footer (in mm)
+     * @param    footerFont    Optional parameter: Set the footer font. Fonts available: Times, Courier, Helvetica, Arial
+     * @param    footerFontSize    Optional parameter: Set the footer font size (in pt)
+     * @param    footerLine    Optional parameter: Draw a full page width horizontal line above your footer
+     * @param    pageWidth    Optional parameter: Set the PDF page width explicitly (in mm)
+     * @param    pageHeight    Optional parameter: Set the PDF page height explicitly (in mm)
      * @return    Returns the void response from the API call 
      */
     public void hTML5RenderAsync(
@@ -532,6 +583,23 @@ public class Imaging extends BaseController {
                 final String css,
                 final Integer imageWidth,
                 final Integer imageHeight,
+                final Integer renderDelay,
+                final String headerTextLeft,
+                final String headerTextCenter,
+                final String headerTextRight,
+                final Integer headerSize,
+                final String headerFont,
+                final String headerFontSize,
+                final Boolean headerLine,
+                final String footerTextLeft,
+                final String footerTextCenter,
+                final String footerTextRight,
+                final Integer footerSize,
+                final String footerFont,
+                final Integer footerFontSize,
+                final Boolean footerLine,
+                final Integer pageWidth,
+                final Integer pageHeight,
                 final APICallBack<InputStream> callBack
     ) {
         //the base uri for api requests
@@ -543,7 +611,7 @@ public class Imaging extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5446718577530805882L;
+            private static final long serialVersionUID = 4827110839848018745L;
             {
                     put( "user-id", Configuration.userId );
                     put( "api-key", Configuration.apiKey );
@@ -553,7 +621,7 @@ public class Imaging extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5719039645804715964L;
+            private static final long serialVersionUID = 5453712910644543885L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
             }
@@ -561,7 +629,7 @@ public class Imaging extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4724639947363706048L;
+            private static final long serialVersionUID = 5325555968145571167L;
             {
                     put( "output-case", "camel" );
                     put( "content", content );
@@ -582,6 +650,23 @@ public class Imaging extends BaseController {
                     put( "css", css );
                     put( "image-width", (imageWidth != null) ? imageWidth : 1024 );
                     put( "image-height", imageHeight );
+                    put( "render-delay", renderDelay );
+                    put( "header-text-left", headerTextLeft );
+                    put( "header-text-center", headerTextCenter );
+                    put( "header-text-right", headerTextRight );
+                    put( "header-size", (headerSize != null) ? headerSize : 9 );
+                    put( "header-font", (headerFont != null) ? headerFont : "Courier" );
+                    put( "header-font-size", (headerFontSize != null) ? headerFontSize : "11" );
+                    put( "header-line", (headerLine != null) ? headerLine : false );
+                    put( "footer-text-left", footerTextLeft );
+                    put( "footer-text-center", footerTextCenter );
+                    put( "footer-text-right", footerTextRight );
+                    put( "footer-size", (footerSize != null) ? footerSize : 9 );
+                    put( "footer-font", (footerFont != null) ? footerFont : "Courier" );
+                    put( "footer-font-size", (footerFontSize != null) ? footerFontSize : 11 );
+                    put( "footer-line", (footerLine != null) ? footerLine : false );
+                    put( "page-width", pageWidth );
+                    put( "page-height", pageHeight );
             }
         };
 
@@ -625,8 +710,8 @@ public class Imaging extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

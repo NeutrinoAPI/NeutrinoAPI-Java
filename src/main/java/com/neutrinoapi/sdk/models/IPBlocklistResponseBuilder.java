@@ -19,6 +19,14 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
+     * The IP address
+     */
+    public IPBlocklistResponseBuilder ip(String ip) {
+        iPBlocklistResponse.setIp(ip);
+        return this;
+    }
+
+    /**
      * IP is hosting a malicious bot or is part of a botnet
      */
     public IPBlocklistResponseBuilder isBot(boolean isBot) {
@@ -127,6 +135,14 @@ public class IPBlocklistResponseBuilder {
      */
     public IPBlocklistResponseBuilder lastSeen(int lastSeen) {
         iPBlocklistResponse.setLastSeen(lastSeen);
+        return this;
+    }
+
+    /**
+     * An array of strings indicating which blocklists this IP is listed on (empty if not listed)
+     */
+    public IPBlocklistResponseBuilder blocklists(List<String> blocklists) {
+        iPBlocklistResponse.setBlocklists(blocklists);
         return this;
     }
     /**

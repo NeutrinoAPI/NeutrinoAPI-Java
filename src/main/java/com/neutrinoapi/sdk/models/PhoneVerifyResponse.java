@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class PhoneVerifyResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4961748292580891932L;
+    private static final long serialVersionUID = 5381521826949490832L;
     private boolean numberValid;
     private boolean calling;
     private String securityCode;

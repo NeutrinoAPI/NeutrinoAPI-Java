@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class ConvertResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4642375330402174929L;
+    private static final long serialVersionUID = 5419771212143231968L;
     private boolean valid;
     private String result;
     private String fromValue;

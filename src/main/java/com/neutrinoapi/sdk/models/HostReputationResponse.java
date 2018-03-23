@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class HostReputationResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4903947687555187897L;
+    private static final long serialVersionUID = 4715650964009146440L;
     private boolean isListed;
     private List<Blacklist> lists;
     private int listCount;

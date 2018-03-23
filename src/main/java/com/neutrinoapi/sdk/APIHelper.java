@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.net.URLEncoder;
 
 import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -21,12 +22,11 @@ import java.util.regex.Pattern;
  
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-
 import com.neutrinoapi.sdk.exceptions.APIException;
 import com.mashape.unirest.http.Unirest;
 public class APIHelper {
@@ -69,26 +69,6 @@ public class APIHelper {
             setSerializationInclusion(JsonInclude.Include.NON_NULL);
         }
     };
-
-    /**
-     * Parse a date from its string representation
-     * @param date	ISO8601 encodede date string
-     * @return Parsed Date object 
-     */
-    public static Date parseDate(String date)
-    {
-        return com.fasterxml.jackson.databind.util.ISO8601Utils.parse(date);
-    }
-    
-    /**
-     * Convert a date to an ISO8601 formatted string
-     * @param date Date object to format
-     * @return ISO8601 formatted date string
-     */
-    public static String dateToString(Date date)
-    {
-        return com.fasterxml.jackson.databind.util.ISO8601Utils.format(date);
-    }
 
     /**
      * JSON Serialization of a given object.
@@ -179,8 +159,6 @@ public class APIHelper {
                  replaceValue = "";
              else if (pair.getValue() instanceof Collection<?>)
                  replaceValue = flattenCollection("", (Collection<?>) pair.getValue(), "%s%s%s", '/');
-             else if (pair.getValue() instanceof Date)
-                 replaceValue = tryUrlEncode(dateToString((Date)pair.getValue()));
              else
                  replaceValue = tryUrlEncode(pair.getValue().toString());
 
@@ -284,11 +262,11 @@ public class APIHelper {
      * @param   value   Value for the form fields
      * @return  Dictionary of form fields created from array elements
      */
-    public static Map<String, Object> prepareFormFields(Object value) {
-        Map<String, Object> formFields = new LinkedHashMap<String, Object>();
+	public static List<SimpleEntry<String, Object>> prepareFormFields(Object value) {
+        List<SimpleEntry<String, Object>> formFields = new ArrayList<SimpleEntry<String, Object>>();
         if(value != null) {
             try {
-                objectToMap("", value, formFields, new HashSet<Integer>());
+                objectToList("", value, formFields, new HashSet<Integer>());
             } catch (Exception ex) {
             }
         }
@@ -302,17 +280,19 @@ public class APIHelper {
      * @param objBuilder
      */
     private static void encodeObjectAsQueryString(String name, Object obj, StringBuilder objBuilder) {
-        try {
+    	try {
             if(obj == null)
                 return;
 
-            Map<String, Object> objectMap = new LinkedHashMap<String, Object>();
-            objectToMap(name, obj, objectMap, new HashSet<Integer>());
+            List<SimpleEntry<String, Object>> objectList = new ArrayList<SimpleEntry<String, Object>>();
+            objectToList(name, obj, objectList, new HashSet<Integer>());
             boolean hasParam = false;
 
-            for (Map.Entry<String, Object> pair : objectMap.entrySet()) {
+			List<String> arrays = new ArrayList<String>();
+                        
+            for (SimpleEntry<String, Object> pair : objectList) {
                 String paramKeyValPair;
-
+                String accessor = pair.getKey();
                 //ignore nulls
                 Object value = pair.getValue();
                 if(value == null)
@@ -320,8 +300,9 @@ public class APIHelper {
 
                 hasParam = true;
                 //load element value as string
-                paramKeyValPair = String.format("%s=%s&", pair.getKey(), tryUrlEncode(value.toString()));
-                objBuilder.append(paramKeyValPair);
+	            paramKeyValPair = String.format("%s=%s&", accessor, tryUrlEncode(value.toString()));
+	            objBuilder.append(paramKeyValPair);
+
             }
 
             //remove the last &
@@ -349,8 +330,6 @@ public class APIHelper {
             //replace null values with empty string to maintain index order
             if (null == element) {
                 elemValue = "";
-            } else if (element instanceof Date) {
-                elemValue = dateToString((Date)element);
             } else {
                 elemValue = element.toString();
             }
@@ -382,12 +361,12 @@ public class APIHelper {
      * Converts a given object to a form encoded map
      * @param objName Name of the object
      * @param obj The object to convert into a map
-     * @param objectMap The object map to populate
+     * @param objectList The object list to populate
      * @param processed List of objects hashCodes that are already parsed
      * @throws InvalidObjectException
      */
-    private static void objectToMap(
-            String objName, Object obj, Map<String,Object> objectMap, HashSet<Integer> processed)
+    private static void objectToList(
+            String objName, Object obj, List<SimpleEntry<String,Object>> objectList, HashSet<Integer> processed)
     throws InvalidObjectException {
         //null values need not to be processed
         if(obj == null)
@@ -406,14 +385,14 @@ public class APIHelper {
             //process array
             if((objName == null) ||(objName.isEmpty()))
                 throw new InvalidObjectException("Object name cannot be empty");
-
+            
             Collection<?> array = (Collection<?>) obj;
             //append all elements in the array into a string
             int index = 0;
             for (Object element : array) {
-                //load key value pair
-                String key = String.format("%s[%d]", objName, index++);
-                loadKeyValuePairForEncoding(key, element, objectMap, processed);
+            	//load key value pair
+				String key = String.format("%s[%d]", objName, index++);
+                loadKeyValuePairForEncoding(key, element, objectList, processed);
             }
         } else if(obj.getClass().isArray()) {
             //process array
@@ -426,10 +405,10 @@ public class APIHelper {
             for (Object element : array) {
                 //load key value pair
                 String key = String.format("%s[%d]", objName, index++);
-                loadKeyValuePairForEncoding(key, element, objectMap, processed);
+                loadKeyValuePairForEncoding(key, element, objectList, processed);
             }
          } else if(obj instanceof Map) {
-            //process map
+        	 //process map
             Map<?, ?> map = (Map<?, ?>) obj;
             //append all elements in the array into a string
             for (Map.Entry<?, ?> pair : map.entrySet()) {
@@ -438,18 +417,13 @@ public class APIHelper {
                 if((objName != null) && (!objName.isEmpty())) {
                     key = String.format("%s[%s]", objName, attribName);
                 }
-                loadKeyValuePairForEncoding(key, pair.getValue(), objectMap, processed);
+                loadKeyValuePairForEncoding(key, pair.getValue(), objectList, processed);
             }
         } else if(obj instanceof UUID) {
             String key = objName;
             String value = obj.toString();
             //UUIDs can be converted to string
-            loadKeyValuePairForEncoding(key, value, objectMap, processed);
-        } else if (obj instanceof Date) {
-            String key = objName;
-            String value = dateToString((Date)obj);
-            //UUIDs can be converted to string
-            loadKeyValuePairForEncoding(key, value, objectMap, processed);
+            loadKeyValuePairForEncoding(key, value, objectList, processed);
         } else {
             //process objects
             // invoke getter methods
@@ -475,7 +449,7 @@ public class APIHelper {
                 try {
                     //load key value pair
                     Object value = method.invoke(obj);
-                    loadKeyValuePairForEncoding(key, value, objectMap, processed);
+                    loadKeyValuePairForEncoding(key, value, objectList, processed);
                 } catch (Exception ex) {
                 }
             }
@@ -492,7 +466,7 @@ public class APIHelper {
                 try {
                     //load key value pair
                     Object value = field.get(obj);
-                    loadKeyValuePairForEncoding(key, value, objectMap, processed);
+                    loadKeyValuePairForEncoding(key, value, objectList, processed);
                 } catch (Exception ex) { }
             }
         }
@@ -502,19 +476,19 @@ public class APIHelper {
      * While processing objects to map, decides whether to perform recursion or load value
      * @param key The key to used for creating key value pair
      * @param value The value to process against the given key
-     * @param objectMap The object map to process with key value pair
+     * @param objectList The object list to process with key value pair
      * @param processed List of processed objects hashCodes
      * @throws InvalidObjectException
      */
     private static void loadKeyValuePairForEncoding(
-            String key, Object value, Map<String, Object> objectMap, HashSet<Integer> processed)
+            String key, Object value, List<SimpleEntry<String, Object>> objectList, HashSet<Integer> processed)
     throws InvalidObjectException {
         if(value == null)
             return;
         if (isWrapperType(value.getClass()))
-            objectMap.put(key, value);
+            objectList.add( new SimpleEntry<String, Object>(key, value));
         else
-            objectToMap(key, value, objectMap, processed);
+            objectToList(key, value, objectList, processed);
     }
 
     /**

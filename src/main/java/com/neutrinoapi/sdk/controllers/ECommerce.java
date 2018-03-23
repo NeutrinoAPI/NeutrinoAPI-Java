@@ -76,7 +76,7 @@ public class ECommerce extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5407497892880341954L;
+            private static final long serialVersionUID = 5027331613125598675L;
             {
                     put( "user-id", Configuration.userId );
                     put( "api-key", Configuration.apiKey );
@@ -86,7 +86,7 @@ public class ECommerce extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4802206401723317382L;
+            private static final long serialVersionUID = 5590514857522846031L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -95,7 +95,7 @@ public class ECommerce extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4687019790971393659L;
+            private static final long serialVersionUID = 5325892353926265534L;
             {
                     put( "output-case", "camel" );
                     put( "bin-number", binNumber );
@@ -149,8 +149,8 @@ public class ECommerce extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

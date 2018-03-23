@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class PhoneValidateResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5074274696843006655L;
+    private static final long serialVersionUID = 5042281504009345662L;
     private boolean valid;
     private String internationalCallingCode;
     private String countryCode;

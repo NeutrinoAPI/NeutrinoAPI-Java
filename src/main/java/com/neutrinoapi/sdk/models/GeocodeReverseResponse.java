@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class GeocodeReverseResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5726071374409529756L;
+    private static final long serialVersionUID = 4716909488551600942L;
     private String country;
     private boolean found;
     private String address;

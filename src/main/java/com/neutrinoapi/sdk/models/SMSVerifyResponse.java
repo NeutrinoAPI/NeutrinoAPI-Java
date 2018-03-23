@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class SMSVerifyResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5325393230159726634L;
+    private static final long serialVersionUID = 5071573803899839045L;
     private boolean numberValid;
     private String securityCode;
     private boolean sent;

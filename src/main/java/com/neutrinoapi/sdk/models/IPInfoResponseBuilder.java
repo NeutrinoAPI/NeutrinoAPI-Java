@@ -81,6 +81,14 @@ public class IPInfoResponseBuilder {
         iPInfoResponse.setLongitude(longitude);
         return this;
     }
+
+    /**
+     * ISO 2-letter continent code
+     */
+    public IPInfoResponseBuilder continentCode(String continentCode) {
+        iPInfoResponse.setContinentCode(continentCode);
+        return this;
+    }
     /**
      * Build the instance with the given values
      */

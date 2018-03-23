@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class UserAgentInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5018351310497482712L;
+    private static final long serialVersionUID = 5594040192675267460L;
     private int mobileScreenWidth;
     private String mobileBrand;
     private String mobileModel;
@@ -27,6 +27,8 @@ public class UserAgentInfoResponse
     private boolean isIos;
     private String operatingSystemFamily;
     private String operatingSystemVersion;
+    private String engine;
+    private String engineVersion;
     /** GETTER
      * Mobile device screen width (in px)
      */
@@ -265,6 +267,38 @@ public class UserAgentInfoResponse
     @JsonSetter("operatingSystemVersion")
     public void setOperatingSystemVersion (String value) { 
         this.operatingSystemVersion = value;
+    }
+ 
+    /** GETTER
+     * The browser engine name
+     */
+    @JsonGetter("engine")
+    public String getEngine ( ) { 
+        return this.engine;
+    }
+    
+    /** SETTER
+     * The browser engine name
+     */
+    @JsonSetter("engine")
+    public void setEngine (String value) { 
+        this.engine = value;
+    }
+ 
+    /** GETTER
+     * The browser engine version (if detectable)
+     */
+    @JsonGetter("engineVersion")
+    public String getEngineVersion ( ) { 
+        return this.engineVersion;
+    }
+    
+    /** SETTER
+     * The browser engine version (if detectable)
+     */
+    @JsonSetter("engineVersion")
+    public void setEngineVersion (String value) { 
+        this.engineVersion = value;
     }
  
 }

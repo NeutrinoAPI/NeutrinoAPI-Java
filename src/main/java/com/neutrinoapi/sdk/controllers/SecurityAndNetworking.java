@@ -72,7 +72,7 @@ public class SecurityAndNetworking extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5549160127829852608L;
+            private static final long serialVersionUID = 5582030286690164710L;
             {
                     put( "user-id", Configuration.userId );
                     put( "api-key", Configuration.apiKey );
@@ -82,7 +82,7 @@ public class SecurityAndNetworking extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4977264624723546375L;
+            private static final long serialVersionUID = 5244223476069939407L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -91,7 +91,7 @@ public class SecurityAndNetworking extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5037123195155281442L;
+            private static final long serialVersionUID = 5642119523370916612L;
             {
                     put( "output-case", "camel" );
                     put( "host", host );
@@ -144,250 +144,8 @@ public class SecurityAndNetworking extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
-
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
-                    }
-                });
-            }
-        };
-
-        //execute async using thread pool
-        APIHelper.getScheduler().execute(_responseTask);
-    }
-
-    /**
-     * The IP Blocklist API will detect potentially malicious or dangerous IP addresses
-     * @param    ip    Required parameter: An IPv4 address
-     * @return    Returns the IPBlocklistResponse response from the API call 
-     */
-    public IPBlocklistResponse iPBlocklist(
-                final String ip
-    ) throws Throwable {
-        APICallBackCatcher<IPBlocklistResponse> callback = new APICallBackCatcher<IPBlocklistResponse>();
-        iPBlocklistAsync(ip, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
-    }
-
-    /**
-     * The IP Blocklist API will detect potentially malicious or dangerous IP addresses
-     * @param    ip    Required parameter: An IPv4 address
-     * @return    Returns the void response from the API call 
-     */
-    public void iPBlocklistAsync(
-                final String ip,
-                final APICallBack<IPBlocklistResponse> callBack
-    ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/ip-blocklist");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4740334550721822780L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5709363580136165242L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5250515148338279248L;
-            {
-                    put( "output-case", "camel" );
-                    put( "ip", ip );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
-        Runnable _responseTask = new Runnable() {
-            public void run() {
-                //make the API call
-                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
-                    public void onSuccess(HttpContext _context, HttpResponse _response) {
-                        try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            String _responseBody = ((HttpStringResponse)_response).getBody();
-                            IPBlocklistResponse _result = APIHelper.deserialize(_responseBody,
-                                                        new TypeReference<IPBlocklistResponse>(){});
-
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
-                        }
-                    }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
-
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
-                    }
-                });
-            }
-        };
-
-        //execute async using thread pool
-        APIHelper.getScheduler().execute(_responseTask);
-    }
-
-    /**
-     * Analyze and extract provider information for an IP address
-     * @param    ip    Required parameter: IPv4 or IPv6 address
-     * @return    Returns the IPProbeResponse response from the API call 
-     */
-    public IPProbeResponse iPProbe(
-                final String ip
-    ) throws Throwable {
-        APICallBackCatcher<IPProbeResponse> callback = new APICallBackCatcher<IPProbeResponse>();
-        iPProbeAsync(ip, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
-    }
-
-    /**
-     * Analyze and extract provider information for an IP address
-     * @param    ip    Required parameter: IPv4 or IPv6 address
-     * @return    Returns the void response from the API call 
-     */
-    public void iPProbeAsync(
-                final String ip,
-                final APICallBack<IPProbeResponse> callBack
-    ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/ip-probe");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4928338173307729520L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5523592192871864995L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5176910490589069934L;
-            {
-                    put( "output-case", "camel" );
-                    put( "ip", ip );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
-        Runnable _responseTask = new Runnable() {
-            public void run() {
-                //make the API call
-                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
-                    public void onSuccess(HttpContext _context, HttpResponse _response) {
-                        try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            String _responseBody = ((HttpStringResponse)_response).getBody();
-                            IPProbeResponse _result = APIHelper.deserialize(_responseBody,
-                                                        new TypeReference<IPProbeResponse>(){});
-
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
-                        }
-                    }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
-                            {
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -439,7 +197,7 @@ public class SecurityAndNetworking extends BaseController {
 
         //process query parameters
         APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5560016080429169377L;
+            private static final long serialVersionUID = 5233594768404679135L;
             {
                     put( "user-id", Configuration.userId );
                     put( "api-key", Configuration.apiKey );
@@ -449,7 +207,7 @@ public class SecurityAndNetworking extends BaseController {
 
         //load all headers for the outgoing API request
         Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 4997628050749866400L;
+            private static final long serialVersionUID = 4877796418211947330L;
             {
                     put( "user-agent", "APIMATIC 2.0" );
                     put( "accept", "application/json" );
@@ -458,7 +216,7 @@ public class SecurityAndNetworking extends BaseController {
 
         //load all fields for the outgoing API request
         Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5403812949588465189L;
+            private static final long serialVersionUID = 5621588550715742743L;
             {
                     put( "output-case", "camel" );
                     put( "url", url );
@@ -512,8 +270,375 @@ public class SecurityAndNetworking extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)	
+                        if (getHttpCallBack() != null)
+                        {
+                            getHttpCallBack().OnAfterResponse(_context);
+                        }
+
+                        //let the caller know of the failure
+                        callBack.onFailure(_context, _error);
+                    }
+                });
+            }
+        };
+
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Analyze and extract provider information for an IP address
+     * @param    ip    Required parameter: IPv4 or IPv6 address
+     * @return    Returns the IPProbeResponse response from the API call 
+     */
+    public IPProbeResponse iPProbe(
+                final String ip
+    ) throws Throwable {
+        APICallBackCatcher<IPProbeResponse> callback = new APICallBackCatcher<IPProbeResponse>();
+        iPProbeAsync(ip, callback);
+        if(!callback.isSuccess())
+            throw callback.getError();
+        return callback.getResult();
+    }
+
+    /**
+     * Analyze and extract provider information for an IP address
+     * @param    ip    Required parameter: IPv4 or IPv6 address
+     * @return    Returns the void response from the API call 
+     */
+    public void iPProbeAsync(
+                final String ip,
+                final APICallBack<IPProbeResponse> callBack
+    ) {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+        
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
+        _queryBuilder.append("/ip-probe");
+
+        //process query parameters
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
+            private static final long serialVersionUID = 4614618887105871631L;
+            {
+                    put( "user-id", Configuration.userId );
+                    put( "api-key", Configuration.apiKey );
+            }});
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>() {
+            private static final long serialVersionUID = 5587407956905131414L;
+            {
+                    put( "user-agent", "APIMATIC 2.0" );
+                    put( "accept", "application/json" );
+            }
+        };
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 4630380823677137198L;
+            {
+                    put( "output-case", "camel" );
+                    put( "ip", ip );
+            }
+        };
+
+        //prepare and invoke the API call request to fetch the response
+        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        //invoke the callback before request if its not null
+        if (getHttpCallBack() != null)
+        {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        //invoke request and get response
+        Runnable _responseTask = new Runnable() {
+            public void run() {
+                //make the API call
+                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext _context, HttpResponse _response) {
+                        try {
+
+                            //invoke the callback after response if its not null
+                            if (getHttpCallBack() != null)	
                             {
+                                getHttpCallBack().OnAfterResponse(_context);
+                            }
+
+                            //handle errors defined at the API level
+                            validateResponse(_response, _context);
+
+                            //extract result from the http response
+                            String _responseBody = ((HttpStringResponse)_response).getBody();
+                            IPProbeResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<IPProbeResponse>(){});
+
+                            //let the caller know of the success
+                            callBack.onSuccess(_context, _result);
+                        } catch (APIException error) {
+                            //let the caller know of the error
+                            callBack.onFailure(_context, error);
+                        } catch (IOException ioException) {
+                            //let the caller know of the caught IO Exception
+                            callBack.onFailure(_context, ioException);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(_context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext _context, Throwable _error) {
+                        //invoke the callback after response if its not null
+                        if (getHttpCallBack() != null)
+                        {
+                            getHttpCallBack().OnAfterResponse(_context);
+                        }
+
+                        //let the caller know of the failure
+                        callBack.onFailure(_context, _error);
+                    }
+                });
+            }
+        };
+
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * The IP Blocklist API will detect potentially malicious or dangerous IP addresses
+     * @param    ip    Required parameter: An IPv4 address
+     * @return    Returns the IPBlocklistResponse response from the API call 
+     */
+    public IPBlocklistResponse iPBlocklist(
+                final String ip
+    ) throws Throwable {
+        APICallBackCatcher<IPBlocklistResponse> callback = new APICallBackCatcher<IPBlocklistResponse>();
+        iPBlocklistAsync(ip, callback);
+        if(!callback.isSuccess())
+            throw callback.getError();
+        return callback.getResult();
+    }
+
+    /**
+     * The IP Blocklist API will detect potentially malicious or dangerous IP addresses
+     * @param    ip    Required parameter: An IPv4 address
+     * @return    Returns the void response from the API call 
+     */
+    public void iPBlocklistAsync(
+                final String ip,
+                final APICallBack<IPBlocklistResponse> callBack
+    ) {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+        
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
+        _queryBuilder.append("/ip-blocklist");
+
+        //process query parameters
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
+            private static final long serialVersionUID = 5245405736912388182L;
+            {
+                    put( "user-id", Configuration.userId );
+                    put( "api-key", Configuration.apiKey );
+            }});
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>() {
+            private static final long serialVersionUID = 5584951205225970063L;
+            {
+                    put( "user-agent", "APIMATIC 2.0" );
+                    put( "accept", "application/json" );
+            }
+        };
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 5025331291996790202L;
+            {
+                    put( "output-case", "camel" );
+                    put( "ip", ip );
+            }
+        };
+
+        //prepare and invoke the API call request to fetch the response
+        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        //invoke the callback before request if its not null
+        if (getHttpCallBack() != null)
+        {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        //invoke request and get response
+        Runnable _responseTask = new Runnable() {
+            public void run() {
+                //make the API call
+                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext _context, HttpResponse _response) {
+                        try {
+
+                            //invoke the callback after response if its not null
+                            if (getHttpCallBack() != null)	
+                            {
+                                getHttpCallBack().OnAfterResponse(_context);
+                            }
+
+                            //handle errors defined at the API level
+                            validateResponse(_response, _context);
+
+                            //extract result from the http response
+                            String _responseBody = ((HttpStringResponse)_response).getBody();
+                            IPBlocklistResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<IPBlocklistResponse>(){});
+
+                            //let the caller know of the success
+                            callBack.onSuccess(_context, _result);
+                        } catch (APIException error) {
+                            //let the caller know of the error
+                            callBack.onFailure(_context, error);
+                        } catch (IOException ioException) {
+                            //let the caller know of the caught IO Exception
+                            callBack.onFailure(_context, ioException);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(_context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext _context, Throwable _error) {
+                        //invoke the callback after response if its not null
+                        if (getHttpCallBack() != null)
+                        {
+                            getHttpCallBack().OnAfterResponse(_context);
+                        }
+
+                        //let the caller know of the failure
+                        callBack.onFailure(_context, _error);
+                    }
+                });
+            }
+        };
+
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * SMTP based email address verification
+     * @param    email    Required parameter: An email address
+     * @param    fixTypos    Optional parameter: Automatically attempt to fix typos in the address
+     * @return    Returns the EmailVerifyResponse response from the API call 
+     */
+    public EmailVerifyResponse emailVerify(
+                final String email,
+                final Boolean fixTypos
+    ) throws Throwable {
+        APICallBackCatcher<EmailVerifyResponse> callback = new APICallBackCatcher<EmailVerifyResponse>();
+        emailVerifyAsync(email, fixTypos, callback);
+        if(!callback.isSuccess())
+            throw callback.getError();
+        return callback.getResult();
+    }
+
+    /**
+     * SMTP based email address verification
+     * @param    email    Required parameter: An email address
+     * @param    fixTypos    Optional parameter: Automatically attempt to fix typos in the address
+     * @return    Returns the void response from the API call 
+     */
+    public void emailVerifyAsync(
+                final String email,
+                final Boolean fixTypos,
+                final APICallBack<EmailVerifyResponse> callBack
+    ) {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+        
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
+        _queryBuilder.append("/email-verify");
+
+        //process query parameters
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
+            private static final long serialVersionUID = 5288956279856174564L;
+            {
+                    put( "user-id", Configuration.userId );
+                    put( "api-key", Configuration.apiKey );
+            }});
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>() {
+            private static final long serialVersionUID = 5098538927483468744L;
+            {
+                    put( "user-agent", "APIMATIC 2.0" );
+                    put( "accept", "application/json" );
+            }
+        };
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 4728403585404180448L;
+            {
+                    put( "email", email );
+                    put( "fix-typos", fixTypos );
+            }
+        };
+
+        //prepare and invoke the API call request to fetch the response
+        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        //invoke the callback before request if its not null
+        if (getHttpCallBack() != null)
+        {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        //invoke request and get response
+        Runnable _responseTask = new Runnable() {
+            public void run() {
+                //make the API call
+                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext _context, HttpResponse _response) {
+                        try {
+
+                            //invoke the callback after response if its not null
+                            if (getHttpCallBack() != null)	
+                            {
+                                getHttpCallBack().OnAfterResponse(_context);
+                            }
+
+                            //handle errors defined at the API level
+                            validateResponse(_response, _context);
+
+                            //extract result from the http response
+                            String _responseBody = ((HttpStringResponse)_response).getBody();
+                            EmailVerifyResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<EmailVerifyResponse>(){});
+
+                            //let the caller know of the success
+                            callBack.onSuccess(_context, _result);
+                        } catch (APIException error) {
+                            //let the caller know of the error
+                            callBack.onFailure(_context, error);
+                        } catch (IOException ioException) {
+                            //let the caller know of the caught IO Exception
+                            callBack.onFailure(_context, ioException);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(_context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext _context, Throwable _error) {
+                        //invoke the callback after response if its not null
+                        if (getHttpCallBack() != null)
+                        {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

@@ -10,6 +10,8 @@ import com.neutrinoapi.sdk.http.request.HttpBodyRequest;
 import com.neutrinoapi.sdk.http.request.HttpRequest;
 import com.neutrinoapi.sdk.http.response.HttpResponse;
 import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.List;
 
 public interface HttpClient {
 
@@ -49,27 +51,27 @@ public interface HttpClient {
      * Create a simple HTTP GET request with basic authentication
      */
     public HttpRequest get(String _queryUrl,
-                    Map<String, String> _headers, Map<String, Object> _parameters,
+                    Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                     String _username, String _password);
 
     /**
      * Create a simple HTTP GET request
      */
     public HttpRequest get(String _queryUrl,
-                    Map<String, String> _headers, Map<String, Object> _parameters);
+                    Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters);
 
     /**
      * Create an HTTP POST request with parameters
      */
     public HttpRequest post(String _queryUrl,
-                     Map<String, String> _headers, Map<String, Object> _parameters);
+                     Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters);
 
 
     /**
      * Create an HTTP POST request with parameters and with basic authentication
      */
     public HttpRequest post(String _queryUrl,
-                     Map<String, String> _headers, Map<String, Object> _parameters,
+                     Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                      String _username, String _password);
 
     /**
@@ -89,13 +91,13 @@ public interface HttpClient {
      * Create an HTTP PUT request with parameters
      */
     public HttpRequest put(String _queryUrl,
-                    Map<String, String> _headers, Map<String, Object> _parameters);
+                    Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters);
 
     /**
      * Create an HTTP PUT request with parameters and with basic authentication
      */
     HttpRequest put(String _queryUrl,
-                    Map<String, String> _headers, Map<String, Object> _parameters,
+                    Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                     String _username, String _password);
 
     /**
@@ -115,13 +117,13 @@ public interface HttpClient {
      * Create an HTTP PATCH request with parameters
      */
     public HttpRequest patch(String _queryUrl,
-                      Map<String, String> _headers, Map<String, Object> _parameters);
+                      Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters);
 
     /**
      * Create an HTTP PATCH request with parameters and with basic authentication
      */
     HttpRequest patch(String _queryUrl,
-                      Map<String, String> _headers, Map<String, Object> _parameters,
+                      Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                       String _username, String _password);
 
     /**
@@ -141,13 +143,13 @@ public interface HttpClient {
      * Create an HTTP DELETE request with parameters
      */
     HttpRequest delete(String _queryUrl,
-                       Map<String, String> _headers, Map<String, Object> _parameters);
+                       Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters);
 
     /**
      * Create an HTTP DELETE request with parameters and with basic authentication
      */
     public HttpRequest delete(String _queryUrl,
-                       Map<String, String> _headers, Map<String, Object> _parameters,
+                       Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                        String _username, String _password);
 
     /**

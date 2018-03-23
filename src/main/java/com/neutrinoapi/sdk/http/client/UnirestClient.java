@@ -20,6 +20,8 @@ import com.neutrinoapi.sdk.exceptions.APIException;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.List;
 
 public class UnirestClient implements HttpClient {
     /**
@@ -195,7 +197,8 @@ public class UnirestClient implements HttpClient {
         
         //set json header if needed
         if(request instanceof HttpBodyRequest) {
-            uniRequest.header("content-type", "application/json; charset=UTF-8");
+            if (!uniRequest.getHeaders().containsKey("content-type"))
+                uniRequest.header("content-type", "application/json; charset=UTF-8");
         } 
 
         //set basic auth credentials if needed
@@ -236,7 +239,7 @@ public class UnirestClient implements HttpClient {
      * Create a simple HTTP GET request with basic authentication
      */
     public HttpRequest get(String _queryUrl,
-                           Map<String, String> _headers, Map<String, Object> _parameters,
+                           Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                            String _username, String _password) {
         return new HttpRequest(HttpMethod.GET, _queryUrl, _headers, _parameters, _username, _password);
     }
@@ -245,7 +248,7 @@ public class UnirestClient implements HttpClient {
      * Create a simple HTTP GET request
      */
     public HttpRequest get(String _queryUrl,
-                           Map<String, String> _headers, Map<String, Object> _parameters) {
+                           Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters) {
         return new HttpRequest(HttpMethod.GET, _queryUrl, _headers, _parameters);
     }
 
@@ -253,7 +256,7 @@ public class UnirestClient implements HttpClient {
      * Create an HTTP POST request with parameters
      */
     public HttpRequest post(String _queryUrl,
-                            Map<String, String> _headers, Map<String, Object> _parameters) {
+                            Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters) {
         return new HttpRequest(HttpMethod.POST, _queryUrl, _headers, _parameters);
     }
 
@@ -261,7 +264,7 @@ public class UnirestClient implements HttpClient {
      * Create an HTTP POST request with parameters and with basic authentication
      */
     public HttpRequest post(String _queryUrl,
-                            Map<String, String> _headers, Map<String, Object> _parameters,
+                            Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                             String _username, String _password) {
         return new HttpRequest(HttpMethod.POST, _queryUrl, _headers, _parameters, _username, _password);
     }
@@ -287,7 +290,7 @@ public class UnirestClient implements HttpClient {
      * Create an HTTP PUT request with parameters
      */
     public HttpRequest put(String _queryUrl,
-                           Map<String, String> _headers, Map<String, Object> _parameters) {
+                           Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters) {
         return new HttpRequest(HttpMethod.PUT, _queryUrl, _headers, _parameters);
     }
 
@@ -295,7 +298,7 @@ public class UnirestClient implements HttpClient {
      * Create an HTTP PUT request with parameters and with basic authentication
      */
     public HttpRequest put(String _queryUrl,
-                           Map<String, String> _headers, Map<String, Object> _parameters,
+                           Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                            String _username, String _password) {
         return new HttpRequest(HttpMethod.PUT, _queryUrl, _headers, _parameters, _username, _password);
     }
@@ -321,7 +324,7 @@ public class UnirestClient implements HttpClient {
      * Create an HTTP PATCH request with parameters
      */
     public HttpRequest patch(String _queryUrl,
-                             Map<String, String> _headers, Map<String, Object> _parameters) {
+                             Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters) {
         return new HttpRequest(HttpMethod.PATCH, _queryUrl, _headers, _parameters);
     }
 
@@ -329,7 +332,7 @@ public class UnirestClient implements HttpClient {
      * Create an HTTP PATCH request with parameters and with basic authentication
      */
     public HttpRequest patch(String _queryUrl,
-                             Map<String, String> _headers, Map<String, Object> _parameters,
+                             Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                              String _username, String _password) {
         return new HttpRequest(HttpMethod.PATCH, _queryUrl, _headers, _parameters, _username, _password);
     }
@@ -355,7 +358,7 @@ public class UnirestClient implements HttpClient {
      * Create an HTTP DELETE request with parameters
      */
     public HttpRequest delete(String _queryUrl,
-                              Map<String, String> _headers, Map<String, Object> _parameters) {
+                              Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters) {
         return new HttpRequest(HttpMethod.DELETE, _queryUrl, _headers, _parameters);
     }
 
@@ -363,7 +366,7 @@ public class UnirestClient implements HttpClient {
      * Create an HTTP DELETE request with parameters and with basic authentication
      */
     public HttpRequest delete(String _queryUrl,
-                              Map<String, String> _headers, Map<String, Object> _parameters,
+                              Map<String, String> _headers, List<SimpleEntry<String, Object>> _parameters,
                               String _username, String _password) {
         return new HttpRequest(HttpMethod.DELETE, _queryUrl, _headers, _parameters, _username, _password);
     }

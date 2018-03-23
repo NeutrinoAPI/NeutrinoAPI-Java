@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class BINLookupResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4951581629212035214L;
+    private static final long serialVersionUID = 5371030463009267433L;
     private String country;
     private String ipCity;
     private boolean ipMatchesBin;

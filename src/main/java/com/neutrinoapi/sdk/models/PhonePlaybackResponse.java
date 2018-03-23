@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class PhonePlaybackResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5240316063597196572L;
+    private static final long serialVersionUID = 4706016657647219647L;
     private boolean calling;
     private boolean numberValid;
     /** GETTER
