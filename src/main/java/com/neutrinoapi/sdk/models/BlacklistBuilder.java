@@ -59,6 +59,14 @@ public class BlacklistBuilder {
     }
 
     /**
+     * the specific return code for this listing (if listed)
+     */
+    public BlacklistBuilder returnCode(String returnCode) {
+        blacklist.setReturnCode(returnCode);
+        return this;
+    }
+
+    /**
      * the DNSBL server response time in milliseconds
      */
     public BlacklistBuilder responseTime(int responseTime) {

@@ -59,7 +59,7 @@ public class EmailValidateResponseBuilder {
     }
 
     /**
-     * The full email address (this could be different to the supplied address if fix-typos is used)
+     * The full email address (this could be different to the supplied address if typos-fixed is true)
      */
     public EmailValidateResponseBuilder email(String email) {
         emailValidateResponse.setEmail(email);

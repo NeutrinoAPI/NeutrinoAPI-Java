@@ -21,9 +21,9 @@ import com.neutrinoapi.sdk.http.response.HttpStringResponse;
 import com.neutrinoapi.sdk.http.client.APICallBack;
 import com.neutrinoapi.sdk.controllers.syncwrapper.APICallBackCatcher;
 
-public class ECommerce extends BaseController {    
+public class ECommerce extends BaseController {
     //private static variables for the singleton pattern
-    private static Object syncObject = new Object();
+    private static final Object syncObject = new Object();
     private static ECommerce instance = null;
 
     /**
@@ -31,9 +31,11 @@ public class ECommerce extends BaseController {
      * @return The singleton instance of the ECommerce class 
      */
     public static ECommerce getInstance() {
-        synchronized (syncObject) {
-            if (null == instance) {
-                instance = new ECommerce();
+        if (null == instance) {
+            synchronized (syncObject) {
+                if (null == instance) {
+                    instance = new ECommerce();
+                }
             }
         }
         return instance;
@@ -42,7 +44,7 @@ public class ECommerce extends BaseController {
     /**
      * Perform a BIN (Bank Identification Number) or IIN (Issuer Identification Number) lookup. See: https://www.neutrinoapi.com/api/bin-lookup/
      * @param    binNumber    Required parameter: The BIN or IIN number (the first 6 digits of a credit card number)
-     * @param    customerIp    Optional parameter: Pass in a customers remote IP address. The API will then determine the country of the IP address and match it against the BIN country. This feature is designed for fraud prevention and detection checks.
+     * @param    customerIp    Optional parameter: Pass in the customers IP address and we will return some extra information about them
      * @return    Returns the BINLookupResponse response from the API call 
      */
     public BINLookupResponse bINLookup(
@@ -59,7 +61,7 @@ public class ECommerce extends BaseController {
     /**
      * Perform a BIN (Bank Identification Number) or IIN (Issuer Identification Number) lookup. See: https://www.neutrinoapi.com/api/bin-lookup/
      * @param    binNumber    Required parameter: The BIN or IIN number (the first 6 digits of a credit card number)
-     * @param    customerIp    Optional parameter: Pass in a customers remote IP address. The API will then determine the country of the IP address and match it against the BIN country. This feature is designed for fraud prevention and detection checks.
+     * @param    customerIp    Optional parameter: Pass in the customers IP address and we will return some extra information about them
      * @return    Returns the void response from the API call 
      */
     public void bINLookupAsync(
@@ -67,62 +69,60 @@ public class ECommerce extends BaseController {
                 final String customerIp,
                 final APICallBack<BINLookupResponse> callBack
     ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/bin-lookup");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5027331613125598675L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5590514857522846031L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5325892353926265534L;
-            {
-                    put( "output-case", "camel" );
-                    put( "bin-number", binNumber );
-                    put( "customer-ip", customerIp );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
         Runnable _responseTask = new Runnable() {
             public void run() {
-                //make the API call
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/bin-lookup");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+                    _headers.put("accept", "application/json");
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("output-case", "camel");
+                    _parameters.put("bin-number", binNumber);
+                    if (customerIp != null) {
+                        _parameters.put("customer-ip", customerIp);
+                    }
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
                 getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
 
                             //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
+                            if (getHttpCallBack() != null) {
                                 getHttpCallBack().OnAfterResponse(_context);
                             }
 
@@ -136,12 +136,6 @@ public class ECommerce extends BaseController {
 
                             //let the caller know of the success
                             callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
                         } catch (Exception exception) {
                             //let the caller know of the caught Exception
                             callBack.onFailure(_context, exception);
@@ -150,7 +144,7 @@ public class ECommerce extends BaseController {
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
                         if (getHttpCallBack() != null)
-                        {
+ {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

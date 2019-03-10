@@ -27,7 +27,7 @@ public class PhonePlaybackResponseBuilder {
     }
 
     /**
-     * Is this a valid phone number
+     * True if this a valid phone number
      */
     public PhonePlaybackResponseBuilder numberValid(boolean numberValid) {
         phonePlaybackResponse.setNumberValid(numberValid);

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class EmailValidateResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5445631352936809743L;
+    private static final long serialVersionUID = 6116992900542344172L;
     private boolean valid;
     private boolean syntaxError;
     private String domain;
@@ -103,7 +103,7 @@ public class EmailValidateResponse
     }
  
     /** GETTER
-     * The full email address (this could be different to the supplied address if fix-typos is used)
+     * The full email address (this could be different to the supplied address if typos-fixed is true)
      */
     @JsonGetter("email")
     public String getEmail ( ) { 
@@ -111,7 +111,7 @@ public class EmailValidateResponse
     }
     
     /** SETTER
-     * The full email address (this could be different to the supplied address if fix-typos is used)
+     * The full email address (this could be different to the supplied address if typos-fixed is true)
      */
     @JsonSetter("email")
     public void setEmail (String value) { 
@@ -183,4 +183,3 @@ public class EmailValidateResponse
     }
  
 }
- 

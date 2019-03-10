@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class EmailVerifyResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5515531121146827152L;
+    private static final long serialVersionUID = 196147590924230381L;
     private boolean valid;
     private boolean verified;
     private String email;
@@ -204,7 +204,7 @@ public class EmailVerifyResponse
     }
  
     /** GETTER
-     * The SMTP verification status for the address (see online docs for full details)
+     * The SMTP verification status for the address:<br/><ul><li>ok - SMTP verification was successful, this is a real address that can receive mail</li><li>invalid - this is not a valid email address (has either a domain or syntax error)</li><li>absent - this address is not registered with the email service provider</li><li>unresponsive - the mail server(s) for this address timed-out or refused to open an SMTP connection</li><li>unknown - sorry, we could not reliably determine the real status of this address (this address may or may not exist)</li></ul>
      */
     @JsonGetter("smtpStatus")
     public String getSmtpStatus ( ) { 
@@ -212,7 +212,7 @@ public class EmailVerifyResponse
     }
     
     /** SETTER
-     * The SMTP verification status for the address (see online docs for full details)
+     * The SMTP verification status for the address:<br/><ul><li>ok - SMTP verification was successful, this is a real address that can receive mail</li><li>invalid - this is not a valid email address (has either a domain or syntax error)</li><li>absent - this address is not registered with the email service provider</li><li>unresponsive - the mail server(s) for this address timed-out or refused to open an SMTP connection</li><li>unknown - sorry, we could not reliably determine the real status of this address (this address may or may not exist)</li></ul>
      */
     @JsonSetter("smtpStatus")
     public void setSmtpStatus (String value) { 
@@ -268,4 +268,3 @@ public class EmailVerifyResponse
     }
  
 }
- 

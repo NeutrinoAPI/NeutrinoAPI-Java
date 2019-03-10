@@ -19,7 +19,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * Full country name of the issuer
+     * The full country name of the issuer
      */
     public BINLookupResponseBuilder country(String country) {
         bINLookupResponse.setCountry(country);
@@ -27,7 +27,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * The city name (if detectable) from the customer IP
+     * The city of the customers IP (if detectable)
      */
     public BINLookupResponseBuilder ipCity(String ipCity) {
         bINLookupResponse.setIpCity(ipCity);
@@ -35,7 +35,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * True if the customer IP address country matches the BIN country
+     * True if the customers IP country matches the BIN country
      */
     public BINLookupResponseBuilder ipMatchesBin(boolean ipMatchesBin) {
         bINLookupResponse.setIpMatchesBin(ipMatchesBin);
@@ -51,7 +51,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * The card category (if known)
+     * The card category. There are many different card categories the most common card categories are: CLASSIC, BUSINESS, CORPORATE, PLATINUM, PREPAID
      */
     public BINLookupResponseBuilder cardCategory(String cardCategory) {
         bINLookupResponse.setCardCategory(cardCategory);
@@ -59,7 +59,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * The ISO 2-letter country code detected from the customer IP
+     * The ISO 2-letter country code of the customers IP
      */
     public BINLookupResponseBuilder ipCountryCode(String ipCountryCode) {
         bINLookupResponse.setIpCountryCode(ipCountryCode);
@@ -67,7 +67,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * The country detected from the customer IP
+     * The country of the customers IP
      */
     public BINLookupResponseBuilder ipCountry(String ipCountry) {
         bINLookupResponse.setIpCountry(ipCountry);
@@ -75,7 +75,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * The card issuer (if known)
+     * The card issuer
      */
     public BINLookupResponseBuilder issuer(String issuer) {
         bINLookupResponse.setIssuer(issuer);
@@ -83,7 +83,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * True if the customer IP is listed on one of our blocklists, see the IP Blocklist API for more details
+     * True if the customers IP is listed on one of our blocklists, see the <a href="http://www.neutrinoapi.com/api/ip-blocklist/">IP Blocklist API</a>
      */
     public BINLookupResponseBuilder ipBlocklisted(boolean ipBlocklisted) {
         bINLookupResponse.setIpBlocklisted(ipBlocklisted);
@@ -107,7 +107,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * The card issuer website (if known)
+     * The card issuers website
      */
     public BINLookupResponseBuilder issuerWebsite(String issuerWebsite) {
         bINLookupResponse.setIssuerWebsite(issuerWebsite);
@@ -115,7 +115,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * ISO 2-letter country code of the issuer
+     * The ISO 2-letter country code of the issuer
      */
     public BINLookupResponseBuilder countryCode(String countryCode) {
         bINLookupResponse.setCountryCode(countryCode);
@@ -123,7 +123,7 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * The region name (if detectable) from the customer IP
+     * The region of the customers IP (if detectable)
      */
     public BINLookupResponseBuilder ipRegion(String ipRegion) {
         bINLookupResponse.setIpRegion(ipRegion);
@@ -139,10 +139,34 @@ public class BINLookupResponseBuilder {
     }
 
     /**
-     * The card issuer phone number (if known)
+     * The card issuers phone number
      */
     public BINLookupResponseBuilder issuerPhone(String issuerPhone) {
         bINLookupResponse.setIssuerPhone(issuerPhone);
+        return this;
+    }
+
+    /**
+     * The ISO 3-letter country code of the issuer
+     */
+    public BINLookupResponseBuilder countryCode3(String countryCode3) {
+        bINLookupResponse.setCountryCode3(countryCode3);
+        return this;
+    }
+
+    /**
+     * ISO 4217 currency code associated with the country of the issuer
+     */
+    public BINLookupResponseBuilder currencyCode(String currencyCode) {
+        bINLookupResponse.setCurrencyCode(currencyCode);
+        return this;
+    }
+
+    /**
+     * The ISO 3-letter country code of the customers IP
+     */
+    public BINLookupResponseBuilder ipCountryCode3(String ipCountryCode3) {
+        bINLookupResponse.setIpCountryCode3(ipCountryCode3);
         return this;
     }
     /**

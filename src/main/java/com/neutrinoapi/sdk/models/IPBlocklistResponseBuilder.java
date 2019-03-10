@@ -27,7 +27,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP is hosting a malicious bot or is part of a botnet
+     * IP is hosting a malicious bot or is part of a botnet. Includes brute-force crackers
      */
     public IPBlocklistResponseBuilder isBot(boolean isBot) {
         iPBlocklistResponse.setIsBot(isBot);
@@ -35,7 +35,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP is hosting an exploit finding bot or exploit scanning software
+     * IP is hosting an exploit finding bot or is running exploit scanning software
      */
     public IPBlocklistResponseBuilder isExploitBot(boolean isExploitBot) {
         iPBlocklistResponse.setIsExploitBot(isExploitBot);
@@ -43,7 +43,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP is involved in distributing malware
+     * IP is involved in distributing or is running malware
      */
     public IPBlocklistResponseBuilder isMalware(boolean isMalware) {
         iPBlocklistResponse.setIsMalware(isMalware);
@@ -51,7 +51,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP is a hostile spider or crawler
+     * IP is running a hostile web spider / web crawler
      */
     public IPBlocklistResponseBuilder isSpider(boolean isSpider) {
         iPBlocklistResponse.setIsSpider(isSpider);
@@ -59,7 +59,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP has been flagged on DShield (dshield.org)
+     * IP has been flagged as an attack source on DShield (dshield.org)
      */
     public IPBlocklistResponseBuilder isDshield(boolean isDshield) {
         iPBlocklistResponse.setIsDshield(isDshield);
@@ -83,7 +83,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * hijacked netblocks or netblocks controlled by criminal organizations
+     * IP is part of a hijacked netblock or a netblock controlled by a criminal organization
      */
     public IPBlocklistResponseBuilder isHijacked(boolean isHijacked) {
         iPBlocklistResponse.setIsHijacked(isHijacked);
@@ -91,7 +91,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP is coming from a Tor node
+     * IP is a Tor node or running a Tor related service
      */
     public IPBlocklistResponseBuilder isTor(boolean isTor) {
         iPBlocklistResponse.setIsTor(isTor);
@@ -99,7 +99,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP is being used by spyware, malware, botnets or for other malicious activities
+     * IP is involved in distributing or is running spyware
      */
     public IPBlocklistResponseBuilder isSpyware(boolean isSpyware) {
         iPBlocklistResponse.setIsSpyware(isSpyware);
@@ -107,7 +107,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP address is hosting a spam bot, comment spamming or other spamming software
+     * IP address is hosting a spam bot, comment spamming or any other spamming type software
      */
     public IPBlocklistResponseBuilder isSpamBot(boolean isSpamBot) {
         iPBlocklistResponse.setIsSpamBot(isSpamBot);
@@ -123,7 +123,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP has been detected as coming from a VPN hosting provider
+     * IP has been detected as belonging to a VPN provider
      */
     public IPBlocklistResponseBuilder isVpn(boolean isVpn) {
         iPBlocklistResponse.setIsVpn(isVpn);

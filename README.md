@@ -111,6 +111,7 @@ NeutrinoAPIClient client = new NeutrinoAPIClient(userId, apiKey);
 * [SecurityAndNetworking](#security_and_networking)
 * [Geolocation](#geolocation)
 * [ECommerce](#e_commerce)
+* [WWW](#www)
 
 ## <a name="imaging"></a>![Class: ](https://apidocs.io/img/class.png "com.neutrinoapi.sdk.controllers.Imaging") Imaging
 
@@ -141,8 +142,8 @@ void imageResizeAsync(
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | imageUrl |  ``` Required ```  | The URL to the source image |
-| width |  ``` Required ```  | Width to resize to (in px) |
-| height |  ``` Required ```  | Height to resize to (in px) |
+| width |  ``` Required ```  | The width to resize to (in px) while preserving aspect ratio |
+| height |  ``` Required ```  | The height to resize to (in px) while preserving aspect ratio |
 | format |  ``` Optional ```  ``` DefaultValue ```  | The output image format, can be either png or jpg |
 
 
@@ -150,8 +151,8 @@ void imageResizeAsync(
 
 ```java
 String imageUrl = "image-url";
-int width = 57;
-int height = 57;
+int width = 72;
+int height = 72;
 String format = "png";
 // Invoking the API call with sample inputs
 imaging.imageResizeAsync(imageUrl, width, height, format, new APICallBack<InputStream>() {
@@ -188,16 +189,16 @@ void qRCodeAsync(
 | content |  ``` Required ```  | The content to encode into the QR code (e.g. a URL or a phone number) |
 | width |  ``` Optional ```  ``` DefaultValue ```  | The width of the QR code (in px) |
 | height |  ``` Optional ```  ``` DefaultValue ```  | The height of the QR code (in px) |
-| fgColor |  ``` Optional ```  ``` DefaultValue ```  | The QR code foreground color (you should always use a dark color for this) |
-| bgColor |  ``` Optional ```  ``` DefaultValue ```  | The QR code background color (you should always use a light color for this) |
+| fgColor |  ``` Optional ```  ``` DefaultValue ```  | The QR code foreground color |
+| bgColor |  ``` Optional ```  ``` DefaultValue ```  | The QR code background color |
 
 
 #### Example Usage
 
 ```java
 String content = "content";
-Integer width = 250;
-Integer height = 250;
+Integer width = 256;
+Integer height = 256;
 String fgColor = "#000000";
 String bgColor = "#ffffff";
 // Invoking the API call with sample inputs
@@ -238,9 +239,9 @@ void imageWatermarkAsync(
 | watermarkUrl |  ``` Required ```  | The URL to the watermark image |
 | opacity |  ``` Optional ```  ``` DefaultValue ```  | The opacity of the watermark (0 to 100) |
 | format |  ``` Optional ```  ``` DefaultValue ```  | The output image format, can be either png or jpg |
-| position |  ``` Optional ```  ``` DefaultValue ```  | The position of the watermark image, possible values are: center, top-left, top-center, top-right, bottom-left, bottom-center, bottom-right |
-| width |  ``` Optional ```  | If set resize the resulting image to this width (preserving aspect ratio) |
-| height |  ``` Optional ```  | If set resize the resulting image to this height (preserving aspect ratio) |
+| position |  ``` Optional ```  ``` DefaultValue ```  | The position of the watermark image, possible values are:<br/>center, top-left, top-center, top-right, bottom-left, bottom-center, bottom-right |
+| width |  ``` Optional ```  | If set resize the resulting image to this width (in px) while preserving aspect ratio |
+| height |  ``` Optional ```  | If set resize the resulting image to this height (in px) while preserving aspect ratio |
 
 
 #### Example Usage
@@ -251,8 +252,8 @@ String watermarkUrl = "watermark-url";
 Integer opacity = 50;
 String format = "png";
 String position = "center";
-Integer width = 57;
-Integer height = 57;
+Integer width = 164;
+Integer height = 164;
 // Invoking the API call with sample inputs
 imaging.imageWatermarkAsync(imageUrl, watermarkUrl, opacity, format, position, width, height, new APICallBack<InputStream>() {
     public void onSuccess(HttpContext context, InputStream response) {
@@ -268,7 +269,7 @@ imaging.imageWatermarkAsync(imageUrl, watermarkUrl, opacity, format, position, w
 
 ### <a name="h_tml5_render_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Imaging.hTML5RenderAsync") hTML5RenderAsync
 
-> Render HTML and HTML5 content to PDF, JPG or PNG
+> Render HTML content to PDF, JPG or PNG. See: https://www.neutrinoapi.com/api/html5-render/
 
 
 ```java
@@ -283,7 +284,7 @@ void hTML5RenderAsync(
         final Integer marginTop,
         final Integer marginBottom,
         final Boolean landscape,
-        final Double zoom,
+        final Integer zoom,
         final Boolean grayscale,
         final Boolean mediaPrint,
         final Boolean mediaQueries,
@@ -297,7 +298,7 @@ void hTML5RenderAsync(
         final String headerTextRight,
         final Integer headerSize,
         final String headerFont,
-        final String headerFontSize,
+        final Integer headerFontSize,
         final Boolean headerLine,
         final String footerTextLeft,
         final String footerTextCenter,
@@ -333,7 +334,7 @@ void hTML5RenderAsync(
 | css |  ``` Optional ```  | Inject custom CSS into the HTML. e.g. 'body { background-color: red;}' |
 | imageWidth |  ``` Optional ```  ``` DefaultValue ```  | If rendering to an image format (PNG or JPG) use this image width (in pixels) |
 | imageHeight |  ``` Optional ```  | If rendering to an image format (PNG or JPG) use this image height (in pixels). The default is automatic which dynamically sets the image height based on the content |
-| renderDelay |  ``` Optional ```  | Number of milliseconds to wait before rendering the page (can be useful for pages with animations etc) |
+| renderDelay |  ``` Optional ```  ``` DefaultValue ```  | Number of milliseconds to wait before rendering the page (can be useful for pages with animations etc) |
 | headerTextLeft |  ``` Optional ```  | Text to print to the left-hand side header of each page. e.g. 'My header - Page {page_number} of {total_pages}' |
 | headerTextCenter |  ``` Optional ```  | Text to print to the center header of each page |
 | headerTextRight |  ``` Optional ```  | Text to print to the right-hand side header of each page |
@@ -365,21 +366,21 @@ Integer marginRight = 0;
 Integer marginTop = 0;
 Integer marginBottom = 0;
 Boolean landscape = false;
-Double zoom = 1.0;
+Integer zoom = 1.0;
 Boolean grayscale = false;
 Boolean mediaPrint = false;
 Boolean mediaQueries = false;
 Boolean forms = false;
 String css = "css";
 Integer imageWidth = 1024;
-Integer imageHeight = 57;
-Integer renderDelay = 57;
+Integer imageHeight = 164;
+Integer renderDelay = 0;
 String headerTextLeft = "header-text-left";
 String headerTextCenter = "header-text-center";
 String headerTextRight = "header-text-right";
 Integer headerSize = 9;
 String headerFont = "Courier";
-String headerFontSize = "11";
+Integer headerFontSize = 11;
 Boolean headerLine = false;
 String footerTextLeft = "footer-text-left";
 String footerTextCenter = "footer-text-center";
@@ -388,8 +389,8 @@ Integer footerSize = 9;
 String footerFont = "Courier";
 Integer footerFontSize = 11;
 Boolean footerLine = false;
-Integer pageWidth = 57;
-Integer pageHeight = 57;
+Integer pageWidth = 164;
+Integer pageHeight = 164;
 // Invoking the API call with sample inputs
 imaging.hTML5RenderAsync(content, format, pageSize, title, margin, marginLeft, marginRight, marginTop, marginBottom, landscape, zoom, grayscale, mediaPrint, mediaQueries, forms, css, imageWidth, imageHeight, renderDelay, headerTextLeft, headerTextCenter, headerTextRight, headerSize, headerFont, headerFontSize, headerLine, footerTextLeft, footerTextCenter, footerTextRight, footerSize, footerFont, footerFontSize, footerLine, pageWidth, pageHeight, new APICallBack<InputStream>() {
     public void onSuccess(HttpContext context, InputStream response) {
@@ -417,7 +418,7 @@ Telephony telephony = client.getTelephony();
 
 ### <a name="h_lr_lookup_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Telephony.hLRLookupAsync") hLRLookupAsync
 
-> Connect to the global mobile cellular network and retrieve the status of a mobile device
+> Connect to the global mobile cellular network and retrieve the status of a mobile device. See: https://www.neutrinoapi.com/api/hlr-lookup/
 
 
 ```java
@@ -432,7 +433,7 @@ void hLRLookupAsync(
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | number |  ``` Required ```  | A phone number |
-| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign) |
+| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign) |
 
 
 #### Example Usage
@@ -455,7 +456,7 @@ telephony.hLRLookupAsync(number, countryCode, new APICallBack<HLRLookupResponse>
 
 ### <a name="phone_playback_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Telephony.phonePlaybackAsync") phonePlaybackAsync
 
-> Make an automated call to any valid phone number and playback an audio message
+> Make an automated call to any valid phone number and playback an audio message. See: https://www.neutrinoapi.com/api/phone-playback/
 
 
 ```java
@@ -469,8 +470,8 @@ void phonePlaybackAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| number |  ``` Required ```  | The phone number to call. Must be valid international format |
-| audioUrl |  ``` Required ```  | A URL to a valid audio file. Accepted audio formats are: MP3, WAV, OGG |
+| number |  ``` Required ```  | The phone number to call. Must be in valid international format |
+| audioUrl |  ``` Required ```  | A URL to a valid audio file. Accepted audio formats are:<ul><li>MP3</li><li>WAV</li><li>OGG</ul></ul>You can use the following MP3 URL for testing:<br/>https://www.neutrinoapi.com/test-files/test1.mp3 |
 
 
 #### Example Usage
@@ -493,12 +494,12 @@ telephony.phonePlaybackAsync(number, audioUrl, new APICallBack<PhonePlaybackResp
 
 ### <a name="verify_security_code_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Telephony.verifySecurityCodeAsync") verifySecurityCodeAsync
 
-> Check if a security code from one of the verify APIs is valid
+> Check if a security code from one of the verify APIs is valid. See: https://www.neutrinoapi.com/api/verify-security-code/
 
 
 ```java
 void verifySecurityCodeAsync(
-        final int securityCode,
+        final String securityCode,
         final APICallBack<VerifySecurityCodeResponse> callBack)
 ```
 
@@ -512,7 +513,7 @@ void verifySecurityCodeAsync(
 #### Example Usage
 
 ```java
-int securityCode = 57;
+String securityCode = "security-code";
 // Invoking the API call with sample inputs
 telephony.verifySecurityCodeAsync(securityCode, new APICallBack<VerifySecurityCodeResponse>() {
     public void onSuccess(HttpContext context, VerifySecurityCodeResponse response) {
@@ -528,7 +529,7 @@ telephony.verifySecurityCodeAsync(securityCode, new APICallBack<VerifySecurityCo
 
 ### <a name="s_ms_verify_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Telephony.sMSVerifyAsync") sMSVerifyAsync
 
-> Send a unique security code to any mobile device via SMS
+> Send a unique security code to any mobile device via SMS. See: https://www.neutrinoapi.com/api/sms-verify/
 
 
 ```java
@@ -547,9 +548,9 @@ void sMSVerifyAsync(
 |-----------|------|-------------|
 | number |  ``` Required ```  | The phone number to send a verification code to |
 | codeLength |  ``` Optional ```  ``` DefaultValue ```  | The number of digits to use in the security code (must be between 4 and 12) |
-| securityCode |  ``` Optional ```  | ass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code (only numerical security codes are currently supported) |
-| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign) |
-| languageCode |  ``` Optional ```  ``` DefaultValue ```  | The language to send the verification code in, available languages are: de - German, en - English, es - Spanish, fr - Fench, it - Italian, pt - Portuguese, ru - Russian |
+| securityCode |  ``` Optional ```  | Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code |
+| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign) |
+| languageCode |  ``` Optional ```  ``` DefaultValue ```  | The language to send the verification code in, available languages are:<ul><li>de - German</li><li>en - English</li><li>es - Spanish</li><li>fr - French</li><li>it - Italian</li><li>pt - Portuguese</li><li>ru - Russian</li></ul> |
 
 
 #### Example Usage
@@ -557,7 +558,7 @@ void sMSVerifyAsync(
 ```java
 String number = "number";
 Integer codeLength = 5;
-Integer securityCode = 57;
+Integer securityCode = 164;
 String countryCode = "country-code";
 String languageCode = "en";
 // Invoking the API call with sample inputs
@@ -573,9 +574,50 @@ telephony.sMSVerifyAsync(number, codeLength, securityCode, countryCode, language
 ```
 
 
+### <a name="s_ms_message_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Telephony.sMSMessageAsync") sMSMessageAsync
+
+> Send a free-form message to any mobile device via SMS. See: https://www.neutrinoapi.com/api/sms-message/
+
+
+```java
+void sMSMessageAsync(
+        final String number,
+        final String message,
+        final String countryCode,
+        final APICallBack<SMSMessageResponse> callBack)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| number |  ``` Required ```  | The phone number to send a message to |
+| message |  ``` Required ```  | The SMS message to send. Messages are truncated to a maximum of 150 characters for ASCII content OR 70 characters for UTF content |
+| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign) |
+
+
+#### Example Usage
+
+```java
+String number = "number";
+String message = "message";
+String countryCode = "country-code";
+// Invoking the API call with sample inputs
+telephony.sMSMessageAsync(number, message, countryCode, new APICallBack<SMSMessageResponse>() {
+    public void onSuccess(HttpContext context, SMSMessageResponse response) {
+        // TODO success callback handler
+    }
+    public void onFailure(HttpContext context, Throwable error) {
+        // TODO failure callback handler
+    }
+});
+
+```
+
+
 ### <a name="phone_verify_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Telephony.phoneVerifyAsync") phoneVerifyAsync
 
-> Make an automated call to any valid phone number and playback a unique security code
+> Make an automated call to any valid phone number and playback a unique security code. See: https://www.neutrinoapi.com/api/phone-verify/
 
 
 ```java
@@ -595,10 +637,10 @@ void phoneVerifyAsync(
 |-----------|------|-------------|
 | number |  ``` Required ```  | The phone number to send the verification code to |
 | codeLength |  ``` Optional ```  ``` DefaultValue ```  | The number of digits to use in the security code (between 4 and 12) |
-| securityCode |  ``` Optional ```  | Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code (only numerical security codes are currently supported) |
+| securityCode |  ``` Optional ```  | Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code |
 | playbackDelay |  ``` Optional ```  ``` DefaultValue ```  | The delay in milliseconds between the playback of each security code |
-| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign) |
-| languageCode |  ``` Optional ```  ``` DefaultValue ```  | The language to playback the verification code in, available languages are: de - German, en - English, es - Spanish, fr - Fench, it - Italian, pt - Portuguese, ru - Russian |
+| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign) |
+| languageCode |  ``` Optional ```  ``` DefaultValue ```  | The language to playback the verification code in, available languages are:<ul><li>de - German</li><li>en - English</li><li>es - Spanish</li><li>fr - French</li><li>it - Italian</li><li>pt - Portuguese</li><li>ru - Russian</li></ul> |
 
 
 #### Example Usage
@@ -606,7 +648,7 @@ void phoneVerifyAsync(
 ```java
 String number = "number";
 Integer codeLength = 6;
-Integer securityCode = 57;
+Integer securityCode = 164;
 Integer playbackDelay = 800;
 String countryCode = "country-code";
 String languageCode = "en";
@@ -637,7 +679,7 @@ DataTools dataTools = client.getDataTools();
 
 ### <a name="email_validate_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.DataTools.emailValidateAsync") emailValidateAsync
 
-> Parse, validate and clean an email address
+> Parse, validate and clean an email address. See: https://www.neutrinoapi.com/api/email-validate/
 
 
 ```java
@@ -651,7 +693,7 @@ void emailValidateAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| email |  ``` Required ```  | The email address |
+| email |  ``` Required ```  | An email address |
 | fixTypos |  ``` Optional ```  ``` DefaultValue ```  | Automatically attempt to fix typos in the address |
 
 
@@ -675,7 +717,7 @@ dataTools.emailValidateAsync(email, fixTypos, new APICallBack<EmailValidateRespo
 
 ### <a name="bad_word_filter_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.DataTools.badWordFilterAsync") badWordFilterAsync
 
-> Detect bad words, swear words and profanity in a given text
+> Detect bad words, swear words and profanity in a given text. See: https://www.neutrinoapi.com/api/bad-word-filter/
 
 
 ```java
@@ -689,7 +731,7 @@ void badWordFilterAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| content |  ``` Required ```  | The text content to check. This can be either a URL to load content from or an actual content string |
+| content |  ``` Required ```  | The content to scan. This can be either a URL to load content from or an actual content string |
 | censorCharacter |  ``` Optional ```  | The character to use to censor out the bad words found |
 
 
@@ -713,7 +755,7 @@ dataTools.badWordFilterAsync(content, censorCharacter, new APICallBack<BadWordFi
 
 ### <a name="convert_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.DataTools.convertAsync") convertAsync
 
-> A powerful unit and currency conversion tool
+> A powerful unit conversion tool. See: https://www.neutrinoapi.com/api/convert/
 
 
 ```java
@@ -728,9 +770,9 @@ void convertAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| fromValue |  ``` Required ```  | The value to convert from |
-| fromType |  ``` Required ```  | The type of the value to convert from |
-| toType |  ``` Required ```  | The type to convert to |
+| fromValue |  ``` Required ```  | The value to convert from (e.g. 10.95) |
+| fromType |  ``` Required ```  | The type of the value to convert from (e.g. USD) |
+| toType |  ``` Required ```  | The type to convert to (e.g. EUR) |
 
 
 #### Example Usage
@@ -754,7 +796,7 @@ dataTools.convertAsync(fromValue, fromType, toType, new APICallBack<ConvertRespo
 
 ### <a name="phone_validate_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.DataTools.phoneValidateAsync") phoneValidateAsync
 
-> Parse, validate and get location information about a phone number
+> Parse, validate and get location information about a phone number. See: https://www.neutrinoapi.com/api/phone-validate/
 
 
 ```java
@@ -769,8 +811,8 @@ void phoneValidateAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| number |  ``` Required ```  | The phone number |
-| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign) |
+| number |  ``` Required ```  | A phone number. This can be in international format (E.164) or local format. If passing local format you should use the 'country-code' or 'ip' options as well |
+| countryCode |  ``` Optional ```  | ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign) |
 | ip |  ``` Optional ```  | Pass in a users IP address and we will assume numbers are based in the country of the IP address |
 
 
@@ -795,7 +837,7 @@ dataTools.phoneValidateAsync(number, countryCode, ip, new APICallBack<PhoneValid
 
 ### <a name="user_agent_info_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.DataTools.userAgentInfoAsync") userAgentInfoAsync
 
-> Parse, validate and get detailed user-agent information from a user agent string
+> Parse, validate and get detailed user-agent information from a user agent string. See: https://www.neutrinoapi.com/api/user-agent-info/
 
 
 ```java
@@ -808,7 +850,7 @@ void userAgentInfoAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| userAgent |  ``` Required ```  | A user-agent string |
+| userAgent |  ``` Required ```  | A user agent string |
 
 
 #### Example Usage
@@ -818,88 +860,6 @@ String userAgent = "user-agent";
 // Invoking the API call with sample inputs
 dataTools.userAgentInfoAsync(userAgent, new APICallBack<UserAgentInfoResponse>() {
     public void onSuccess(HttpContext context, UserAgentInfoResponse response) {
-        // TODO success callback handler
-    }
-    public void onFailure(HttpContext context, Throwable error) {
-        // TODO failure callback handler
-    }
-});
-
-```
-
-
-### <a name="h_tml_clean_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.DataTools.hTMLCleanAsync") hTMLCleanAsync
-
-> Clean and sanitize untrusted HTML
-
-
-```java
-void hTMLCleanAsync(
-        final String content,
-        final String outputType,
-        final APICallBack<InputStream> callBack)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| content |  ``` Required ```  | The HTML content. This can be either a URL to load HTML from or an actual HTML content string |
-| outputType |  ``` Required ```  | The level of sanitization, possible values are: plain-text, simple-text, basic-html, basic-html-with-images, advanced-html |
-
-
-#### Example Usage
-
-```java
-String content = "content";
-String outputType = "output-type";
-// Invoking the API call with sample inputs
-dataTools.hTMLCleanAsync(content, outputType, new APICallBack<InputStream>() {
-    public void onSuccess(HttpContext context, InputStream response) {
-        // TODO success callback handler
-    }
-    public void onFailure(HttpContext context, Throwable error) {
-        // TODO failure callback handler
-    }
-});
-
-```
-
-
-### <a name="h_tml_extract_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.DataTools.hTMLExtractAsync") hTMLExtractAsync
-
-> Extract specific HTML tag contents or attributes from complex HTML or XHTML content
-
-
-```java
-void hTMLExtractAsync(
-        final String content,
-        final String tag,
-        final String attribute,
-        final String baseUrl,
-        final APICallBack<HTMLExtractResponse> callBack)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| content |  ``` Required ```  | The HTML content. This can be either a URL to load HTML from or an actual HTML content string |
-| tag |  ``` Required ```  | The HTML tag(s) to extract data from. This can just be a simple tag name like 'img' OR a CSS/jQuery style selector |
-| attribute |  ``` Optional ```  | If set, then extract data from the specified tag attribute. If not set, then data will be extracted from the tags inner content |
-| baseUrl |  ``` Optional ```  | The base URL to replace into realive links |
-
-
-#### Example Usage
-
-```java
-String content = "content";
-String tag = "tag";
-String attribute = "attribute";
-String baseUrl = "base-url";
-// Invoking the API call with sample inputs
-dataTools.hTMLExtractAsync(content, tag, attribute, baseUrl, new APICallBack<HTMLExtractResponse>() {
-    public void onSuccess(HttpContext context, HTMLExtractResponse response) {
         // TODO success callback handler
     }
     public void onFailure(HttpContext context, Throwable error) {
@@ -924,12 +884,13 @@ SecurityAndNetworking securityAndNetworking = client.getSecurityAndNetworking();
 
 ### <a name="host_reputation_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.SecurityAndNetworking.hostReputationAsync") hostReputationAsync
 
-> Check the reputation of an IP address or domain against a comprehensive list of blacklists and blocklists (DNSBLs)
+> Check the reputation of an IP address, domain name, FQDN or URL against a comprehensive list of blacklists and blocklists. See: https://www.neutrinoapi.com/api/host-reputation/
 
 
 ```java
 void hostReputationAsync(
         final String host,
+        final Integer listRating,
         final APICallBack<HostReputationResponse> callBack)
 ```
 
@@ -937,54 +898,18 @@ void hostReputationAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| host |  ``` Required ```  | An IPv4 address or a domain name. If you supply a domain name it will be checked against the URI DNSBL list |
+| host |  ``` Required ```  | An IP address, domain name, FQDN or URL.<br/>If you supply a domain/URL it will be checked against the URI DNSBL lists |
+| listRating |  ``` Optional ```  ``` DefaultValue ```  | Only check lists with this rating or better |
 
 
 #### Example Usage
 
 ```java
 String host = "host";
+Integer listRating = 3;
 // Invoking the API call with sample inputs
-securityAndNetworking.hostReputationAsync(host, new APICallBack<HostReputationResponse>() {
+securityAndNetworking.hostReputationAsync(host, listRating, new APICallBack<HostReputationResponse>() {
     public void onSuccess(HttpContext context, HostReputationResponse response) {
-        // TODO success callback handler
-    }
-    public void onFailure(HttpContext context, Throwable error) {
-        // TODO failure callback handler
-    }
-});
-
-```
-
-
-### <a name="u_rl_info_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.SecurityAndNetworking.uRLInfoAsync") uRLInfoAsync
-
-> Parse, analyze and retrieve content from the supplied URL
-
-
-```java
-void uRLInfoAsync(
-        final String url,
-        final boolean fetchContent,
-        final APICallBack<URLInfoResponse> callBack)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| url |  ``` Required ```  | The URL to process |
-| fetchContent |  ``` Required ```  | If this URL responds with html, text, json or xml then return the response. This option is useful if you want to perform further processing on the URL content |
-
-
-#### Example Usage
-
-```java
-String url = "url";
-boolean fetchContent = false;
-// Invoking the API call with sample inputs
-securityAndNetworking.uRLInfoAsync(url, fetchContent, new APICallBack<URLInfoResponse>() {
-    public void onSuccess(HttpContext context, URLInfoResponse response) {
         // TODO success callback handler
     }
     public void onFailure(HttpContext context, Throwable error) {
@@ -997,7 +922,7 @@ securityAndNetworking.uRLInfoAsync(url, fetchContent, new APICallBack<URLInfoRes
 
 ### <a name="i_p_probe_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.SecurityAndNetworking.iPProbeAsync") iPProbeAsync
 
-> Analyze and extract provider information for an IP address
+> Analyze and extract provider information for an IP address. See: https://www.neutrinoapi.com/api/ip-probe/
 
 
 ```java
@@ -1032,7 +957,7 @@ securityAndNetworking.iPProbeAsync(ip, new APICallBack<IPProbeResponse>() {
 
 ### <a name="i_p_blocklist_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.SecurityAndNetworking.iPBlocklistAsync") iPBlocklistAsync
 
-> The IP Blocklist API will detect potentially malicious or dangerous IP addresses
+> The IP Blocklist API will detect potentially malicious or dangerous IP addresses. See: https://www.neutrinoapi.com/api/ip-blocklist/
 
 
 ```java
@@ -1045,7 +970,7 @@ void iPBlocklistAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| ip |  ``` Required ```  | An IPv4 address |
+| ip |  ``` Required ```  | An IPv4 or IPv6 address |
 
 
 #### Example Usage
@@ -1067,7 +992,7 @@ securityAndNetworking.iPBlocklistAsync(ip, new APICallBack<IPBlocklistResponse>(
 
 ### <a name="email_verify_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.SecurityAndNetworking.emailVerifyAsync") emailVerifyAsync
 
-> SMTP based email address verification
+> SMTP based email address verification. See: https://www.neutrinoapi.com/api/email-verify/
 
 
 ```java
@@ -1082,7 +1007,7 @@ void emailVerifyAsync(
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | email |  ``` Required ```  | An email address |
-| fixTypos |  ``` Optional ```  | Automatically attempt to fix typos in the address |
+| fixTypos |  ``` Optional ```  ``` DefaultValue ```  | Automatically attempt to fix typos in the address |
 
 
 #### Example Usage
@@ -1117,13 +1042,13 @@ Geolocation geolocation = client.getGeolocation();
 
 ### <a name="geocode_reverse_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Geolocation.geocodeReverseAsync") geocodeReverseAsync
 
-> Convert a geographic coordinate (latitude and longitude) into a real world address or location.
+> Convert a geographic coordinate (latitude and longitude) into a real world address or location. See: https://www.neutrinoapi.com/api/geocode-reverse/
 
 
 ```java
 void geocodeReverseAsync(
-        final double latitude,
-        final double longitude,
+        final String latitude,
+        final String longitude,
         final String languageCode,
         final APICallBack<GeocodeReverseResponse> callBack)
 ```
@@ -1132,16 +1057,16 @@ void geocodeReverseAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| latitude |  ``` Required ```  | The location latitude |
-| longitude |  ``` Required ```  | The location longitude |
-| languageCode |  ``` Optional ```  ``` DefaultValue ```  | The language to display results in, available languages are: de, en, es, fr, it, pt, ru |
+| latitude |  ``` Required ```  | The location latitude in decimal degrees format |
+| longitude |  ``` Required ```  | The location longitude in decimal degrees format |
+| languageCode |  ``` Optional ```  ``` DefaultValue ```  | The language to display results in, available languages are:<ul><li>de, en, es, fr, it, pt, ru</li></ul> |
 
 
 #### Example Usage
 
 ```java
-double latitude = 57.0396697065046;
-double longitude = 57.0396697065046;
+String latitude = "latitude";
+String longitude = "longitude";
 String languageCode = "en";
 // Invoking the API call with sample inputs
 geolocation.geocodeReverseAsync(latitude, longitude, languageCode, new APICallBack<GeocodeReverseResponse>() {
@@ -1158,7 +1083,7 @@ geolocation.geocodeReverseAsync(latitude, longitude, languageCode, new APICallBa
 
 ### <a name="i_p_info_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Geolocation.iPInfoAsync") iPInfoAsync
 
-> Get location information about an IP address and do reverse DNS (PTR) lookups.
+> Get location information about an IP address and do reverse DNS (PTR) lookups. See: https://www.neutrinoapi.com/api/ip-info/
 
 
 ```java
@@ -1172,7 +1097,7 @@ void iPInfoAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| ip |  ``` Required ```  | The IP address |
+| ip |  ``` Required ```  | IPv4 or IPv6 address |
 | reverseLookup |  ``` Optional ```  ``` DefaultValue ```  | Do a reverse DNS (PTR) lookup. This option can add extra delay to the request so only use it if you need it |
 
 
@@ -1196,7 +1121,7 @@ geolocation.iPInfoAsync(ip, reverseLookup, new APICallBack<IPInfoResponse>() {
 
 ### <a name="geocode_address_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.Geolocation.geocodeAddressAsync") geocodeAddressAsync
 
-> Geocode an address, partial address or the name of a location
+> Geocode an address, partial address or just the name of a place. See: https://www.neutrinoapi.com/api/geocode-address/
 
 
 ```java
@@ -1212,9 +1137,9 @@ void geocodeAddressAsync(
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| address |  ``` Required ```  | The address or partial address to try and locate |
-| countryCode |  ``` Optional ```  | The ISO 2-letter country code to be biased towards (default is no country bias) |
-| languageCode |  ``` Optional ```  ``` DefaultValue ```  | The language to display results in, available languages are: de, en, es, fr, it, pt, ru |
+| address |  ``` Required ```  | The address, partial address or name of a place to try and locate |
+| countryCode |  ``` Optional ```  | The ISO 2-letter country code to be biased towards (the default is no country bias) |
+| languageCode |  ``` Optional ```  ``` DefaultValue ```  | The language to display results in, available languages are:<ul><li>de, en, es, fr, it, pt, ru</li></ul> |
 | fuzzySearch |  ``` Optional ```  ``` DefaultValue ```  | If no matches are found for the given address, start performing a recursive fuzzy search until a geolocation is found. We use a combination of approximate string matching and data cleansing to find possible location matches |
 
 
@@ -1267,7 +1192,7 @@ void bINLookupAsync(
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | binNumber |  ``` Required ```  | The BIN or IIN number (the first 6 digits of a credit card number) |
-| customerIp |  ``` Optional ```  | Pass in a customers remote IP address. The API will then determine the country of the IP address and match it against the BIN country. This feature is designed for fraud prevention and detection checks. |
+| customerIp |  ``` Optional ```  | Pass in the customers IP address and we will return some extra information about them |
 
 
 #### Example Usage
@@ -1278,6 +1203,148 @@ String customerIp = "customer-ip";
 // Invoking the API call with sample inputs
 eCommerce.bINLookupAsync(binNumber, customerIp, new APICallBack<BINLookupResponse>() {
     public void onSuccess(HttpContext context, BINLookupResponse response) {
+        // TODO success callback handler
+    }
+    public void onFailure(HttpContext context, Throwable error) {
+        // TODO failure callback handler
+    }
+});
+
+```
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+## <a name="www"></a>![Class: ](https://apidocs.io/img/class.png "com.neutrinoapi.sdk.controllers.WWW") WWW
+
+### Get singleton instance
+
+The singleton instance of the ``` WWW ``` class can be accessed from the API Client.
+
+```java
+WWW wWW = client.getWWW();
+```
+
+### <a name="u_rl_info_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.WWW.uRLInfoAsync") uRLInfoAsync
+
+> Parse, analyze and retrieve content from the supplied URL. See: https://www.neutrinoapi.com/api/url-info/
+
+
+```java
+void uRLInfoAsync(
+        final String url,
+        final Boolean fetchContent,
+        final APICallBack<URLInfoResponse> callBack)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| url |  ``` Required ```  | The URL to probe |
+| fetchContent |  ``` Optional ```  ``` DefaultValue ```  | If this URL responds with html, text, json or xml then return the response. This option is useful if you want to perform further processing on the URL content (e.g. with the HTML Extract or HTML Clean APIs) |
+
+
+#### Example Usage
+
+```java
+String url = "url";
+Boolean fetchContent = false;
+// Invoking the API call with sample inputs
+wWW.uRLInfoAsync(url, fetchContent, new APICallBack<URLInfoResponse>() {
+    public void onSuccess(HttpContext context, URLInfoResponse response) {
+        // TODO success callback handler
+    }
+    public void onFailure(HttpContext context, Throwable error) {
+        // TODO failure callback handler
+    }
+});
+
+```
+
+
+### <a name="browser_bot_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.WWW.browserBotAsync") browserBotAsync
+
+> Browser bot can extract content, interact with keyboard and mouse events, and execute JavaScript on a website. See: https://www.neutrinoapi.com/api/browser-bot/
+
+
+```java
+void browserBotAsync(
+        final String url,
+        final Integer timeout,
+        final Integer delay,
+        final String selector,
+        final List<String> exec,
+        final String userAgent,
+        final Boolean ignoreCertificateErrors,
+        final APICallBack<BrowserBotResponse> callBack)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| url |  ``` Required ```  | The URL to load |
+| timeout |  ``` Optional ```  ``` DefaultValue ```  | Timeout in seconds. Give up if still trying to load the page after this number of seconds |
+| delay |  ``` Optional ```  ``` DefaultValue ```  | Delay in seconds to wait before executing any selectors or JavaScript |
+| selector |  ``` Optional ```  | Extract content from the page DOM using this selector. Commonly known as a CSS selector, you can find a good reference <a href="https://www.w3schools.com/cssref/css_selectors.asp" target="_blank">here</a> |
+| exec |  ``` Optional ```  ``` Collection ```  ``` DefaultValue ```  | Execute JavaScript on the page. Each array element should contain a valid JavaScript statement in string form. If a statement returns any kind of value it will be returned in the 'exec-results' response.<br/><br/>For your convenience you can also use the following special shortcut functions:<br/><div style='padding-left:32px; font-family:inherit; font-size:inherit;'>sleep(seconds); Just wait/sleep for the specified number of seconds.<br/>click('selector'); Click on the first element matching the given selector.<br/>focus('selector'); Focus on the first element matching the given selector.<br/>keys('characters'); Send the specified keyboard characters. Use click() or focus() first to send keys to a specific element.<br/>enter(); Send the Enter key.<br/>tab(); Send the Tab key.<br/></div><br/>Example:<br/><div style='padding-left:32px; font-family:inherit; font-size:inherit;'>[ "click('#button-id')", "sleep(1)", "click('.field-class')", "keys('1234')", "enter()" ]</div> |
+| userAgent |  ``` Optional ```  | Override the browsers default user-agent string with this one |
+| ignoreCertificateErrors |  ``` Optional ```  ``` DefaultValue ```  | Ignore any TLS/SSL certificate errors and load the page anyway |
+
+
+#### Example Usage
+
+```java
+String url = "url";
+Integer timeout = 30;
+Integer delay = 2;
+String selector = "selector";
+String execValue = "[]";
+List<String> exec = mapper.readValue(execValue,new TypeReference<List<String>> (){});
+String userAgent = "user-agent";
+Boolean ignoreCertificateErrors = false;
+// Invoking the API call with sample inputs
+wWW.browserBotAsync(url, timeout, delay, selector, exec, userAgent, ignoreCertificateErrors, new APICallBack<BrowserBotResponse>() {
+    public void onSuccess(HttpContext context, BrowserBotResponse response) {
+        // TODO success callback handler
+    }
+    public void onFailure(HttpContext context, Throwable error) {
+        // TODO failure callback handler
+    }
+});
+
+```
+
+
+### <a name="h_tml_clean_async"></a>![Method: ](https://apidocs.io/img/method.png "com.neutrinoapi.sdk.controllers.WWW.hTMLCleanAsync") hTMLCleanAsync
+
+> Clean and sanitize untrusted HTML. See: https://www.neutrinoapi.com/api/html-clean/
+
+
+```java
+void hTMLCleanAsync(
+        final String content,
+        final String outputType,
+        final APICallBack<InputStream> callBack)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| content |  ``` Required ```  | The HTML content. This can be either a URL to load HTML from or an actual HTML content string |
+| outputType |  ``` Required ```  | The level of sanitization, possible values are:<br/><b>plain-text</b>: reduce the content to plain text only (no HTML tags at all)<br/><br/><b>simple-text</b>: allow only very basic text formatting tags like b, em, i, strong, u<br/><br/><b>basic-html</b>: allow advanced text formatting and hyper links<br/><br/><b>basic-html-with-images</b>: same as basic html but also allows image tags<br/><br/><b>advanced-html</b>: same as basic html with images but also allows many more common HTML tags like table, ul, dl, pre<br/> |
+
+
+#### Example Usage
+
+```java
+String content = "content";
+String outputType = "output-type";
+// Invoking the API call with sample inputs
+wWW.hTMLCleanAsync(content, outputType, new APICallBack<InputStream>() {
+    public void onSuccess(HttpContext context, InputStream response) {
         // TODO success callback handler
     }
     public void onFailure(HttpContext context, Throwable error) {

@@ -11,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class BadWordFilterResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5012000721558972440L;
+    private static final long serialVersionUID = 6480042614706018237L;
     private List<String> badWordsList;
     private int badWordsTotal;
     private String censoredContent;
     private boolean isBad;
     /** GETTER
-     * Array of the bad words found
+     * An array of the bad words found
      */
     @JsonGetter("badWordsList")
     public List<String> getBadWordsList ( ) { 
@@ -25,7 +25,7 @@ public class BadWordFilterResponse
     }
     
     /** SETTER
-     * Array of the bad words found
+     * An array of the bad words found
      */
     @JsonSetter("badWordsList")
     public void setBadWordsList (List<String> value) { 
@@ -81,4 +81,3 @@ public class BadWordFilterResponse
     }
  
 }
- 

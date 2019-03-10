@@ -19,7 +19,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * Is this a valid phone number (mobile or otherwise)
+     * True if this a valid phone number
      */
     public HLRLookupResponseBuilder numberValid(boolean numberValid) {
         hLRLookupResponse.setNumberValid(numberValid);
@@ -27,15 +27,15 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * Numbers international calling code
+     * The numbers international calling code
      */
-    public HLRLookupResponseBuilder internationalCallingCode(String internationalCallingCode) {
+    public HLRLookupResponseBuilder internationalCallingCode(int internationalCallingCode) {
         hLRLookupResponse.setInternationalCallingCode(internationalCallingCode);
         return this;
     }
 
     /**
-     * The mobile MNC number (only set if HLR lookup valid)
+     * The mobile MNC number
      */
     public HLRLookupResponseBuilder mnc(String mnc) {
         hLRLookupResponse.setMnc(mnc);
@@ -43,7 +43,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The number type, possible values are: mobile, fixed-line, premium-rate, toll-free, voip, unknown
+     * The number type, possible values are:<br/><ul><li>mobile</li><li>fixed-line</li><li>premium-rate</li><li>toll-free</li><li>voip</li><li>unknown</li></ul>
      */
     public HLRLookupResponseBuilder numberType(String numberType) {
         hLRLookupResponse.setNumberType(numberType);
@@ -59,7 +59,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The HLR lookup status. See API docs for specific status details
+     * The HLR lookup status, possible values are:<br/><ul><li>ok - the HLR lookup was successful and the device is connected</li><li>absent - the number was once registered but the device has been switched off or out of network range for some time</li><li>unknown - the number is not known by the mobile network</li><li>invalid  - the number is not a valid mobile MSISDN number</li><li>fixed-line - the number is a registered fixed-line not mobile</li><li>voip - the number has been detected as a VOIP line</li><li>failed - the HLR lookup has failed, we could not determine the real status of this number</li></ul>
      */
     public HLRLookupResponseBuilder hlrStatus(String hlrStatus) {
         hLRLookupResponse.setHlrStatus(hlrStatus);
@@ -67,7 +67,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * If the number has been ported, the ported to mobile carrier name (only set if HLR lookup valid)
+     * If the number has been ported, the ported to carrier name
      */
     public HLRLookupResponseBuilder portedNetwork(String portedNetwork) {
         hLRLookupResponse.setPortedNetwork(portedNetwork);
@@ -75,7 +75,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The mobile IMSI number (only set if HLR lookup valid)
+     * The mobile IMSI number
      */
     public HLRLookupResponseBuilder imsi(String imsi) {
         hLRLookupResponse.setImsi(imsi);
@@ -83,7 +83,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The mobile MCC number (only set if HLR lookup valid)
+     * The mobile MCC number
      */
     public HLRLookupResponseBuilder mcc(String mcc) {
         hLRLookupResponse.setMcc(mcc);
@@ -91,7 +91,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * Number represented in international format
+     * The number represented in full international format
      */
     public HLRLookupResponseBuilder internationalNumber(String internationalNumber) {
         hLRLookupResponse.setInternationalNumber(internationalNumber);
@@ -99,7 +99,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * Number represented in local format
+     * The number represented in local dialing format
      */
     public HLRLookupResponseBuilder localNumber(String localNumber) {
         hLRLookupResponse.setLocalNumber(localNumber);
@@ -107,7 +107,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * Number location ISO 2-letter country code
+     * The number location as an ISO 2-letter country code
      */
     public HLRLookupResponseBuilder countryCode(String countryCode) {
         hLRLookupResponse.setCountryCode(countryCode);
@@ -123,7 +123,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The mobile MSIN number (only set if HLR lookup valid)
+     * The mobile MSIN number
      */
     public HLRLookupResponseBuilder msin(String msin) {
         hLRLookupResponse.setMsin(msin);
@@ -131,7 +131,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * Number location (could be a city, region or country)
+     * The number location. Could be a city, region or country depending on the type of number
      */
     public HLRLookupResponseBuilder location(String location) {
         hLRLookupResponse.setLocation(location);
@@ -139,7 +139,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The origin mobile carrier name (only set if HLR lookup valid)
+     * The origin mobile carrier name
      */
     public HLRLookupResponseBuilder originNetwork(String originNetwork) {
         hLRLookupResponse.setOriginNetwork(originNetwork);
@@ -147,7 +147,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * Is this a mobile number
+     * True if this is a mobile number (only true with 100% certainty, if the number type is unknown this value will be false)
      */
     public HLRLookupResponseBuilder isMobile(boolean isMobile) {
         hLRLookupResponse.setIsMobile(isMobile);
@@ -167,6 +167,30 @@ public class HLRLookupResponseBuilder {
      */
     public HLRLookupResponseBuilder country(String country) {
         hLRLookupResponse.setCountry(country);
+        return this;
+    }
+
+    /**
+     * The number location as an ISO 3-letter country code
+     */
+    public HLRLookupResponseBuilder countryCode3(String countryCode3) {
+        hLRLookupResponse.setCountryCode3(countryCode3);
+        return this;
+    }
+
+    /**
+     * ISO 4217 currency code associated with the country
+     */
+    public HLRLookupResponseBuilder currencyCode(String currencyCode) {
+        hLRLookupResponse.setCurrencyCode(currencyCode);
+        return this;
+    }
+
+    /**
+     * If the number is currently roaming, the ISO 2-letter country code of the roaming in country
+     */
+    public HLRLookupResponseBuilder roamingCountryCode(String roamingCountryCode) {
+        hLRLookupResponse.setRoamingCountryCode(roamingCountryCode);
         return this;
     }
     /**

@@ -19,7 +19,7 @@ public class SMSVerifyResponseBuilder {
     }
 
     /**
-     * Is this a valid phone number
+     * True if this a valid phone number
      */
     public SMSVerifyResponseBuilder numberValid(boolean numberValid) {
         sMSVerifyResponse.setNumberValid(numberValid);
@@ -27,7 +27,7 @@ public class SMSVerifyResponseBuilder {
     }
 
     /**
-     * The security code generated, you can save this code to perform your own verification or you can use the Verify Security Code API
+     * The security code generated, you can save this code to perform your own verification or you can use the <a href='https://www.neutrinoapi.com/api/verify-security-code/'>Verify Security Code API</a>
      */
     public SMSVerifyResponseBuilder securityCode(String securityCode) {
         sMSVerifyResponse.setSecurityCode(securityCode);

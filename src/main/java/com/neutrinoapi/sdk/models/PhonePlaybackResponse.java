@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class PhonePlaybackResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4706016657647219647L;
+    private static final long serialVersionUID = -1708508275636761100L;
     private boolean calling;
     private boolean numberValid;
     /** GETTER
@@ -31,20 +31,19 @@ public class PhonePlaybackResponse
     }
  
     /** GETTER
-     * Is this a valid phone number
+     * True if this a valid phone number
      */
-    @JsonGetter("number-valid")
+    @JsonGetter("numberValid")
     public boolean getNumberValid ( ) { 
         return this.numberValid;
     }
     
     /** SETTER
-     * Is this a valid phone number
+     * True if this a valid phone number
      */
-    @JsonSetter("number-valid")
+    @JsonSetter("numberValid")
     public void setNumberValid (boolean value) { 
         this.numberValid = value;
     }
  
 }
- 

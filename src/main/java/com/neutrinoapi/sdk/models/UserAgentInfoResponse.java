@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class UserAgentInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5594040192675267460L;
+    private static final long serialVersionUID = 3122395078611339799L;
     private int mobileScreenWidth;
     private String mobileBrand;
     private String mobileModel;
@@ -30,7 +30,7 @@ public class UserAgentInfoResponse
     private String engine;
     private String engineVersion;
     /** GETTER
-     * Mobile device screen width (in px)
+     * The estimated mobile device screen width in CSS 'px'
      */
     @JsonGetter("mobileScreenWidth")
     public int getMobileScreenWidth ( ) { 
@@ -38,7 +38,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Mobile device screen width (in px)
+     * The estimated mobile device screen width in CSS 'px'
      */
     @JsonSetter("mobileScreenWidth")
     public void setMobileScreenWidth (int value) { 
@@ -46,7 +46,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * Mobile device brand
+     * The mobile device brand
      */
     @JsonGetter("mobileBrand")
     public String getMobileBrand ( ) { 
@@ -54,7 +54,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Mobile device brand
+     * The mobile device brand
      */
     @JsonSetter("mobileBrand")
     public void setMobileBrand (String value) { 
@@ -62,7 +62,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * Mobile device model
+     * The mobile device model
      */
     @JsonGetter("mobileModel")
     public String getMobileModel ( ) { 
@@ -70,7 +70,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Mobile device model
+     * The mobile device model
      */
     @JsonSetter("mobileModel")
     public void setMobileModel (String value) { 
@@ -78,7 +78,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * Producer or manufacturer
+     * The producer or manufacturer of the user agent
      */
     @JsonGetter("producer")
     public String getProducer ( ) { 
@@ -86,7 +86,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Producer or manufacturer
+     * The producer or manufacturer of the user agent
      */
     @JsonSetter("producer")
     public void setProducer (String value) { 
@@ -94,7 +94,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * Browser software name
+     * The browser software name
      */
     @JsonGetter("browserName")
     public String getBrowserName ( ) { 
@@ -102,7 +102,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Browser software name
+     * The browser software name
      */
     @JsonSetter("browserName")
     public void setBrowserName (String value) { 
@@ -110,7 +110,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * Mobile device screen height (in px)
+     * The estimated mobile device screen height in CSS 'px'
      */
     @JsonGetter("mobileScreenHeight")
     public int getMobileScreenHeight ( ) { 
@@ -118,7 +118,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Mobile device screen height (in px)
+     * The estimated mobile device screen height in CSS 'px'
      */
     @JsonSetter("mobileScreenHeight")
     public void setMobileScreenHeight (int value) { 
@@ -126,7 +126,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * True if this is a mobile user-agent
+     * True if this is a mobile user agent
      */
     @JsonGetter("isMobile")
     public boolean getIsMobile ( ) { 
@@ -134,7 +134,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * True if this is a mobile user-agent
+     * True if this is a mobile user agent
      */
     @JsonSetter("isMobile")
     public void setIsMobile (boolean value) { 
@@ -142,7 +142,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * The user-agent type, possible values are: desktop-browser, email-client, feed-reader, software-library, media-player, mobile-browser, robot, unknown
+     * The user agent type, possible values are:<br/><ul><li>desktop-browser</li><li>mobile-browser</li><li>email-client</li><li>feed-reader</li><li>software-library</li><li>media-player (includes smart TVs)</li><li>robot</li><li>unknown</li></ul>
      */
     @JsonGetter("type")
     public String getType ( ) { 
@@ -150,7 +150,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * The user-agent type, possible values are: desktop-browser, email-client, feed-reader, software-library, media-player, mobile-browser, robot, unknown
+     * The user agent type, possible values are:<br/><ul><li>desktop-browser</li><li>mobile-browser</li><li>email-client</li><li>feed-reader</li><li>software-library</li><li>media-player (includes smart TVs)</li><li>robot</li><li>unknown</li></ul>
      */
     @JsonSetter("type")
     public void setType (String value) { 
@@ -158,7 +158,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * Software version
+     * The browser software version
      */
     @JsonGetter("version")
     public String getVersion ( ) { 
@@ -166,7 +166,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Software version
+     * The browser software version
      */
     @JsonSetter("version")
     public void setVersion (String value) { 
@@ -174,7 +174,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * Operating system
+     * The full operating system name which may include the major version number or code name
      */
     @JsonGetter("operatingSystem")
     public String getOperatingSystem ( ) { 
@@ -182,7 +182,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Operating system
+     * The full operating system name which may include the major version number or code name
      */
     @JsonSetter("operatingSystem")
     public void setOperatingSystem (String value) { 
@@ -190,7 +190,7 @@ public class UserAgentInfoResponse
     }
  
     /** GETTER
-     * Mobile device browser
+     * The mobile device browser name (this is usually the same as the browser name)
      */
     @JsonGetter("mobileBrowser")
     public String getMobileBrowser ( ) { 
@@ -198,7 +198,7 @@ public class UserAgentInfoResponse
     }
     
     /** SETTER
-     * Mobile device browser
+     * The mobile device browser name (this is usually the same as the browser name)
      */
     @JsonSetter("mobileBrowser")
     public void setMobileBrowser (String value) { 
@@ -302,4 +302,3 @@ public class UserAgentInfoResponse
     }
  
 }
- 

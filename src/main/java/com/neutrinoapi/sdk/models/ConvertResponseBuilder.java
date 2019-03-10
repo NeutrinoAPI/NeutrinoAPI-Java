@@ -19,7 +19,7 @@ public class ConvertResponseBuilder {
     }
 
     /**
-     * Was the coversion successful and produced a valid result
+     * True if the coversion was successful and produced a valid result
      */
     public ConvertResponseBuilder valid(boolean valid) {
         convertResponse.setValid(valid);

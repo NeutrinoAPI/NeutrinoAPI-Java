@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class PhoneVerifyResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5381521826949490832L;
+    private static final long serialVersionUID = 8633960974558053264L;
     private boolean numberValid;
     private boolean calling;
     private String securityCode;
     /** GETTER
-     * Is this a valid phone number
+     * True if this a valid phone number
      */
     @JsonGetter("numberValid")
     public boolean getNumberValid ( ) { 
@@ -24,7 +24,7 @@ public class PhoneVerifyResponse
     }
     
     /** SETTER
-     * Is this a valid phone number
+     * True if this a valid phone number
      */
     @JsonSetter("numberValid")
     public void setNumberValid (boolean value) { 
@@ -48,7 +48,7 @@ public class PhoneVerifyResponse
     }
  
     /** GETTER
-     * The security code generated, you can save this code to perform your own verification or you can use the Verify Security Code API
+     * The security code generated, you can save this code to perform your own verification or you can use the <a href='https://www.neutrinoapi.com/api/verify-security-code/'>Verify Security Code API</a>
      */
     @JsonGetter("securityCode")
     public String getSecurityCode ( ) { 
@@ -56,7 +56,7 @@ public class PhoneVerifyResponse
     }
     
     /** SETTER
-     * The security code generated, you can save this code to perform your own verification or you can use the Verify Security Code API
+     * The security code generated, you can save this code to perform your own verification or you can use the <a href='https://www.neutrinoapi.com/api/verify-security-code/'>Verify Security Code API</a>
      */
     @JsonSetter("securityCode")
     public void setSecurityCode (String value) { 
@@ -64,4 +64,3 @@ public class PhoneVerifyResponse
     }
  
 }
- 

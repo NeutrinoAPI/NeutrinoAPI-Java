@@ -21,13 +21,13 @@ public class URLInfoResponseBuilder {
     /**
      * The HTTP status message assoicated with the status code
      */
-    public URLInfoResponseBuilder httpStatusMessage(String httpStatusMessage) {
+    public URLInfoResponseBuilder httpStatusMessage(int httpStatusMessage) {
         uRLInfoResponse.setHttpStatusMessage(httpStatusMessage);
         return this;
     }
 
     /**
-     * Server IP geo-location: full region name (if detectable)
+     * The servers IP geo-location: full region name (if detectable)
      */
     public URLInfoResponseBuilder serverRegion(String serverRegion) {
         uRLInfoResponse.setServerRegion(serverRegion);
@@ -35,9 +35,9 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * A key:value map of the URL query paramaters
+     * A key-value map of the URL query paramaters
      */
-    public URLInfoResponseBuilder query(LinkedHashMap<String, Object> query) {
+    public URLInfoResponseBuilder query(LinkedHashMap<String, String> query) {
         uRLInfoResponse.setQuery(query);
         return this;
     }
@@ -59,7 +59,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * Server IP geo-location: full country name
+     * The servers IP geo-location: full country name
      */
     public URLInfoResponseBuilder serverCountry(String serverCountry) {
         uRLInfoResponse.setServerCountry(serverCountry);
@@ -75,7 +75,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * Server IP geo-location: full city name (if detectable)
+     * The servers IP geo-location: full city name (if detectable)
      */
     public URLInfoResponseBuilder serverCity(String serverCity) {
         uRLInfoResponse.setServerCity(serverCity);
@@ -91,7 +91,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * The fully qualified URL. This may be different to the URL requested if http-redirect is True
+     * The fully qualified URL. This may be different to the URL requested if http-redirect is true
      */
     public URLInfoResponseBuilder url(String url) {
         uRLInfoResponse.setUrl(url);
@@ -107,7 +107,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * The server hostname (PTR)
+     * The servers hostname (PTR record)
      */
     public URLInfoResponseBuilder serverHostname(String serverHostname) {
         uRLInfoResponse.setServerHostname(serverHostname);
@@ -115,9 +115,9 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * The time taken to load the URL content (in seconds)
+     * The time taken to load the URL content in seconds
      */
-    public URLInfoResponseBuilder loadTime(double loadTime) {
+    public URLInfoResponseBuilder loadTime(int loadTime) {
         uRLInfoResponse.setLoadTime(loadTime);
         return this;
     }
@@ -139,7 +139,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * The HTTP status code this URL responded with
+     * The HTTP status code this URL responded with. An HTTP status of 0 indicates a network level issue
      */
     public URLInfoResponseBuilder httpStatus(int httpStatus) {
         uRLInfoResponse.setHttpStatus(httpStatus);
@@ -147,7 +147,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * Server IP geo-location: ISO 2-letter country code
+     * The servers IP geo-location: ISO 2-letter country code
      */
     public URLInfoResponseBuilder serverCountryCode(String serverCountryCode) {
         uRLInfoResponse.setServerCountryCode(serverCountryCode);
@@ -155,7 +155,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * The encoding type the URL uses
+     * The encoding format the URL uses
      */
     public URLInfoResponseBuilder contentEncoding(String contentEncoding) {
         uRLInfoResponse.setContentEncoding(contentEncoding);
@@ -171,7 +171,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * The URL protocol (usually http or https)
+     * The URL protocol, usually http or https
      */
     public URLInfoResponseBuilder urlProtocol(String urlProtocol) {
         uRLInfoResponse.setUrlProtocol(urlProtocol);
@@ -179,7 +179,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * The content-type the URL points to
+     * The content-type this URL serves
      */
     public URLInfoResponseBuilder contentType(String contentType) {
         uRLInfoResponse.setContentType(contentType);
@@ -187,7 +187,7 @@ public class URLInfoResponseBuilder {
     }
 
     /**
-     * True if this URL responded with a HTTP redirect
+     * True if this URL responded with an HTTP redirect
      */
     public URLInfoResponseBuilder httpRedirect(boolean httpRedirect) {
         uRLInfoResponse.setHttpRedirect(httpRedirect);

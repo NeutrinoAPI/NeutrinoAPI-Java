@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class HLRLookupResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5521536290157527191L;
+    private static final long serialVersionUID = 5590493695433213319L;
     private boolean numberValid;
-    private String internationalCallingCode;
+    private int internationalCallingCode;
     private String mnc;
     private String numberType;
     private boolean hlrValid;
@@ -31,8 +31,11 @@ public class HLRLookupResponse
     private boolean isMobile;
     private boolean isRoaming;
     private String country;
+    private String countryCode3;
+    private String currencyCode;
+    private String roamingCountryCode;
     /** GETTER
-     * Is this a valid phone number (mobile or otherwise)
+     * True if this a valid phone number
      */
     @JsonGetter("numberValid")
     public boolean getNumberValid ( ) { 
@@ -40,7 +43,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * Is this a valid phone number (mobile or otherwise)
+     * True if this a valid phone number
      */
     @JsonSetter("numberValid")
     public void setNumberValid (boolean value) { 
@@ -48,23 +51,23 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * Numbers international calling code
+     * The numbers international calling code
      */
     @JsonGetter("internationalCallingCode")
-    public String getInternationalCallingCode ( ) { 
+    public int getInternationalCallingCode ( ) { 
         return this.internationalCallingCode;
     }
     
     /** SETTER
-     * Numbers international calling code
+     * The numbers international calling code
      */
     @JsonSetter("internationalCallingCode")
-    public void setInternationalCallingCode (String value) { 
+    public void setInternationalCallingCode (int value) { 
         this.internationalCallingCode = value;
     }
  
     /** GETTER
-     * The mobile MNC number (only set if HLR lookup valid)
+     * The mobile MNC number
      */
     @JsonGetter("mnc")
     public String getMnc ( ) { 
@@ -72,7 +75,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The mobile MNC number (only set if HLR lookup valid)
+     * The mobile MNC number
      */
     @JsonSetter("mnc")
     public void setMnc (String value) { 
@@ -80,7 +83,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The number type, possible values are: mobile, fixed-line, premium-rate, toll-free, voip, unknown
+     * The number type, possible values are:<br/><ul><li>mobile</li><li>fixed-line</li><li>premium-rate</li><li>toll-free</li><li>voip</li><li>unknown</li></ul>
      */
     @JsonGetter("numberType")
     public String getNumberType ( ) { 
@@ -88,7 +91,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The number type, possible values are: mobile, fixed-line, premium-rate, toll-free, voip, unknown
+     * The number type, possible values are:<br/><ul><li>mobile</li><li>fixed-line</li><li>premium-rate</li><li>toll-free</li><li>voip</li><li>unknown</li></ul>
      */
     @JsonSetter("numberType")
     public void setNumberType (String value) { 
@@ -112,7 +115,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The HLR lookup status. See API docs for specific status details
+     * The HLR lookup status, possible values are:<br/><ul><li>ok - the HLR lookup was successful and the device is connected</li><li>absent - the number was once registered but the device has been switched off or out of network range for some time</li><li>unknown - the number is not known by the mobile network</li><li>invalid  - the number is not a valid mobile MSISDN number</li><li>fixed-line - the number is a registered fixed-line not mobile</li><li>voip - the number has been detected as a VOIP line</li><li>failed - the HLR lookup has failed, we could not determine the real status of this number</li></ul>
      */
     @JsonGetter("hlrStatus")
     public String getHlrStatus ( ) { 
@@ -120,7 +123,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The HLR lookup status. See API docs for specific status details
+     * The HLR lookup status, possible values are:<br/><ul><li>ok - the HLR lookup was successful and the device is connected</li><li>absent - the number was once registered but the device has been switched off or out of network range for some time</li><li>unknown - the number is not known by the mobile network</li><li>invalid  - the number is not a valid mobile MSISDN number</li><li>fixed-line - the number is a registered fixed-line not mobile</li><li>voip - the number has been detected as a VOIP line</li><li>failed - the HLR lookup has failed, we could not determine the real status of this number</li></ul>
      */
     @JsonSetter("hlrStatus")
     public void setHlrStatus (String value) { 
@@ -128,7 +131,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * If the number has been ported, the ported to mobile carrier name (only set if HLR lookup valid)
+     * If the number has been ported, the ported to carrier name
      */
     @JsonGetter("portedNetwork")
     public String getPortedNetwork ( ) { 
@@ -136,7 +139,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * If the number has been ported, the ported to mobile carrier name (only set if HLR lookup valid)
+     * If the number has been ported, the ported to carrier name
      */
     @JsonSetter("portedNetwork")
     public void setPortedNetwork (String value) { 
@@ -144,7 +147,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The mobile IMSI number (only set if HLR lookup valid)
+     * The mobile IMSI number
      */
     @JsonGetter("imsi")
     public String getImsi ( ) { 
@@ -152,7 +155,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The mobile IMSI number (only set if HLR lookup valid)
+     * The mobile IMSI number
      */
     @JsonSetter("imsi")
     public void setImsi (String value) { 
@@ -160,7 +163,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The mobile MCC number (only set if HLR lookup valid)
+     * The mobile MCC number
      */
     @JsonGetter("mcc")
     public String getMcc ( ) { 
@@ -168,7 +171,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The mobile MCC number (only set if HLR lookup valid)
+     * The mobile MCC number
      */
     @JsonSetter("mcc")
     public void setMcc (String value) { 
@@ -176,7 +179,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * Number represented in international format
+     * The number represented in full international format
      */
     @JsonGetter("internationalNumber")
     public String getInternationalNumber ( ) { 
@@ -184,7 +187,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * Number represented in international format
+     * The number represented in full international format
      */
     @JsonSetter("internationalNumber")
     public void setInternationalNumber (String value) { 
@@ -192,7 +195,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * Number represented in local format
+     * The number represented in local dialing format
      */
     @JsonGetter("localNumber")
     public String getLocalNumber ( ) { 
@@ -200,7 +203,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * Number represented in local format
+     * The number represented in local dialing format
      */
     @JsonSetter("localNumber")
     public void setLocalNumber (String value) { 
@@ -208,7 +211,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * Number location ISO 2-letter country code
+     * The number location as an ISO 2-letter country code
      */
     @JsonGetter("countryCode")
     public String getCountryCode ( ) { 
@@ -216,7 +219,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * Number location ISO 2-letter country code
+     * The number location as an ISO 2-letter country code
      */
     @JsonSetter("countryCode")
     public void setCountryCode (String value) { 
@@ -240,7 +243,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The mobile MSIN number (only set if HLR lookup valid)
+     * The mobile MSIN number
      */
     @JsonGetter("msin")
     public String getMsin ( ) { 
@@ -248,7 +251,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The mobile MSIN number (only set if HLR lookup valid)
+     * The mobile MSIN number
      */
     @JsonSetter("msin")
     public void setMsin (String value) { 
@@ -256,7 +259,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * Number location (could be a city, region or country)
+     * The number location. Could be a city, region or country depending on the type of number
      */
     @JsonGetter("location")
     public String getLocation ( ) { 
@@ -264,7 +267,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * Number location (could be a city, region or country)
+     * The number location. Could be a city, region or country depending on the type of number
      */
     @JsonSetter("location")
     public void setLocation (String value) { 
@@ -272,7 +275,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The origin mobile carrier name (only set if HLR lookup valid)
+     * The origin mobile carrier name
      */
     @JsonGetter("originNetwork")
     public String getOriginNetwork ( ) { 
@@ -280,7 +283,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The origin mobile carrier name (only set if HLR lookup valid)
+     * The origin mobile carrier name
      */
     @JsonSetter("originNetwork")
     public void setOriginNetwork (String value) { 
@@ -288,7 +291,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * Is this a mobile number
+     * True if this is a mobile number (only true with 100% certainty, if the number type is unknown this value will be false)
      */
     @JsonGetter("isMobile")
     public boolean getIsMobile ( ) { 
@@ -296,7 +299,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * Is this a mobile number
+     * True if this is a mobile number (only true with 100% certainty, if the number type is unknown this value will be false)
      */
     @JsonSetter("isMobile")
     public void setIsMobile (boolean value) { 
@@ -335,5 +338,52 @@ public class HLRLookupResponse
         this.country = value;
     }
  
-}
+    /** GETTER
+     * The number location as an ISO 3-letter country code
+     */
+    @JsonGetter("countryCode3")
+    public String getCountryCode3 ( ) { 
+        return this.countryCode3;
+    }
+    
+    /** SETTER
+     * The number location as an ISO 3-letter country code
+     */
+    @JsonSetter("countryCode3")
+    public void setCountryCode3 (String value) { 
+        this.countryCode3 = value;
+    }
  
+    /** GETTER
+     * ISO 4217 currency code associated with the country
+     */
+    @JsonGetter("currencyCode")
+    public String getCurrencyCode ( ) { 
+        return this.currencyCode;
+    }
+    
+    /** SETTER
+     * ISO 4217 currency code associated with the country
+     */
+    @JsonSetter("currencyCode")
+    public void setCurrencyCode (String value) { 
+        this.currencyCode = value;
+    }
+ 
+    /** GETTER
+     * If the number is currently roaming, the ISO 2-letter country code of the roaming in country
+     */
+    @JsonGetter("roamingCountryCode")
+    public String getRoamingCountryCode ( ) { 
+        return this.roamingCountryCode;
+    }
+    
+    /** SETTER
+     * If the number is currently roaming, the ISO 2-letter country code of the roaming in country
+     */
+    @JsonSetter("roamingCountryCode")
+    public void setRoamingCountryCode (String value) { 
+        this.roamingCountryCode = value;
+    }
+ 
+}

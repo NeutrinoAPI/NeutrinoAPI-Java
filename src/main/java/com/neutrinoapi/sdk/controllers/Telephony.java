@@ -21,9 +21,9 @@ import com.neutrinoapi.sdk.http.response.HttpStringResponse;
 import com.neutrinoapi.sdk.http.client.APICallBack;
 import com.neutrinoapi.sdk.controllers.syncwrapper.APICallBackCatcher;
 
-public class Telephony extends BaseController {    
+public class Telephony extends BaseController {
     //private static variables for the singleton pattern
-    private static Object syncObject = new Object();
+    private static final Object syncObject = new Object();
     private static Telephony instance = null;
 
     /**
@@ -31,18 +31,20 @@ public class Telephony extends BaseController {
      * @return The singleton instance of the Telephony class 
      */
     public static Telephony getInstance() {
-        synchronized (syncObject) {
-            if (null == instance) {
-                instance = new Telephony();
+        if (null == instance) {
+            synchronized (syncObject) {
+                if (null == instance) {
+                    instance = new Telephony();
+                }
             }
         }
         return instance;
     }
 
     /**
-     * Connect to the global mobile cellular network and retrieve the status of a mobile device
+     * Connect to the global mobile cellular network and retrieve the status of a mobile device. See: https://www.neutrinoapi.com/api/hlr-lookup/
      * @param    number    Required parameter: A phone number
-     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
+     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign)
      * @return    Returns the HLRLookupResponse response from the API call 
      */
     public HLRLookupResponse hLRLookup(
@@ -57,9 +59,9 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Connect to the global mobile cellular network and retrieve the status of a mobile device
+     * Connect to the global mobile cellular network and retrieve the status of a mobile device. See: https://www.neutrinoapi.com/api/hlr-lookup/
      * @param    number    Required parameter: A phone number
-     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
+     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign)
      * @return    Returns the void response from the API call 
      */
     public void hLRLookupAsync(
@@ -67,62 +69,60 @@ public class Telephony extends BaseController {
                 final String countryCode,
                 final APICallBack<HLRLookupResponse> callBack
     ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/hlr-lookup");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5627663925388310466L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5448760061256316080L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5689667783795817473L;
-            {
-                    put( "output-case", "camel" );
-                    put( "number", number );
-                    put( "country-code", countryCode );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
         Runnable _responseTask = new Runnable() {
             public void run() {
-                //make the API call
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/hlr-lookup");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+                    _headers.put("accept", "application/json");
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("output-case", "camel");
+                    _parameters.put("number", number);
+                    if (countryCode != null) {
+                        _parameters.put("country-code", countryCode);
+                    }
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
                 getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
 
                             //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
+                            if (getHttpCallBack() != null) {
                                 getHttpCallBack().OnAfterResponse(_context);
                             }
 
@@ -136,12 +136,6 @@ public class Telephony extends BaseController {
 
                             //let the caller know of the success
                             callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
                         } catch (Exception exception) {
                             //let the caller know of the caught Exception
                             callBack.onFailure(_context, exception);
@@ -150,7 +144,7 @@ public class Telephony extends BaseController {
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
                         if (getHttpCallBack() != null)
-                        {
+ {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -166,9 +160,9 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Make an automated call to any valid phone number and playback an audio message
-     * @param    number    Required parameter: The phone number to call. Must be valid international format
-     * @param    audioUrl    Required parameter: A URL to a valid audio file. Accepted audio formats are: MP3, WAV, OGG
+     * Make an automated call to any valid phone number and playback an audio message. See: https://www.neutrinoapi.com/api/phone-playback/
+     * @param    number    Required parameter: The phone number to call. Must be in valid international format
+     * @param    audioUrl    Required parameter: A URL to a valid audio file. Accepted audio formats are:<ul><li>MP3</li><li>WAV</li><li>OGG</ul></ul>You can use the following MP3 URL for testing:<br/>https://www.neutrinoapi.com/test-files/test1.mp3
      * @return    Returns the PhonePlaybackResponse response from the API call 
      */
     public PhonePlaybackResponse phonePlayback(
@@ -183,9 +177,9 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Make an automated call to any valid phone number and playback an audio message
-     * @param    number    Required parameter: The phone number to call. Must be valid international format
-     * @param    audioUrl    Required parameter: A URL to a valid audio file. Accepted audio formats are: MP3, WAV, OGG
+     * Make an automated call to any valid phone number and playback an audio message. See: https://www.neutrinoapi.com/api/phone-playback/
+     * @param    number    Required parameter: The phone number to call. Must be in valid international format
+     * @param    audioUrl    Required parameter: A URL to a valid audio file. Accepted audio formats are:<ul><li>MP3</li><li>WAV</li><li>OGG</ul></ul>You can use the following MP3 URL for testing:<br/>https://www.neutrinoapi.com/test-files/test1.mp3
      * @return    Returns the void response from the API call 
      */
     public void phonePlaybackAsync(
@@ -193,62 +187,58 @@ public class Telephony extends BaseController {
                 final String audioUrl,
                 final APICallBack<PhonePlaybackResponse> callBack
     ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/phone-playback");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4893378044028194560L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5156004511247516613L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5462050210833890300L;
-            {
-                    put( "output-case", "camel" );
-                    put( "number", number );
-                    put( "audio-url", audioUrl );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
         Runnable _responseTask = new Runnable() {
             public void run() {
-                //make the API call
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/phone-playback");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+                    _headers.put("accept", "application/json");
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("output-case", "camel");
+                    _parameters.put("number", number);
+                    _parameters.put("audio-url", audioUrl);
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
                 getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
 
                             //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
+                            if (getHttpCallBack() != null) {
                                 getHttpCallBack().OnAfterResponse(_context);
                             }
 
@@ -262,12 +252,6 @@ public class Telephony extends BaseController {
 
                             //let the caller know of the success
                             callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
                         } catch (Exception exception) {
                             //let the caller know of the caught Exception
                             callBack.onFailure(_context, exception);
@@ -276,7 +260,7 @@ public class Telephony extends BaseController {
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
                         if (getHttpCallBack() != null)
-                        {
+ {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -292,12 +276,12 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Check if a security code from one of the verify APIs is valid
+     * Check if a security code from one of the verify APIs is valid. See: https://www.neutrinoapi.com/api/verify-security-code/
      * @param    securityCode    Required parameter: The security code to verify
      * @return    Returns the VerifySecurityCodeResponse response from the API call 
      */
     public VerifySecurityCodeResponse verifySecurityCode(
-                final int securityCode
+                final String securityCode
     ) throws Throwable {
         APICallBackCatcher<VerifySecurityCodeResponse> callback = new APICallBackCatcher<VerifySecurityCodeResponse>();
         verifySecurityCodeAsync(securityCode, callback);
@@ -307,69 +291,65 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Check if a security code from one of the verify APIs is valid
+     * Check if a security code from one of the verify APIs is valid. See: https://www.neutrinoapi.com/api/verify-security-code/
      * @param    securityCode    Required parameter: The security code to verify
      * @return    Returns the void response from the API call 
      */
     public void verifySecurityCodeAsync(
-                final int securityCode,
+                final String securityCode,
                 final APICallBack<VerifySecurityCodeResponse> callBack
     ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/verify-security-code");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5168039769223927998L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5601105136062192338L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4672425025371789899L;
-            {
-                    put( "output-case", "camel" );
-                    put( "security-code", securityCode );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
         Runnable _responseTask = new Runnable() {
             public void run() {
-                //make the API call
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/verify-security-code");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+                    _headers.put("accept", "application/json");
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("output-case", "camel");
+                    _parameters.put("security-code", securityCode);
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
                 getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
 
                             //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
+                            if (getHttpCallBack() != null) {
                                 getHttpCallBack().OnAfterResponse(_context);
                             }
 
@@ -383,12 +363,6 @@ public class Telephony extends BaseController {
 
                             //let the caller know of the success
                             callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
                         } catch (Exception exception) {
                             //let the caller know of the caught Exception
                             callBack.onFailure(_context, exception);
@@ -397,7 +371,7 @@ public class Telephony extends BaseController {
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
                         if (getHttpCallBack() != null)
-                        {
+ {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -413,12 +387,12 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Send a unique security code to any mobile device via SMS
+     * Send a unique security code to any mobile device via SMS. See: https://www.neutrinoapi.com/api/sms-verify/
      * @param    number    Required parameter: The phone number to send a verification code to
      * @param    codeLength    Optional parameter: The number of digits to use in the security code (must be between 4 and 12)
-     * @param    securityCode    Optional parameter: ass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code (only numerical security codes are currently supported)
-     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
-     * @param    languageCode    Optional parameter: The language to send the verification code in, available languages are: de - German, en - English, es - Spanish, fr - Fench, it - Italian, pt - Portuguese, ru - Russian
+     * @param    securityCode    Optional parameter: Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code
+     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign)
+     * @param    languageCode    Optional parameter: The language to send the verification code in, available languages are:<ul><li>de - German</li><li>en - English</li><li>es - Spanish</li><li>fr - French</li><li>it - Italian</li><li>pt - Portuguese</li><li>ru - Russian</li></ul>
      * @return    Returns the SMSVerifyResponse response from the API call 
      */
     public SMSVerifyResponse sMSVerify(
@@ -436,12 +410,12 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Send a unique security code to any mobile device via SMS
+     * Send a unique security code to any mobile device via SMS. See: https://www.neutrinoapi.com/api/sms-verify/
      * @param    number    Required parameter: The phone number to send a verification code to
      * @param    codeLength    Optional parameter: The number of digits to use in the security code (must be between 4 and 12)
-     * @param    securityCode    Optional parameter: ass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code (only numerical security codes are currently supported)
-     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
-     * @param    languageCode    Optional parameter: The language to send the verification code in, available languages are: de - German, en - English, es - Spanish, fr - Fench, it - Italian, pt - Portuguese, ru - Russian
+     * @param    securityCode    Optional parameter: Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code
+     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign)
+     * @param    languageCode    Optional parameter: The language to send the verification code in, available languages are:<ul><li>de - German</li><li>en - English</li><li>es - Spanish</li><li>fr - French</li><li>it - Italian</li><li>pt - Portuguese</li><li>ru - Russian</li></ul>
      * @return    Returns the void response from the API call 
      */
     public void sMSVerifyAsync(
@@ -452,65 +426,69 @@ public class Telephony extends BaseController {
                 final String languageCode,
                 final APICallBack<SMSVerifyResponse> callBack
     ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/sms-verify");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 4902901676399440164L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5116114496558888989L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5450318225184861132L;
-            {
-                    put( "output-case", "camel" );
-                    put( "number", number );
-                    put( "code-length", (codeLength != null) ? codeLength : 5 );
-                    put( "security-code", securityCode );
-                    put( "country-code", countryCode );
-                    put( "language-code", (languageCode != null) ? languageCode : "en" );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
         Runnable _responseTask = new Runnable() {
             public void run() {
-                //make the API call
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/sms-verify");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+                    _headers.put("accept", "application/json");
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("output-case", "camel");
+                    _parameters.put("number", number);
+                    if (codeLength != null) {
+                        _parameters.put("code-length", (codeLength != null) ? codeLength : 5);
+                    }
+                    if (securityCode != null) {
+                        _parameters.put("security-code", securityCode);
+                    }
+                    if (countryCode != null) {
+                        _parameters.put("country-code", countryCode);
+                    }
+                    if (languageCode != null) {
+                        _parameters.put("language-code", (languageCode != null) ? languageCode : "en");
+                    }
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
                 getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
 
                             //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
+                            if (getHttpCallBack() != null) {
                                 getHttpCallBack().OnAfterResponse(_context);
                             }
 
@@ -524,12 +502,6 @@ public class Telephony extends BaseController {
 
                             //let the caller know of the success
                             callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
                         } catch (Exception exception) {
                             //let the caller know of the caught Exception
                             callBack.onFailure(_context, exception);
@@ -538,7 +510,7 @@ public class Telephony extends BaseController {
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
                         if (getHttpCallBack() != null)
-                        {
+ {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -554,13 +526,136 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Make an automated call to any valid phone number and playback a unique security code
+     * Send a free-form message to any mobile device via SMS. See: https://www.neutrinoapi.com/api/sms-message/
+     * @param    number    Required parameter: The phone number to send a message to
+     * @param    message    Required parameter: The SMS message to send. Messages are truncated to a maximum of 150 characters for ASCII content OR 70 characters for UTF content
+     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign)
+     * @return    Returns the SMSMessageResponse response from the API call 
+     */
+    public SMSMessageResponse sMSMessage(
+                final String number,
+                final String message,
+                final String countryCode
+    ) throws Throwable {
+        APICallBackCatcher<SMSMessageResponse> callback = new APICallBackCatcher<SMSMessageResponse>();
+        sMSMessageAsync(number, message, countryCode, callback);
+        if(!callback.isSuccess())
+            throw callback.getError();
+        return callback.getResult();
+    }
+
+    /**
+     * Send a free-form message to any mobile device via SMS. See: https://www.neutrinoapi.com/api/sms-message/
+     * @param    number    Required parameter: The phone number to send a message to
+     * @param    message    Required parameter: The SMS message to send. Messages are truncated to a maximum of 150 characters for ASCII content OR 70 characters for UTF content
+     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign)
+     * @return    Returns the void response from the API call 
+     */
+    public void sMSMessageAsync(
+                final String number,
+                final String message,
+                final String countryCode,
+                final APICallBack<SMSMessageResponse> callBack
+    ) {
+        Runnable _responseTask = new Runnable() {
+            public void run() {
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/sms-message");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+                    _headers.put("accept", "application/json");
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("output-case", "camel");
+                    _parameters.put("number", number);
+                    _parameters.put("message", message);
+                    if (countryCode != null) {
+                        _parameters.put("country-code", countryCode);
+                    }
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
+                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext _context, HttpResponse _response) {
+                        try {
+
+                            //invoke the callback after response if its not null
+                            if (getHttpCallBack() != null) {
+                                getHttpCallBack().OnAfterResponse(_context);
+                            }
+
+                            //handle errors defined at the API level
+                            validateResponse(_response, _context);
+
+                            //extract result from the http response
+                            String _responseBody = ((HttpStringResponse)_response).getBody();
+                            SMSMessageResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<SMSMessageResponse>(){});
+
+                            //let the caller know of the success
+                            callBack.onSuccess(_context, _result);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(_context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext _context, Throwable _error) {
+                        //invoke the callback after response if its not null
+                        if (getHttpCallBack() != null)
+ {
+                            getHttpCallBack().OnAfterResponse(_context);
+                        }
+
+                        //let the caller know of the failure
+                        callBack.onFailure(_context, _error);
+                    }
+                });
+            }
+        };
+
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Make an automated call to any valid phone number and playback a unique security code. See: https://www.neutrinoapi.com/api/phone-verify/
      * @param    number    Required parameter: The phone number to send the verification code to
      * @param    codeLength    Optional parameter: The number of digits to use in the security code (between 4 and 12)
-     * @param    securityCode    Optional parameter: Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code (only numerical security codes are currently supported)
+     * @param    securityCode    Optional parameter: Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code
      * @param    playbackDelay    Optional parameter: The delay in milliseconds between the playback of each security code
-     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
-     * @param    languageCode    Optional parameter: The language to playback the verification code in, available languages are: de - German, en - English, es - Spanish, fr - Fench, it - Italian, pt - Portuguese, ru - Russian
+     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign)
+     * @param    languageCode    Optional parameter: The language to playback the verification code in, available languages are:<ul><li>de - German</li><li>en - English</li><li>es - Spanish</li><li>fr - French</li><li>it - Italian</li><li>pt - Portuguese</li><li>ru - Russian</li></ul>
      * @return    Returns the PhoneVerifyResponse response from the API call 
      */
     public PhoneVerifyResponse phoneVerify(
@@ -579,13 +674,13 @@ public class Telephony extends BaseController {
     }
 
     /**
-     * Make an automated call to any valid phone number and playback a unique security code
+     * Make an automated call to any valid phone number and playback a unique security code. See: https://www.neutrinoapi.com/api/phone-verify/
      * @param    number    Required parameter: The phone number to send the verification code to
      * @param    codeLength    Optional parameter: The number of digits to use in the security code (between 4 and 12)
-     * @param    securityCode    Optional parameter: Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code (only numerical security codes are currently supported)
+     * @param    securityCode    Optional parameter: Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code
      * @param    playbackDelay    Optional parameter: The delay in milliseconds between the playback of each security code
-     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
-     * @param    languageCode    Optional parameter: The language to playback the verification code in, available languages are: de - German, en - English, es - Spanish, fr - Fench, it - Italian, pt - Portuguese, ru - Russian
+     * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country.<br/>If not set numbers are assumed to be in international format (with or without the leading + sign)
+     * @param    languageCode    Optional parameter: The language to playback the verification code in, available languages are:<ul><li>de - German</li><li>en - English</li><li>es - Spanish</li><li>fr - French</li><li>it - Italian</li><li>pt - Portuguese</li><li>ru - Russian</li></ul>
      * @return    Returns the void response from the API call 
      */
     public void phoneVerifyAsync(
@@ -597,66 +692,72 @@ public class Telephony extends BaseController {
                 final String languageCode,
                 final APICallBack<PhoneVerifyResponse> callBack
     ) {
-        //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
-        
-        //prepare query string for API call
-        StringBuilder _queryBuilder = new StringBuilder(_baseUri);
-        _queryBuilder.append("/phone-verify");
-
-        //process query parameters
-        APIHelper.appendUrlWithQueryParameters(_queryBuilder, new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5636784830896812471L;
-            {
-                    put( "user-id", Configuration.userId );
-                    put( "api-key", Configuration.apiKey );
-            }});
-        //validate and preprocess url
-        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
-
-        //load all headers for the outgoing API request
-        Map<String, String> _headers = new HashMap<String, String>() {
-            private static final long serialVersionUID = 5204953330628735274L;
-            {
-                    put( "user-agent", "APIMATIC 2.0" );
-                    put( "accept", "application/json" );
-            }
-        };
-
-        //load all fields for the outgoing API request
-        Map<String, Object> _parameters = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 5549268949756135278L;
-            {
-                    put( "output-case", "camel" );
-                    put( "number", number );
-                    put( "code-length", (codeLength != null) ? codeLength : 6 );
-                    put( "security-code", securityCode );
-                    put( "playback-delay", (playbackDelay != null) ? playbackDelay : 800 );
-                    put( "country-code", countryCode );
-                    put( "language-code", (languageCode != null) ? languageCode : "en" );
-            }
-        };
-
-        //prepare and invoke the API call request to fetch the response
-        final HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-        //invoke the callback before request if its not null
-        if (getHttpCallBack() != null)
-        {
-            getHttpCallBack().OnBeforeRequest(_request);
-        }
-
-        //invoke request and get response
         Runnable _responseTask = new Runnable() {
             public void run() {
-                //make the API call
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/phone-verify");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+                    _headers.put("accept", "application/json");
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("output-case", "camel");
+                    _parameters.put("number", number);
+                    if (codeLength != null) {
+                        _parameters.put("code-length", (codeLength != null) ? codeLength : 6);
+                    }
+                    if (securityCode != null) {
+                        _parameters.put("security-code", securityCode);
+                    }
+                    if (playbackDelay != null) {
+                        _parameters.put("playback-delay", (playbackDelay != null) ? playbackDelay : 800);
+                    }
+                    if (countryCode != null) {
+                        _parameters.put("country-code", countryCode);
+                    }
+                    if (languageCode != null) {
+                        _parameters.put("language-code", (languageCode != null) ? languageCode : "en");
+                    }
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
                 getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
 
                             //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null)	
-                            {
+                            if (getHttpCallBack() != null) {
                                 getHttpCallBack().OnAfterResponse(_context);
                             }
 
@@ -670,12 +771,6 @@ public class Telephony extends BaseController {
 
                             //let the caller know of the success
                             callBack.onSuccess(_context, _result);
-                        } catch (APIException error) {
-                            //let the caller know of the error
-                            callBack.onFailure(_context, error);
-                        } catch (IOException ioException) {
-                            //let the caller know of the caught IO Exception
-                            callBack.onFailure(_context, ioException);
                         } catch (Exception exception) {
                             //let the caller know of the caught Exception
                             callBack.onFailure(_context, exception);
@@ -684,7 +779,7 @@ public class Telephony extends BaseController {
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
                         if (getHttpCallBack() != null)
-                        {
+ {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

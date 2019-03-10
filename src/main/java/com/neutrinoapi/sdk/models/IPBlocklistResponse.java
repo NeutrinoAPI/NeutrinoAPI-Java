@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class IPBlocklistResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4954316217036140533L;
+    private static final long serialVersionUID = -1555136853673531388L;
     private String ip;
     private boolean isBot;
     private boolean isExploitBot;
@@ -45,7 +45,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP is hosting a malicious bot or is part of a botnet
+     * IP is hosting a malicious bot or is part of a botnet. Includes brute-force crackers
      */
     @JsonGetter("isBot")
     public boolean getIsBot ( ) { 
@@ -53,7 +53,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP is hosting a malicious bot or is part of a botnet
+     * IP is hosting a malicious bot or is part of a botnet. Includes brute-force crackers
      */
     @JsonSetter("isBot")
     public void setIsBot (boolean value) { 
@@ -61,7 +61,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP is hosting an exploit finding bot or exploit scanning software
+     * IP is hosting an exploit finding bot or is running exploit scanning software
      */
     @JsonGetter("isExploitBot")
     public boolean getIsExploitBot ( ) { 
@@ -69,7 +69,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP is hosting an exploit finding bot or exploit scanning software
+     * IP is hosting an exploit finding bot or is running exploit scanning software
      */
     @JsonSetter("isExploitBot")
     public void setIsExploitBot (boolean value) { 
@@ -77,7 +77,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP is involved in distributing malware
+     * IP is involved in distributing or is running malware
      */
     @JsonGetter("isMalware")
     public boolean getIsMalware ( ) { 
@@ -85,7 +85,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP is involved in distributing malware
+     * IP is involved in distributing or is running malware
      */
     @JsonSetter("isMalware")
     public void setIsMalware (boolean value) { 
@@ -93,7 +93,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP is a hostile spider or crawler
+     * IP is running a hostile web spider / web crawler
      */
     @JsonGetter("isSpider")
     public boolean getIsSpider ( ) { 
@@ -101,7 +101,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP is a hostile spider or crawler
+     * IP is running a hostile web spider / web crawler
      */
     @JsonSetter("isSpider")
     public void setIsSpider (boolean value) { 
@@ -109,7 +109,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP has been flagged on DShield (dshield.org)
+     * IP has been flagged as an attack source on DShield (dshield.org)
      */
     @JsonGetter("isDshield")
     public boolean getIsDshield ( ) { 
@@ -117,7 +117,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP has been flagged on DShield (dshield.org)
+     * IP has been flagged as an attack source on DShield (dshield.org)
      */
     @JsonSetter("isDshield")
     public void setIsDshield (boolean value) { 
@@ -157,7 +157,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * hijacked netblocks or netblocks controlled by criminal organizations
+     * IP is part of a hijacked netblock or a netblock controlled by a criminal organization
      */
     @JsonGetter("isHijacked")
     public boolean getIsHijacked ( ) { 
@@ -165,7 +165,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * hijacked netblocks or netblocks controlled by criminal organizations
+     * IP is part of a hijacked netblock or a netblock controlled by a criminal organization
      */
     @JsonSetter("isHijacked")
     public void setIsHijacked (boolean value) { 
@@ -173,7 +173,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP is coming from a Tor node
+     * IP is a Tor node or running a Tor related service
      */
     @JsonGetter("isTor")
     public boolean getIsTor ( ) { 
@@ -181,7 +181,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP is coming from a Tor node
+     * IP is a Tor node or running a Tor related service
      */
     @JsonSetter("isTor")
     public void setIsTor (boolean value) { 
@@ -189,7 +189,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP is being used by spyware, malware, botnets or for other malicious activities
+     * IP is involved in distributing or is running spyware
      */
     @JsonGetter("isSpyware")
     public boolean getIsSpyware ( ) { 
@@ -197,7 +197,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP is being used by spyware, malware, botnets or for other malicious activities
+     * IP is involved in distributing or is running spyware
      */
     @JsonSetter("isSpyware")
     public void setIsSpyware (boolean value) { 
@@ -205,7 +205,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP address is hosting a spam bot, comment spamming or other spamming software
+     * IP address is hosting a spam bot, comment spamming or any other spamming type software
      */
     @JsonGetter("isSpamBot")
     public boolean getIsSpamBot ( ) { 
@@ -213,7 +213,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP address is hosting a spam bot, comment spamming or other spamming software
+     * IP address is hosting a spam bot, comment spamming or any other spamming type software
      */
     @JsonSetter("isSpamBot")
     public void setIsSpamBot (boolean value) { 
@@ -237,7 +237,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP has been detected as coming from a VPN hosting provider
+     * IP has been detected as belonging to a VPN provider
      */
     @JsonGetter("isVpn")
     public boolean getIsVpn ( ) { 
@@ -245,7 +245,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP has been detected as coming from a VPN hosting provider
+     * IP has been detected as belonging to a VPN provider
      */
     @JsonSetter("isVpn")
     public void setIsVpn (boolean value) { 
@@ -285,4 +285,3 @@ public class IPBlocklistResponse
     }
  
 }
- 

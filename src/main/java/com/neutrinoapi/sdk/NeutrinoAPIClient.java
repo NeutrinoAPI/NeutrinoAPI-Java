@@ -58,6 +58,14 @@ public class NeutrinoAPIClient {
     }
 
     /**
+     * Singleton access to WWW controller
+     * @return	Returns the WWW instance 
+     */
+    public WWW getWWW() {
+        return WWW.getInstance();
+    }
+
+    /**
      * Get the shared http client currently being used for API calls
      * @return The http client instance currently being used
      */

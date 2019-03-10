@@ -19,7 +19,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Mobile device screen width (in px)
+     * The estimated mobile device screen width in CSS 'px'
      */
     public UserAgentInfoResponseBuilder mobileScreenWidth(int mobileScreenWidth) {
         userAgentInfoResponse.setMobileScreenWidth(mobileScreenWidth);
@@ -27,7 +27,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Mobile device brand
+     * The mobile device brand
      */
     public UserAgentInfoResponseBuilder mobileBrand(String mobileBrand) {
         userAgentInfoResponse.setMobileBrand(mobileBrand);
@@ -35,7 +35,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Mobile device model
+     * The mobile device model
      */
     public UserAgentInfoResponseBuilder mobileModel(String mobileModel) {
         userAgentInfoResponse.setMobileModel(mobileModel);
@@ -43,7 +43,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Producer or manufacturer
+     * The producer or manufacturer of the user agent
      */
     public UserAgentInfoResponseBuilder producer(String producer) {
         userAgentInfoResponse.setProducer(producer);
@@ -51,7 +51,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Browser software name
+     * The browser software name
      */
     public UserAgentInfoResponseBuilder browserName(String browserName) {
         userAgentInfoResponse.setBrowserName(browserName);
@@ -59,7 +59,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Mobile device screen height (in px)
+     * The estimated mobile device screen height in CSS 'px'
      */
     public UserAgentInfoResponseBuilder mobileScreenHeight(int mobileScreenHeight) {
         userAgentInfoResponse.setMobileScreenHeight(mobileScreenHeight);
@@ -67,7 +67,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * True if this is a mobile user-agent
+     * True if this is a mobile user agent
      */
     public UserAgentInfoResponseBuilder isMobile(boolean isMobile) {
         userAgentInfoResponse.setIsMobile(isMobile);
@@ -75,7 +75,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * The user-agent type, possible values are: desktop-browser, email-client, feed-reader, software-library, media-player, mobile-browser, robot, unknown
+     * The user agent type, possible values are:<br/><ul><li>desktop-browser</li><li>mobile-browser</li><li>email-client</li><li>feed-reader</li><li>software-library</li><li>media-player (includes smart TVs)</li><li>robot</li><li>unknown</li></ul>
      */
     public UserAgentInfoResponseBuilder type(String type) {
         userAgentInfoResponse.setType(type);
@@ -83,7 +83,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Software version
+     * The browser software version
      */
     public UserAgentInfoResponseBuilder version(String version) {
         userAgentInfoResponse.setVersion(version);
@@ -91,7 +91,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Operating system
+     * The full operating system name which may include the major version number or code name
      */
     public UserAgentInfoResponseBuilder operatingSystem(String operatingSystem) {
         userAgentInfoResponse.setOperatingSystem(operatingSystem);
@@ -99,7 +99,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * Mobile device browser
+     * The mobile device browser name (this is usually the same as the browser name)
      */
     public UserAgentInfoResponseBuilder mobileBrowser(String mobileBrowser) {
         userAgentInfoResponse.setMobileBrowser(mobileBrowser);

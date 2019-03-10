@@ -9,11 +9,10 @@ import java.util.*;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
-public class SMSVerifyResponse 
+public class SMSMessageResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = -1412647205695402896L;
+    private static final long serialVersionUID = -2187702151476749904L;
     private boolean numberValid;
-    private String securityCode;
     private boolean sent;
     /** GETTER
      * True if this a valid phone number
@@ -29,22 +28,6 @@ public class SMSVerifyResponse
     @JsonSetter("numberValid")
     public void setNumberValid (boolean value) { 
         this.numberValid = value;
-    }
- 
-    /** GETTER
-     * The security code generated, you can save this code to perform your own verification or you can use the <a href='https://www.neutrinoapi.com/api/verify-security-code/'>Verify Security Code API</a>
-     */
-    @JsonGetter("securityCode")
-    public String getSecurityCode ( ) { 
-        return this.securityCode;
-    }
-    
-    /** SETTER
-     * The security code generated, you can save this code to perform your own verification or you can use the <a href='https://www.neutrinoapi.com/api/verify-security-code/'>Verify Security Code API</a>
-     */
-    @JsonSetter("securityCode")
-    public void setSecurityCode (String value) { 
-        this.securityCode = value;
     }
  
     /** GETTER

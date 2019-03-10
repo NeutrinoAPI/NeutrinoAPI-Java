@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class IPProbeResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4823612807837523341L;
+    private static final long serialVersionUID = 4977469777968548673L;
     private boolean valid;
     private String country;
     private String providerType;
@@ -26,6 +26,17 @@ public class IPProbeResponse
     private String continentCode;
     private boolean isHosting;
     private boolean isIsp;
+    private String countryCode3;
+    private String currencyCode;
+    private boolean isVpn;
+    private boolean isProxy;
+    private String asn;
+    private String asCidr;
+    private String asCountryCode;
+    private String asCountryCode3;
+    private List<String> asDomains;
+    private String asDescription;
+    private int asAge;
     /** GETTER
      * Is this a valid IPv4 or IPv6 address
      */
@@ -59,7 +70,7 @@ public class IPProbeResponse
     }
  
     /** GETTER
-     * The detected provider type. See online API docs for specific provider type details
+     * The detected provider type, possible values are:<br/><ul><li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li><li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li><li>vpn - IP belongs to a VPN provider</li><li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li><li>university - IP belongs to a university/college/campus</li><li>government - IP belongs to a government department. This includes military facilities</li><li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li><li>unknown - could not identify the provider type</li></ul>
      */
     @JsonGetter("providerType")
     public String getProviderType ( ) { 
@@ -67,7 +78,7 @@ public class IPProbeResponse
     }
     
     /** SETTER
-     * The detected provider type. See online API docs for specific provider type details
+     * The detected provider type, possible values are:<br/><ul><li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li><li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li><li>vpn - IP belongs to a VPN provider</li><li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li><li>university - IP belongs to a university/college/campus</li><li>government - IP belongs to a government department. This includes military facilities</li><li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li><li>unknown - could not identify the provider type</li></ul>
      */
     @JsonSetter("providerType")
     public void setProviderType (String value) { 
@@ -187,7 +198,7 @@ public class IPProbeResponse
     }
  
     /** GETTER
-     * A description of the provider, usually extracted from the providers website or WHOIS record
+     * A description of the provider (usually extracted from the providers website)
      */
     @JsonGetter("providerDescription")
     public String getProviderDescription ( ) { 
@@ -195,7 +206,7 @@ public class IPProbeResponse
     }
     
     /** SETTER
-     * A description of the provider, usually extracted from the providers website or WHOIS record
+     * A description of the provider (usually extracted from the providers website)
      */
     @JsonSetter("providerDescription")
     public void setProviderDescription (String value) { 
@@ -235,7 +246,7 @@ public class IPProbeResponse
     }
  
     /** GETTER
-     * True if this IP belongs to an ISP. Note that this can still be true even if the provider type is VPN/proxy, this occurs in the case that the IP is detected as both types
+     * True if this IP belongs to an internet service provider. Note that this can still be true even if the provider type is VPN/proxy, this occurs in the case that the IP is detected as both types
      */
     @JsonGetter("isIsp")
     public boolean getIsIsp ( ) { 
@@ -243,12 +254,187 @@ public class IPProbeResponse
     }
     
     /** SETTER
-     * True if this IP belongs to an ISP. Note that this can still be true even if the provider type is VPN/proxy, this occurs in the case that the IP is detected as both types
+     * True if this IP belongs to an internet service provider. Note that this can still be true even if the provider type is VPN/proxy, this occurs in the case that the IP is detected as both types
      */
     @JsonSetter("isIsp")
     public void setIsIsp (boolean value) { 
         this.isIsp = value;
     }
  
-}
+    /** GETTER
+     * ISO 3-letter country code
+     */
+    @JsonGetter("countryCode3")
+    public String getCountryCode3 ( ) { 
+        return this.countryCode3;
+    }
+    
+    /** SETTER
+     * ISO 3-letter country code
+     */
+    @JsonSetter("countryCode3")
+    public void setCountryCode3 (String value) { 
+        this.countryCode3 = value;
+    }
  
+    /** GETTER
+     * ISO 4217 currency code associated with the country
+     */
+    @JsonGetter("currencyCode")
+    public String getCurrencyCode ( ) { 
+        return this.currencyCode;
+    }
+    
+    /** SETTER
+     * ISO 4217 currency code associated with the country
+     */
+    @JsonSetter("currencyCode")
+    public void setCurrencyCode (String value) { 
+        this.currencyCode = value;
+    }
+ 
+    /** GETTER
+     * True if this IP ia a VPN
+     */
+    @JsonGetter("isVpn")
+    public boolean getIsVpn ( ) { 
+        return this.isVpn;
+    }
+    
+    /** SETTER
+     * True if this IP ia a VPN
+     */
+    @JsonSetter("isVpn")
+    public void setIsVpn (boolean value) { 
+        this.isVpn = value;
+    }
+ 
+    /** GETTER
+     * True if this IP ia a proxy
+     */
+    @JsonGetter("isProxy")
+    public boolean getIsProxy ( ) { 
+        return this.isProxy;
+    }
+    
+    /** SETTER
+     * True if this IP ia a proxy
+     */
+    @JsonSetter("isProxy")
+    public void setIsProxy (boolean value) { 
+        this.isProxy = value;
+    }
+ 
+    /** GETTER
+     * The autonomous system (AS) number
+     */
+    @JsonGetter("asn")
+    public String getAsn ( ) { 
+        return this.asn;
+    }
+    
+    /** SETTER
+     * The autonomous system (AS) number
+     */
+    @JsonSetter("asn")
+    public void setAsn (String value) { 
+        this.asn = value;
+    }
+ 
+    /** GETTER
+     * The autonomous system (AS) CIDR range
+     */
+    @JsonGetter("asCidr")
+    public String getAsCidr ( ) { 
+        return this.asCidr;
+    }
+    
+    /** SETTER
+     * The autonomous system (AS) CIDR range
+     */
+    @JsonSetter("asCidr")
+    public void setAsCidr (String value) { 
+        this.asCidr = value;
+    }
+ 
+    /** GETTER
+     * The autonomous system (AS) ISO 2-letter country code
+     */
+    @JsonGetter("asCountryCode")
+    public String getAsCountryCode ( ) { 
+        return this.asCountryCode;
+    }
+    
+    /** SETTER
+     * The autonomous system (AS) ISO 2-letter country code
+     */
+    @JsonSetter("asCountryCode")
+    public void setAsCountryCode (String value) { 
+        this.asCountryCode = value;
+    }
+ 
+    /** GETTER
+     * The autonomous system (AS) ISO 3-letter country code
+     */
+    @JsonGetter("asCountryCode3")
+    public String getAsCountryCode3 ( ) { 
+        return this.asCountryCode3;
+    }
+    
+    /** SETTER
+     * The autonomous system (AS) ISO 3-letter country code
+     */
+    @JsonSetter("asCountryCode3")
+    public void setAsCountryCode3 (String value) { 
+        this.asCountryCode3 = value;
+    }
+ 
+    /** GETTER
+     * Array of all the domains associated with the autonomous system (AS)
+     */
+    @JsonGetter("asDomains")
+    public List<String> getAsDomains ( ) { 
+        return this.asDomains;
+    }
+    
+    /** SETTER
+     * Array of all the domains associated with the autonomous system (AS)
+     */
+    @JsonSetter("asDomains")
+    public void setAsDomains (List<String> value) { 
+        this.asDomains = value;
+    }
+ 
+    /** GETTER
+     * The autonomous system (AS) description / company name
+     */
+    @JsonGetter("asDescription")
+    public String getAsDescription ( ) { 
+        return this.asDescription;
+    }
+    
+    /** SETTER
+     * The autonomous system (AS) description / company name
+     */
+    @JsonSetter("asDescription")
+    public void setAsDescription (String value) { 
+        this.asDescription = value;
+    }
+ 
+    /** GETTER
+     * The age of the autonomous system (AS) in number of years since registration
+     */
+    @JsonGetter("asAge")
+    public int getAsAge ( ) { 
+        return this.asAge;
+    }
+    
+    /** SETTER
+     * The age of the autonomous system (AS) in number of years since registration
+     */
+    @JsonSetter("asAge")
+    public void setAsAge (int value) { 
+        this.asAge = value;
+    }
+ 
+}

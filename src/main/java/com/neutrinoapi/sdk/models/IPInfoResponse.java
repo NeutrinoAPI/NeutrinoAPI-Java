@@ -11,18 +11,21 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class IPInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5292011842924060316L;
+    private static final long serialVersionUID = 4212761328805676339L;
     private boolean valid;
     private String country;
     private String hostname;
     private String city;
     private String countryCode;
-    private double latitude;
+    private int latitude;
     private String region;
-    private double longitude;
+    private int longitude;
     private String continentCode;
+    private String ip;
+    private String countryCode3;
+    private String currencyCode;
     /** GETTER
-     * Is this a valid IP address
+     * Is this a valid IPv4 or IPv6 address
      */
     @JsonGetter("valid")
     public boolean getValid ( ) { 
@@ -30,7 +33,7 @@ public class IPInfoResponse
     }
     
     /** SETTER
-     * Is this a valid IP address
+     * Is this a valid IPv4 or IPv6 address
      */
     @JsonSetter("valid")
     public void setValid (boolean value) { 
@@ -105,7 +108,7 @@ public class IPInfoResponse
      * Location latitude
      */
     @JsonGetter("latitude")
-    public double getLatitude ( ) { 
+    public int getLatitude ( ) { 
         return this.latitude;
     }
     
@@ -113,7 +116,7 @@ public class IPInfoResponse
      * Location latitude
      */
     @JsonSetter("latitude")
-    public void setLatitude (double value) { 
+    public void setLatitude (int value) { 
         this.latitude = value;
     }
  
@@ -137,7 +140,7 @@ public class IPInfoResponse
      * Location longitude
      */
     @JsonGetter("longitude")
-    public double getLongitude ( ) { 
+    public int getLongitude ( ) { 
         return this.longitude;
     }
     
@@ -145,7 +148,7 @@ public class IPInfoResponse
      * Location longitude
      */
     @JsonSetter("longitude")
-    public void setLongitude (double value) { 
+    public void setLongitude (int value) { 
         this.longitude = value;
     }
  
@@ -165,5 +168,52 @@ public class IPInfoResponse
         this.continentCode = value;
     }
  
-}
+    /** GETTER
+     * The IP address
+     */
+    @JsonGetter("ip")
+    public String getIp ( ) { 
+        return this.ip;
+    }
+    
+    /** SETTER
+     * The IP address
+     */
+    @JsonSetter("ip")
+    public void setIp (String value) { 
+        this.ip = value;
+    }
  
+    /** GETTER
+     * ISO 3-letter country code
+     */
+    @JsonGetter("countryCode3")
+    public String getCountryCode3 ( ) { 
+        return this.countryCode3;
+    }
+    
+    /** SETTER
+     * ISO 3-letter country code
+     */
+    @JsonSetter("countryCode3")
+    public void setCountryCode3 (String value) { 
+        this.countryCode3 = value;
+    }
+ 
+    /** GETTER
+     * ISO 4217 currency code associated with the country
+     */
+    @JsonGetter("currencyCode")
+    public String getCurrencyCode ( ) { 
+        return this.currencyCode;
+    }
+    
+    /** SETTER
+     * ISO 4217 currency code associated with the country
+     */
+    @JsonSetter("currencyCode")
+    public void setCurrencyCode (String value) { 
+        this.currencyCode = value;
+    }
+ 
+}

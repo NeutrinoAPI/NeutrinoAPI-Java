@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class VerifySecurityCodeResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4977276744168853841L;
+    private static final long serialVersionUID = 116993190482534947L;
     private boolean verified;
     /** GETTER
      * True if the code is valid
@@ -30,4 +30,3 @@ public class VerifySecurityCodeResponse
     }
  
 }
- 

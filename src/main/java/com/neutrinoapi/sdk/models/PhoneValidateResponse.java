@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class PhoneValidateResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5042281504009345662L;
+    private static final long serialVersionUID = -3179116940280709846L;
     private boolean valid;
-    private String internationalCallingCode;
+    private int internationalCallingCode;
     private String countryCode;
     private String location;
     private boolean isMobile;
@@ -21,6 +21,8 @@ public class PhoneValidateResponse
     private String internationalNumber;
     private String localNumber;
     private String country;
+    private String countryCode3;
+    private String currencyCode;
     /** GETTER
      * Is this a valid phone number
      */
@@ -38,23 +40,23 @@ public class PhoneValidateResponse
     }
  
     /** GETTER
-     * Numbers international calling code
+     * The international calling code
      */
     @JsonGetter("internationalCallingCode")
-    public String getInternationalCallingCode ( ) { 
+    public int getInternationalCallingCode ( ) { 
         return this.internationalCallingCode;
     }
     
     /** SETTER
-     * Numbers international calling code
+     * The international calling code
      */
     @JsonSetter("internationalCallingCode")
-    public void setInternationalCallingCode (String value) { 
+    public void setInternationalCallingCode (int value) { 
         this.internationalCallingCode = value;
     }
  
     /** GETTER
-     * Number location ISO 2-letter country code
+     * The phone number country as an ISO 2-letter country code
      */
     @JsonGetter("countryCode")
     public String getCountryCode ( ) { 
@@ -62,7 +64,7 @@ public class PhoneValidateResponse
     }
     
     /** SETTER
-     * Number location ISO 2-letter country code
+     * The phone number country as an ISO 2-letter country code
      */
     @JsonSetter("countryCode")
     public void setCountryCode (String value) { 
@@ -70,7 +72,7 @@ public class PhoneValidateResponse
     }
  
     /** GETTER
-     * Number location (could be a city, region or country)
+     * The phone number location. Could be a city, region or country depending on the type of number
      */
     @JsonGetter("location")
     public String getLocation ( ) { 
@@ -78,7 +80,7 @@ public class PhoneValidateResponse
     }
     
     /** SETTER
-     * Number location (could be a city, region or country)
+     * The phone number location. Could be a city, region or country depending on the type of number
      */
     @JsonSetter("location")
     public void setLocation (String value) { 
@@ -86,7 +88,7 @@ public class PhoneValidateResponse
     }
  
     /** GETTER
-     * Is this a mobile number
+     * True if this is a mobile number (only true with 100% certainty, if the number type is unknown this value will be false)
      */
     @JsonGetter("isMobile")
     public boolean getIsMobile ( ) { 
@@ -94,7 +96,7 @@ public class PhoneValidateResponse
     }
     
     /** SETTER
-     * Is this a mobile number
+     * True if this is a mobile number (only true with 100% certainty, if the number type is unknown this value will be false)
      */
     @JsonSetter("isMobile")
     public void setIsMobile (boolean value) { 
@@ -102,7 +104,7 @@ public class PhoneValidateResponse
     }
  
     /** GETTER
-     * The number type, possible values are: mobile, fixed-line, premium-rate, toll-free, voip, unknown
+     * The predicted number type.<br/>Note: type detection is not possible in some countries which have no predictable prefix pattern (you can use the HLR Lookup API in these cases)<br/> Possible values are:<br/><ul><li>mobile</li><li>fixed-line</li><li>premium-rate</li><li>toll-free</li><li>voip</li><li>unknown (use HLR lookup instead)</li></ul>
      */
     @JsonGetter("type")
     public String getType ( ) { 
@@ -110,7 +112,7 @@ public class PhoneValidateResponse
     }
     
     /** SETTER
-     * The number type, possible values are: mobile, fixed-line, premium-rate, toll-free, voip, unknown
+     * The predicted number type.<br/>Note: type detection is not possible in some countries which have no predictable prefix pattern (you can use the HLR Lookup API in these cases)<br/> Possible values are:<br/><ul><li>mobile</li><li>fixed-line</li><li>premium-rate</li><li>toll-free</li><li>voip</li><li>unknown (use HLR lookup instead)</li></ul>
      */
     @JsonSetter("type")
     public void setType (String value) { 
@@ -118,7 +120,7 @@ public class PhoneValidateResponse
     }
  
     /** GETTER
-     * Number represented in international format
+     * The number represented in full international format (E.164)
      */
     @JsonGetter("internationalNumber")
     public String getInternationalNumber ( ) { 
@@ -126,7 +128,7 @@ public class PhoneValidateResponse
     }
     
     /** SETTER
-     * Number represented in international format
+     * The number represented in full international format (E.164)
      */
     @JsonSetter("internationalNumber")
     public void setInternationalNumber (String value) { 
@@ -134,7 +136,7 @@ public class PhoneValidateResponse
     }
  
     /** GETTER
-     * Number represented in local format
+     * The number represented in local dialing format
      */
     @JsonGetter("localNumber")
     public String getLocalNumber ( ) { 
@@ -142,7 +144,7 @@ public class PhoneValidateResponse
     }
     
     /** SETTER
-     * Number represented in local format
+     * The number represented in local dialing format
      */
     @JsonSetter("localNumber")
     public void setLocalNumber (String value) { 
@@ -165,5 +167,36 @@ public class PhoneValidateResponse
         this.country = value;
     }
  
-}
+    /** GETTER
+     * The phone number country as an ISO 3-letter country code
+     */
+    @JsonGetter("countryCode3")
+    public String getCountryCode3 ( ) { 
+        return this.countryCode3;
+    }
+    
+    /** SETTER
+     * The phone number country as an ISO 3-letter country code
+     */
+    @JsonSetter("countryCode3")
+    public void setCountryCode3 (String value) { 
+        this.countryCode3 = value;
+    }
  
+    /** GETTER
+     * ISO 4217 currency code associated with the country
+     */
+    @JsonGetter("currencyCode")
+    public String getCurrencyCode ( ) { 
+        return this.currencyCode;
+    }
+    
+    /** SETTER
+     * ISO 4217 currency code associated with the country
+     */
+    @JsonSetter("currencyCode")
+    public void setCurrencyCode (String value) { 
+        this.currencyCode = value;
+    }
+ 
+}

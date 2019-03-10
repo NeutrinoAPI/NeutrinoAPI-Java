@@ -19,7 +19,7 @@ public class IPInfoResponseBuilder {
     }
 
     /**
-     * Is this a valid IP address
+     * Is this a valid IPv4 or IPv6 address
      */
     public IPInfoResponseBuilder valid(boolean valid) {
         iPInfoResponse.setValid(valid);
@@ -61,7 +61,7 @@ public class IPInfoResponseBuilder {
     /**
      * Location latitude
      */
-    public IPInfoResponseBuilder latitude(double latitude) {
+    public IPInfoResponseBuilder latitude(int latitude) {
         iPInfoResponse.setLatitude(latitude);
         return this;
     }
@@ -77,7 +77,7 @@ public class IPInfoResponseBuilder {
     /**
      * Location longitude
      */
-    public IPInfoResponseBuilder longitude(double longitude) {
+    public IPInfoResponseBuilder longitude(int longitude) {
         iPInfoResponse.setLongitude(longitude);
         return this;
     }
@@ -87,6 +87,30 @@ public class IPInfoResponseBuilder {
      */
     public IPInfoResponseBuilder continentCode(String continentCode) {
         iPInfoResponse.setContinentCode(continentCode);
+        return this;
+    }
+
+    /**
+     * The IP address
+     */
+    public IPInfoResponseBuilder ip(String ip) {
+        iPInfoResponse.setIp(ip);
+        return this;
+    }
+
+    /**
+     * ISO 3-letter country code
+     */
+    public IPInfoResponseBuilder countryCode3(String countryCode3) {
+        iPInfoResponse.setCountryCode3(countryCode3);
+        return this;
+    }
+
+    /**
+     * ISO 4217 currency code associated with the country
+     */
+    public IPInfoResponseBuilder currencyCode(String currencyCode) {
+        iPInfoResponse.setCurrencyCode(currencyCode);
         return this;
     }
     /**

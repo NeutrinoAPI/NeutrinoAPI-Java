@@ -19,7 +19,7 @@ public class BadWordFilterResponseBuilder {
     }
 
     /**
-     * Array of the bad words found
+     * An array of the bad words found
      */
     public BadWordFilterResponseBuilder badWordsList(List<String> badWordsList) {
         badWordFilterResponse.setBadWordsList(badWordsList);

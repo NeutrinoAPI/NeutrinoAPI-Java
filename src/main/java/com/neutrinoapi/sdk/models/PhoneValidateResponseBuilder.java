@@ -27,15 +27,15 @@ public class PhoneValidateResponseBuilder {
     }
 
     /**
-     * Numbers international calling code
+     * The international calling code
      */
-    public PhoneValidateResponseBuilder internationalCallingCode(String internationalCallingCode) {
+    public PhoneValidateResponseBuilder internationalCallingCode(int internationalCallingCode) {
         phoneValidateResponse.setInternationalCallingCode(internationalCallingCode);
         return this;
     }
 
     /**
-     * Number location ISO 2-letter country code
+     * The phone number country as an ISO 2-letter country code
      */
     public PhoneValidateResponseBuilder countryCode(String countryCode) {
         phoneValidateResponse.setCountryCode(countryCode);
@@ -43,7 +43,7 @@ public class PhoneValidateResponseBuilder {
     }
 
     /**
-     * Number location (could be a city, region or country)
+     * The phone number location. Could be a city, region or country depending on the type of number
      */
     public PhoneValidateResponseBuilder location(String location) {
         phoneValidateResponse.setLocation(location);
@@ -51,7 +51,7 @@ public class PhoneValidateResponseBuilder {
     }
 
     /**
-     * Is this a mobile number
+     * True if this is a mobile number (only true with 100% certainty, if the number type is unknown this value will be false)
      */
     public PhoneValidateResponseBuilder isMobile(boolean isMobile) {
         phoneValidateResponse.setIsMobile(isMobile);
@@ -59,7 +59,7 @@ public class PhoneValidateResponseBuilder {
     }
 
     /**
-     * The number type, possible values are: mobile, fixed-line, premium-rate, toll-free, voip, unknown
+     * The predicted number type.<br/>Note: type detection is not possible in some countries which have no predictable prefix pattern (you can use the HLR Lookup API in these cases)<br/> Possible values are:<br/><ul><li>mobile</li><li>fixed-line</li><li>premium-rate</li><li>toll-free</li><li>voip</li><li>unknown (use HLR lookup instead)</li></ul>
      */
     public PhoneValidateResponseBuilder type(String type) {
         phoneValidateResponse.setType(type);
@@ -67,7 +67,7 @@ public class PhoneValidateResponseBuilder {
     }
 
     /**
-     * Number represented in international format
+     * The number represented in full international format (E.164)
      */
     public PhoneValidateResponseBuilder internationalNumber(String internationalNumber) {
         phoneValidateResponse.setInternationalNumber(internationalNumber);
@@ -75,7 +75,7 @@ public class PhoneValidateResponseBuilder {
     }
 
     /**
-     * Number represented in local format
+     * The number represented in local dialing format
      */
     public PhoneValidateResponseBuilder localNumber(String localNumber) {
         phoneValidateResponse.setLocalNumber(localNumber);
@@ -87,6 +87,22 @@ public class PhoneValidateResponseBuilder {
      */
     public PhoneValidateResponseBuilder country(String country) {
         phoneValidateResponse.setCountry(country);
+        return this;
+    }
+
+    /**
+     * The phone number country as an ISO 3-letter country code
+     */
+    public PhoneValidateResponseBuilder countryCode3(String countryCode3) {
+        phoneValidateResponse.setCountryCode3(countryCode3);
+        return this;
+    }
+
+    /**
+     * ISO 4217 currency code associated with the country
+     */
+    public PhoneValidateResponseBuilder currencyCode(String currencyCode) {
+        phoneValidateResponse.setCurrencyCode(currencyCode);
         return this;
     }
     /**

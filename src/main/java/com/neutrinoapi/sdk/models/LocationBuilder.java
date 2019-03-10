@@ -51,6 +51,14 @@ public class LocationBuilder {
     }
 
     /**
+     * The ISO 3-letter country code of the location
+     */
+    public LocationBuilder countryCode3(String countryCode3) {
+        location.setCountryCode3(countryCode3);
+        return this;
+    }
+
+    /**
      * The location latitude
      */
     public LocationBuilder latitude(double latitude) {

@@ -11,12 +11,13 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class Blacklist 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5634578064850152347L;
+    private static final long serialVersionUID = 2235891723137896456L;
     private boolean isListed;
     private String listHost;
     private int listRating;
     private String listName;
     private String txtRecord;
+    private String returnCode;
     private int responseTime;
     /** GETTER
      * true if listed, false if not
@@ -99,6 +100,22 @@ public class Blacklist
     }
  
     /** GETTER
+     * the specific return code for this listing (if listed)
+     */
+    @JsonGetter("returnCode")
+    public String getReturnCode ( ) { 
+        return this.returnCode;
+    }
+    
+    /** SETTER
+     * the specific return code for this listing (if listed)
+     */
+    @JsonSetter("returnCode")
+    public void setReturnCode (String value) { 
+        this.returnCode = value;
+    }
+ 
+    /** GETTER
      * the DNSBL server response time in milliseconds
      */
     @JsonGetter("responseTime")
@@ -115,4 +132,3 @@ public class Blacklist
     }
  
 }
- 

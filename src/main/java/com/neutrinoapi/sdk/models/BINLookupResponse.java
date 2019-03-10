@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class BINLookupResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5371030463009267433L;
+    private static final long serialVersionUID = 1942627665655600917L;
     private String country;
     private String ipCity;
     private boolean ipMatchesBin;
@@ -28,8 +28,11 @@ public class BINLookupResponse
     private String ipRegion;
     private String cardBrand;
     private String issuerPhone;
+    private String countryCode3;
+    private String currencyCode;
+    private String ipCountryCode3;
     /** GETTER
-     * Full country name of the issuer
+     * The full country name of the issuer
      */
     @JsonGetter("country")
     public String getCountry ( ) { 
@@ -37,7 +40,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * Full country name of the issuer
+     * The full country name of the issuer
      */
     @JsonSetter("country")
     public void setCountry (String value) { 
@@ -45,7 +48,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * The city name (if detectable) from the customer IP
+     * The city of the customers IP (if detectable)
      */
     @JsonGetter("ipCity")
     public String getIpCity ( ) { 
@@ -53,7 +56,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * The city name (if detectable) from the customer IP
+     * The city of the customers IP (if detectable)
      */
     @JsonSetter("ipCity")
     public void setIpCity (String value) { 
@@ -61,7 +64,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * True if the customer IP address country matches the BIN country
+     * True if the customers IP country matches the BIN country
      */
     @JsonGetter("ipMatchesBin")
     public boolean getIpMatchesBin ( ) { 
@@ -69,7 +72,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * True if the customer IP address country matches the BIN country
+     * True if the customers IP country matches the BIN country
      */
     @JsonSetter("ipMatchesBin")
     public void setIpMatchesBin (boolean value) { 
@@ -93,7 +96,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * The card category (if known)
+     * The card category. There are many different card categories the most common card categories are: CLASSIC, BUSINESS, CORPORATE, PLATINUM, PREPAID
      */
     @JsonGetter("cardCategory")
     public String getCardCategory ( ) { 
@@ -101,7 +104,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * The card category (if known)
+     * The card category. There are many different card categories the most common card categories are: CLASSIC, BUSINESS, CORPORATE, PLATINUM, PREPAID
      */
     @JsonSetter("cardCategory")
     public void setCardCategory (String value) { 
@@ -109,7 +112,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * The ISO 2-letter country code detected from the customer IP
+     * The ISO 2-letter country code of the customers IP
      */
     @JsonGetter("ipCountryCode")
     public String getIpCountryCode ( ) { 
@@ -117,7 +120,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * The ISO 2-letter country code detected from the customer IP
+     * The ISO 2-letter country code of the customers IP
      */
     @JsonSetter("ipCountryCode")
     public void setIpCountryCode (String value) { 
@@ -125,7 +128,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * The country detected from the customer IP
+     * The country of the customers IP
      */
     @JsonGetter("ipCountry")
     public String getIpCountry ( ) { 
@@ -133,7 +136,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * The country detected from the customer IP
+     * The country of the customers IP
      */
     @JsonSetter("ipCountry")
     public void setIpCountry (String value) { 
@@ -141,7 +144,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * The card issuer (if known)
+     * The card issuer
      */
     @JsonGetter("issuer")
     public String getIssuer ( ) { 
@@ -149,7 +152,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * The card issuer (if known)
+     * The card issuer
      */
     @JsonSetter("issuer")
     public void setIssuer (String value) { 
@@ -157,7 +160,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * True if the customer IP is listed on one of our blocklists, see the IP Blocklist API for more details
+     * True if the customers IP is listed on one of our blocklists, see the <a href="http://www.neutrinoapi.com/api/ip-blocklist/">IP Blocklist API</a>
      */
     @JsonGetter("ipBlocklisted")
     public boolean getIpBlocklisted ( ) { 
@@ -165,7 +168,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * True if the customer IP is listed on one of our blocklists, see the IP Blocklist API for more details
+     * True if the customers IP is listed on one of our blocklists, see the <a href="http://www.neutrinoapi.com/api/ip-blocklist/">IP Blocklist API</a>
      */
     @JsonSetter("ipBlocklisted")
     public void setIpBlocklisted (boolean value) { 
@@ -205,7 +208,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * The card issuer website (if known)
+     * The card issuers website
      */
     @JsonGetter("issuerWebsite")
     public String getIssuerWebsite ( ) { 
@@ -213,7 +216,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * The card issuer website (if known)
+     * The card issuers website
      */
     @JsonSetter("issuerWebsite")
     public void setIssuerWebsite (String value) { 
@@ -221,7 +224,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * ISO 2-letter country code of the issuer
+     * The ISO 2-letter country code of the issuer
      */
     @JsonGetter("countryCode")
     public String getCountryCode ( ) { 
@@ -229,7 +232,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * ISO 2-letter country code of the issuer
+     * The ISO 2-letter country code of the issuer
      */
     @JsonSetter("countryCode")
     public void setCountryCode (String value) { 
@@ -237,7 +240,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * The region name (if detectable) from the customer IP
+     * The region of the customers IP (if detectable)
      */
     @JsonGetter("ipRegion")
     public String getIpRegion ( ) { 
@@ -245,7 +248,7 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * The region name (if detectable) from the customer IP
+     * The region of the customers IP (if detectable)
      */
     @JsonSetter("ipRegion")
     public void setIpRegion (String value) { 
@@ -269,7 +272,7 @@ public class BINLookupResponse
     }
  
     /** GETTER
-     * The card issuer phone number (if known)
+     * The card issuers phone number
      */
     @JsonGetter("issuerPhone")
     public String getIssuerPhone ( ) { 
@@ -277,12 +280,59 @@ public class BINLookupResponse
     }
     
     /** SETTER
-     * The card issuer phone number (if known)
+     * The card issuers phone number
      */
     @JsonSetter("issuerPhone")
     public void setIssuerPhone (String value) { 
         this.issuerPhone = value;
     }
  
-}
+    /** GETTER
+     * The ISO 3-letter country code of the issuer
+     */
+    @JsonGetter("countryCode3")
+    public String getCountryCode3 ( ) { 
+        return this.countryCode3;
+    }
+    
+    /** SETTER
+     * The ISO 3-letter country code of the issuer
+     */
+    @JsonSetter("countryCode3")
+    public void setCountryCode3 (String value) { 
+        this.countryCode3 = value;
+    }
  
+    /** GETTER
+     * ISO 4217 currency code associated with the country of the issuer
+     */
+    @JsonGetter("currencyCode")
+    public String getCurrencyCode ( ) { 
+        return this.currencyCode;
+    }
+    
+    /** SETTER
+     * ISO 4217 currency code associated with the country of the issuer
+     */
+    @JsonSetter("currencyCode")
+    public void setCurrencyCode (String value) { 
+        this.currencyCode = value;
+    }
+ 
+    /** GETTER
+     * The ISO 3-letter country code of the customers IP
+     */
+    @JsonGetter("ipCountryCode3")
+    public String getIpCountryCode3 ( ) { 
+        return this.ipCountryCode3;
+    }
+    
+    /** SETTER
+     * The ISO 3-letter country code of the customers IP
+     */
+    @JsonSetter("ipCountryCode3")
+    public void setIpCountryCode3 (String value) { 
+        this.ipCountryCode3 = value;
+    }
+ 
+}

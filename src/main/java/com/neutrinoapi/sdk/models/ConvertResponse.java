@@ -11,14 +11,14 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class ConvertResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5419771212143231968L;
+    private static final long serialVersionUID = -3799666871329753926L;
     private boolean valid;
     private String result;
     private String fromValue;
     private String toType;
     private String fromType;
     /** GETTER
-     * Was the coversion successful and produced a valid result
+     * True if the coversion was successful and produced a valid result
      */
     @JsonGetter("valid")
     public boolean getValid ( ) { 
@@ -26,7 +26,7 @@ public class ConvertResponse
     }
     
     /** SETTER
-     * Was the coversion successful and produced a valid result
+     * True if the coversion was successful and produced a valid result
      */
     @JsonSetter("valid")
     public void setValid (boolean value) { 
@@ -98,4 +98,3 @@ public class ConvertResponse
     }
  
 }
- 

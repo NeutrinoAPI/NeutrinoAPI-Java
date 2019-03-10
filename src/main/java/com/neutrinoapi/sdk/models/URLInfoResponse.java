@@ -11,10 +11,10 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class URLInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5416808471048729505L;
-    private String httpStatusMessage;
+    private static final long serialVersionUID = 6643852703878624010L;
+    private int httpStatusMessage;
     private String serverRegion;
-    private LinkedHashMap<String, Object> query;
+    private LinkedHashMap<String, String> query;
     private String serverName;
     private int urlPort;
     private String serverCountry;
@@ -24,7 +24,7 @@ public class URLInfoResponse
     private String url;
     private boolean valid;
     private String serverHostname;
-    private double loadTime;
+    private int loadTime;
     private boolean httpOk;
     private int contentSize;
     private int httpStatus;
@@ -39,7 +39,7 @@ public class URLInfoResponse
      * The HTTP status message assoicated with the status code
      */
     @JsonGetter("httpStatusMessage")
-    public String getHttpStatusMessage ( ) { 
+    public int getHttpStatusMessage ( ) { 
         return this.httpStatusMessage;
     }
     
@@ -47,12 +47,12 @@ public class URLInfoResponse
      * The HTTP status message assoicated with the status code
      */
     @JsonSetter("httpStatusMessage")
-    public void setHttpStatusMessage (String value) { 
+    public void setHttpStatusMessage (int value) { 
         this.httpStatusMessage = value;
     }
  
     /** GETTER
-     * Server IP geo-location: full region name (if detectable)
+     * The servers IP geo-location: full region name (if detectable)
      */
     @JsonGetter("serverRegion")
     public String getServerRegion ( ) { 
@@ -60,7 +60,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * Server IP geo-location: full region name (if detectable)
+     * The servers IP geo-location: full region name (if detectable)
      */
     @JsonSetter("serverRegion")
     public void setServerRegion (String value) { 
@@ -68,18 +68,18 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * A key:value map of the URL query paramaters
+     * A key-value map of the URL query paramaters
      */
     @JsonGetter("query")
-    public LinkedHashMap<String, Object> getQuery ( ) { 
+    public LinkedHashMap<String, String> getQuery ( ) { 
         return this.query;
     }
     
     /** SETTER
-     * A key:value map of the URL query paramaters
+     * A key-value map of the URL query paramaters
      */
     @JsonSetter("query")
-    public void setQuery (LinkedHashMap<String, Object> value) { 
+    public void setQuery (LinkedHashMap<String, String> value) { 
         this.query = value;
     }
  
@@ -116,7 +116,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * Server IP geo-location: full country name
+     * The servers IP geo-location: full country name
      */
     @JsonGetter("serverCountry")
     public String getServerCountry ( ) { 
@@ -124,7 +124,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * Server IP geo-location: full country name
+     * The servers IP geo-location: full country name
      */
     @JsonSetter("serverCountry")
     public void setServerCountry (String value) { 
@@ -148,7 +148,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * Server IP geo-location: full city name (if detectable)
+     * The servers IP geo-location: full city name (if detectable)
      */
     @JsonGetter("serverCity")
     public String getServerCity ( ) { 
@@ -156,7 +156,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * Server IP geo-location: full city name (if detectable)
+     * The servers IP geo-location: full city name (if detectable)
      */
     @JsonSetter("serverCity")
     public void setServerCity (String value) { 
@@ -180,7 +180,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * The fully qualified URL. This may be different to the URL requested if http-redirect is True
+     * The fully qualified URL. This may be different to the URL requested if http-redirect is true
      */
     @JsonGetter("url")
     public String getUrl ( ) { 
@@ -188,7 +188,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * The fully qualified URL. This may be different to the URL requested if http-redirect is True
+     * The fully qualified URL. This may be different to the URL requested if http-redirect is true
      */
     @JsonSetter("url")
     public void setUrl (String value) { 
@@ -212,7 +212,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * The server hostname (PTR)
+     * The servers hostname (PTR record)
      */
     @JsonGetter("serverHostname")
     public String getServerHostname ( ) { 
@@ -220,7 +220,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * The server hostname (PTR)
+     * The servers hostname (PTR record)
      */
     @JsonSetter("serverHostname")
     public void setServerHostname (String value) { 
@@ -228,18 +228,18 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * The time taken to load the URL content (in seconds)
+     * The time taken to load the URL content in seconds
      */
     @JsonGetter("loadTime")
-    public double getLoadTime ( ) { 
+    public int getLoadTime ( ) { 
         return this.loadTime;
     }
     
     /** SETTER
-     * The time taken to load the URL content (in seconds)
+     * The time taken to load the URL content in seconds
      */
     @JsonSetter("loadTime")
-    public void setLoadTime (double value) { 
+    public void setLoadTime (int value) { 
         this.loadTime = value;
     }
  
@@ -276,7 +276,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * The HTTP status code this URL responded with
+     * The HTTP status code this URL responded with. An HTTP status of 0 indicates a network level issue
      */
     @JsonGetter("httpStatus")
     public int getHttpStatus ( ) { 
@@ -284,7 +284,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * The HTTP status code this URL responded with
+     * The HTTP status code this URL responded with. An HTTP status of 0 indicates a network level issue
      */
     @JsonSetter("httpStatus")
     public void setHttpStatus (int value) { 
@@ -292,7 +292,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * Server IP geo-location: ISO 2-letter country code
+     * The servers IP geo-location: ISO 2-letter country code
      */
     @JsonGetter("serverCountryCode")
     public String getServerCountryCode ( ) { 
@@ -300,7 +300,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * Server IP geo-location: ISO 2-letter country code
+     * The servers IP geo-location: ISO 2-letter country code
      */
     @JsonSetter("serverCountryCode")
     public void setServerCountryCode (String value) { 
@@ -308,7 +308,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * The encoding type the URL uses
+     * The encoding format the URL uses
      */
     @JsonGetter("contentEncoding")
     public String getContentEncoding ( ) { 
@@ -316,7 +316,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * The encoding type the URL uses
+     * The encoding format the URL uses
      */
     @JsonSetter("contentEncoding")
     public void setContentEncoding (String value) { 
@@ -340,7 +340,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * The URL protocol (usually http or https)
+     * The URL protocol, usually http or https
      */
     @JsonGetter("urlProtocol")
     public String getUrlProtocol ( ) { 
@@ -348,7 +348,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * The URL protocol (usually http or https)
+     * The URL protocol, usually http or https
      */
     @JsonSetter("urlProtocol")
     public void setUrlProtocol (String value) { 
@@ -356,7 +356,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * The content-type the URL points to
+     * The content-type this URL serves
      */
     @JsonGetter("contentType")
     public String getContentType ( ) { 
@@ -364,7 +364,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * The content-type the URL points to
+     * The content-type this URL serves
      */
     @JsonSetter("contentType")
     public void setContentType (String value) { 
@@ -372,7 +372,7 @@ public class URLInfoResponse
     }
  
     /** GETTER
-     * True if this URL responded with a HTTP redirect
+     * True if this URL responded with an HTTP redirect
      */
     @JsonGetter("httpRedirect")
     public boolean getHttpRedirect ( ) { 
@@ -380,7 +380,7 @@ public class URLInfoResponse
     }
     
     /** SETTER
-     * True if this URL responded with a HTTP redirect
+     * True if this URL responded with an HTTP redirect
      */
     @JsonSetter("httpRedirect")
     public void setHttpRedirect (boolean value) { 
@@ -404,4 +404,3 @@ public class URLInfoResponse
     }
  
 }
- 

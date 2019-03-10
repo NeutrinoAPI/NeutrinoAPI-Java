@@ -35,7 +35,7 @@ public class IPProbeResponseBuilder {
     }
 
     /**
-     * The detected provider type. See online API docs for specific provider type details
+     * The detected provider type, possible values are:<br/><ul><li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li><li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li><li>vpn - IP belongs to a VPN provider</li><li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li><li>university - IP belongs to a university/college/campus</li><li>government - IP belongs to a government department. This includes military facilities</li><li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li><li>unknown - could not identify the provider type</li></ul>
      */
     public IPProbeResponseBuilder providerType(String providerType) {
         iPProbeResponse.setProviderType(providerType);
@@ -99,7 +99,7 @@ public class IPProbeResponseBuilder {
     }
 
     /**
-     * A description of the provider, usually extracted from the providers website or WHOIS record
+     * A description of the provider (usually extracted from the providers website)
      */
     public IPProbeResponseBuilder providerDescription(String providerDescription) {
         iPProbeResponse.setProviderDescription(providerDescription);
@@ -123,10 +123,98 @@ public class IPProbeResponseBuilder {
     }
 
     /**
-     * True if this IP belongs to an ISP. Note that this can still be true even if the provider type is VPN/proxy, this occurs in the case that the IP is detected as both types
+     * True if this IP belongs to an internet service provider. Note that this can still be true even if the provider type is VPN/proxy, this occurs in the case that the IP is detected as both types
      */
     public IPProbeResponseBuilder isIsp(boolean isIsp) {
         iPProbeResponse.setIsIsp(isIsp);
+        return this;
+    }
+
+    /**
+     * ISO 3-letter country code
+     */
+    public IPProbeResponseBuilder countryCode3(String countryCode3) {
+        iPProbeResponse.setCountryCode3(countryCode3);
+        return this;
+    }
+
+    /**
+     * ISO 4217 currency code associated with the country
+     */
+    public IPProbeResponseBuilder currencyCode(String currencyCode) {
+        iPProbeResponse.setCurrencyCode(currencyCode);
+        return this;
+    }
+
+    /**
+     * True if this IP ia a VPN
+     */
+    public IPProbeResponseBuilder isVpn(boolean isVpn) {
+        iPProbeResponse.setIsVpn(isVpn);
+        return this;
+    }
+
+    /**
+     * True if this IP ia a proxy
+     */
+    public IPProbeResponseBuilder isProxy(boolean isProxy) {
+        iPProbeResponse.setIsProxy(isProxy);
+        return this;
+    }
+
+    /**
+     * The autonomous system (AS) number
+     */
+    public IPProbeResponseBuilder asn(String asn) {
+        iPProbeResponse.setAsn(asn);
+        return this;
+    }
+
+    /**
+     * The autonomous system (AS) CIDR range
+     */
+    public IPProbeResponseBuilder asCidr(String asCidr) {
+        iPProbeResponse.setAsCidr(asCidr);
+        return this;
+    }
+
+    /**
+     * The autonomous system (AS) ISO 2-letter country code
+     */
+    public IPProbeResponseBuilder asCountryCode(String asCountryCode) {
+        iPProbeResponse.setAsCountryCode(asCountryCode);
+        return this;
+    }
+
+    /**
+     * The autonomous system (AS) ISO 3-letter country code
+     */
+    public IPProbeResponseBuilder asCountryCode3(String asCountryCode3) {
+        iPProbeResponse.setAsCountryCode3(asCountryCode3);
+        return this;
+    }
+
+    /**
+     * Array of all the domains associated with the autonomous system (AS)
+     */
+    public IPProbeResponseBuilder asDomains(List<String> asDomains) {
+        iPProbeResponse.setAsDomains(asDomains);
+        return this;
+    }
+
+    /**
+     * The autonomous system (AS) description / company name
+     */
+    public IPProbeResponseBuilder asDescription(String asDescription) {
+        iPProbeResponse.setAsDescription(asDescription);
+        return this;
+    }
+
+    /**
+     * The age of the autonomous system (AS) in number of years since registration
+     */
+    public IPProbeResponseBuilder asAge(int asAge) {
+        iPProbeResponse.setAsAge(asAge);
         return this;
     }
     /**

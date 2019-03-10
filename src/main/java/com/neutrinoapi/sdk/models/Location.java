@@ -11,11 +11,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class Location 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5150468361837436280L;
+    private static final long serialVersionUID = 6552270703335674298L;
     private String country;
     private String address;
     private String city;
     private String countryCode;
+    private String countryCode3;
     private double latitude;
     private String postalCode;
     private double longitude;
@@ -83,6 +84,22 @@ public class Location
     @JsonSetter("countryCode")
     public void setCountryCode (String value) { 
         this.countryCode = value;
+    }
+ 
+    /** GETTER
+     * The ISO 3-letter country code of the location
+     */
+    @JsonGetter("countryCode3")
+    public String getCountryCode3 ( ) { 
+        return this.countryCode3;
+    }
+    
+    /** SETTER
+     * The ISO 3-letter country code of the location
+     */
+    @JsonSetter("countryCode3")
+    public void setCountryCode3 (String value) { 
+        this.countryCode3 = value;
     }
  
     /** GETTER
@@ -166,4 +183,3 @@ public class Location
     }
  
 }
- 
