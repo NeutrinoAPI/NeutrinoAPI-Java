@@ -8,10 +8,13 @@ package com.neutrinoapi.sdk.models;
 import java.util.*;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.ALWAYS)
 public class HLRLookupResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 5590493695433213319L;
+    private static final long serialVersionUID = 3390162582667162892L;
     private boolean numberValid;
     private int internationalCallingCode;
     private String mnc;
@@ -34,6 +37,7 @@ public class HLRLookupResponse
     private String countryCode3;
     private String currencyCode;
     private String roamingCountryCode;
+    private String msc;
     /** GETTER
      * True if this a valid phone number
      */
@@ -67,7 +71,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The mobile MNC number
+     * The mobile MNC number (Mobile Network Code)
      */
     @JsonGetter("mnc")
     public String getMnc ( ) { 
@@ -75,7 +79,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The mobile MNC number
+     * The mobile MNC number (Mobile Network Code)
      */
     @JsonSetter("mnc")
     public void setMnc (String value) { 
@@ -147,7 +151,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The mobile IMSI number
+     * The mobile IMSI number (International Mobile Subscriber Identity)
      */
     @JsonGetter("imsi")
     public String getImsi ( ) { 
@@ -155,7 +159,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The mobile IMSI number
+     * The mobile IMSI number (International Mobile Subscriber Identity)
      */
     @JsonSetter("imsi")
     public void setImsi (String value) { 
@@ -163,7 +167,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The mobile MCC number
+     * The mobile MCC number (Mobile Country Code)
      */
     @JsonGetter("mcc")
     public String getMcc ( ) { 
@@ -171,7 +175,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The mobile MCC number
+     * The mobile MCC number (Mobile Country Code)
      */
     @JsonSetter("mcc")
     public void setMcc (String value) { 
@@ -243,7 +247,7 @@ public class HLRLookupResponse
     }
  
     /** GETTER
-     * The mobile MSIN number
+     * The mobile MSIN number (Mobile Subscription Identification Number)
      */
     @JsonGetter("msin")
     public String getMsin ( ) { 
@@ -251,7 +255,7 @@ public class HLRLookupResponse
     }
     
     /** SETTER
-     * The mobile MSIN number
+     * The mobile MSIN number (Mobile Subscription Identification Number)
      */
     @JsonSetter("msin")
     public void setMsin (String value) { 
@@ -384,6 +388,22 @@ public class HLRLookupResponse
     @JsonSetter("roamingCountryCode")
     public void setRoamingCountryCode (String value) { 
         this.roamingCountryCode = value;
+    }
+ 
+    /** GETTER
+     * The mobile MSC number (Mobile Switching Center)
+     */
+    @JsonGetter("msc")
+    public String getMsc ( ) { 
+        return this.msc;
+    }
+    
+    /** SETTER
+     * The mobile MSC number (Mobile Switching Center)
+     */
+    @JsonSetter("msc")
+    public void setMsc (String value) { 
+        this.msc = value;
     }
  
 }

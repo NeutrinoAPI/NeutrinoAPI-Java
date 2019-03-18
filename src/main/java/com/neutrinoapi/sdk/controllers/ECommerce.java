@@ -143,8 +143,7 @@ public class ECommerce extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
+                        if (getHttpCallBack() != null) {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

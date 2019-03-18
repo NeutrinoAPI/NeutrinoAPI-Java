@@ -8,10 +8,13 @@ package com.neutrinoapi.sdk.models;
 import java.util.*;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.ALWAYS)
 public class BrowserBotResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 8540875543012418758L;
+    private static final long serialVersionUID = -6447929778385389756L;
     private String url;
     private String content;
     private String mimeType;
@@ -25,7 +28,7 @@ public class BrowserBotResponse
     private boolean isHttpRedirect;
     private String httpRedirectUrl;
     private String serverIp;
-    private int loadTime;
+    private double loadTime;
     private LinkedHashMap<String, String> responseHeaders;
     private boolean isSecure;
     private LinkedHashMap<String, String> securityDetails;
@@ -243,7 +246,7 @@ public class BrowserBotResponse
      * The number of seconds taken to load the page (from initial request until DOM ready)
      */
     @JsonGetter("loadTime")
-    public int getLoadTime ( ) { 
+    public double getLoadTime ( ) { 
         return this.loadTime;
     }
     
@@ -251,7 +254,7 @@ public class BrowserBotResponse
      * The number of seconds taken to load the page (from initial request until DOM ready)
      */
     @JsonSetter("loadTime")
-    public void setLoadTime (int value) { 
+    public void setLoadTime (double value) { 
         this.loadTime = value;
     }
  

@@ -125,7 +125,7 @@ public class BrowserBotResponseBuilder {
     /**
      * The number of seconds taken to load the page (from initial request until DOM ready)
      */
-    public BrowserBotResponseBuilder loadTime(int loadTime) {
+    public BrowserBotResponseBuilder loadTime(double loadTime) {
         browserBotResponse.setLoadTime(loadTime);
         return this;
     }

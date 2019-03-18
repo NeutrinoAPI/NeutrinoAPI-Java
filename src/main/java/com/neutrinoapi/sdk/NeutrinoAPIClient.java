@@ -10,6 +10,14 @@ import com.neutrinoapi.sdk.http.client.HttpClient;
 
 public class NeutrinoAPIClient {
     /**
+     * Singleton access to WWW controller
+     * @return	Returns the WWW instance 
+     */
+    public WWW getWWW() {
+        return WWW.getInstance();
+    }
+
+    /**
      * Singleton access to Imaging controller
      * @return	Returns the Imaging instance 
      */
@@ -26,19 +34,11 @@ public class NeutrinoAPIClient {
     }
 
     /**
-     * Singleton access to DataTools controller
-     * @return	Returns the DataTools instance 
+     * Singleton access to ECommerce controller
+     * @return	Returns the ECommerce instance 
      */
-    public DataTools getDataTools() {
-        return DataTools.getInstance();
-    }
-
-    /**
-     * Singleton access to SecurityAndNetworking controller
-     * @return	Returns the SecurityAndNetworking instance 
-     */
-    public SecurityAndNetworking getSecurityAndNetworking() {
-        return SecurityAndNetworking.getInstance();
+    public ECommerce getECommerce() {
+        return ECommerce.getInstance();
     }
 
     /**
@@ -50,19 +50,19 @@ public class NeutrinoAPIClient {
     }
 
     /**
-     * Singleton access to ECommerce controller
-     * @return	Returns the ECommerce instance 
+     * Singleton access to SecurityAndNetworking controller
+     * @return	Returns the SecurityAndNetworking instance 
      */
-    public ECommerce getECommerce() {
-        return ECommerce.getInstance();
+    public SecurityAndNetworking getSecurityAndNetworking() {
+        return SecurityAndNetworking.getInstance();
     }
 
     /**
-     * Singleton access to WWW controller
-     * @return	Returns the WWW instance 
+     * Singleton access to DataTools controller
+     * @return	Returns the DataTools instance 
      */
-    public WWW getWWW() {
-        return WWW.getInstance();
+    public DataTools getDataTools() {
+        return DataTools.getInstance();
     }
 
     /**

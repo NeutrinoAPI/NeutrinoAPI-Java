@@ -35,7 +35,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The mobile MNC number
+     * The mobile MNC number (Mobile Network Code)
      */
     public HLRLookupResponseBuilder mnc(String mnc) {
         hLRLookupResponse.setMnc(mnc);
@@ -75,7 +75,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The mobile IMSI number
+     * The mobile IMSI number (International Mobile Subscriber Identity)
      */
     public HLRLookupResponseBuilder imsi(String imsi) {
         hLRLookupResponse.setImsi(imsi);
@@ -83,7 +83,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The mobile MCC number
+     * The mobile MCC number (Mobile Country Code)
      */
     public HLRLookupResponseBuilder mcc(String mcc) {
         hLRLookupResponse.setMcc(mcc);
@@ -123,7 +123,7 @@ public class HLRLookupResponseBuilder {
     }
 
     /**
-     * The mobile MSIN number
+     * The mobile MSIN number (Mobile Subscription Identification Number)
      */
     public HLRLookupResponseBuilder msin(String msin) {
         hLRLookupResponse.setMsin(msin);
@@ -191,6 +191,14 @@ public class HLRLookupResponseBuilder {
      */
     public HLRLookupResponseBuilder roamingCountryCode(String roamingCountryCode) {
         hLRLookupResponse.setRoamingCountryCode(roamingCountryCode);
+        return this;
+    }
+
+    /**
+     * The mobile MSC number (Mobile Switching Center)
+     */
+    public HLRLookupResponseBuilder msc(String msc) {
+        hLRLookupResponse.setMsc(msc);
         return this;
     }
     /**

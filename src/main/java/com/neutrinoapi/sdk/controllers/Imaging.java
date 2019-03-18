@@ -41,263 +41,6 @@ public class Imaging extends BaseController {
     }
 
     /**
-     * Resize an image and output as either JPEG or PNG. See: https://www.neutrinoapi.com/api/image-resize/
-     * @param    imageUrl    Required parameter: The URL to the source image
-     * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
-     * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
-     * @param    format    Optional parameter: The output image format, can be either png or jpg
-     * @return    Returns the InputStream response from the API call 
-     */
-    public InputStream imageResize(
-                final String imageUrl,
-                final int width,
-                final int height,
-                final String format
-    ) throws Throwable {
-        APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
-        imageResizeAsync(imageUrl, width, height, format, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
-    }
-
-    /**
-     * Resize an image and output as either JPEG or PNG. See: https://www.neutrinoapi.com/api/image-resize/
-     * @param    imageUrl    Required parameter: The URL to the source image
-     * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
-     * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
-     * @param    format    Optional parameter: The output image format, can be either png or jpg
-     * @return    Returns the void response from the API call 
-     */
-    public void imageResizeAsync(
-                final String imageUrl,
-                final int width,
-                final int height,
-                final String format,
-                final APICallBack<InputStream> callBack
-    ) {
-        Runnable _responseTask = new Runnable() {
-            public void run() {
-                final HttpRequest _request;
-
-                try {
-                    //the base uri for api requests
-                    String _baseUri = Configuration.baseUri;
-
-                    //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/image-resize");
-
-                    ///process query parameters
-                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
-                    _queryParameters.put("user-id", Configuration.userId);
-                    _queryParameters.put("api-key", Configuration.apiKey);
-                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
-
-                    //validate and preprocess url
-                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
-
-                    //load all headers for the outgoing API request
-                    Map<String, String> _headers = new HashMap<String, String>();
-                    _headers.put("user-agent", BaseController.userAgent);
-
-
-                    //load all fields for the outgoing API request
-                    Map<String, Object> _parameters = new HashMap<String, Object>();
-                    _parameters.put("image-url", imageUrl);
-                    _parameters.put("width", width);
-                    _parameters.put("height", height);
-                    if (format != null) {
-                        _parameters.put("format", (format != null) ? format : "png");
-                    }
-
-                    //prepare and invoke the API call request to fetch the response
-                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-                    //invoke the callback before request if its not null
-                    if (getHttpCallBack() != null) {
-                        getHttpCallBack().OnBeforeRequest(_request);
-                    }
-
-                } catch (Throwable e) {
-                    callBack.onFailure(null, e);
-                    return;
-                }
-
-                //invoke request and get response
-                getClientInstance().executeAsBinaryAsync(_request, new APICallBack<HttpResponse>() {
-                    public void onSuccess(HttpContext _context, HttpResponse _response) {
-                        try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null) {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            InputStream _result = _response.getRawBody();
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
-                        }
-                    }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
-
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
-                    }
-                });
-            }
-        };
-
-        //execute async using thread pool
-        APIHelper.getScheduler().execute(_responseTask);
-    }
-
-    /**
-     * Generate a QR code as a PNG image. See: https://www.neutrinoapi.com/api/qr-code/
-     * @param    content    Required parameter: The content to encode into the QR code (e.g. a URL or a phone number)
-     * @param    width    Optional parameter: The width of the QR code (in px)
-     * @param    height    Optional parameter: The height of the QR code (in px)
-     * @param    fgColor    Optional parameter: The QR code foreground color
-     * @param    bgColor    Optional parameter: The QR code background color
-     * @return    Returns the InputStream response from the API call 
-     */
-    public InputStream qRCode(
-                final String content,
-                final Integer width,
-                final Integer height,
-                final String fgColor,
-                final String bgColor
-    ) throws Throwable {
-        APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
-        qRCodeAsync(content, width, height, fgColor, bgColor, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
-    }
-
-    /**
-     * Generate a QR code as a PNG image. See: https://www.neutrinoapi.com/api/qr-code/
-     * @param    content    Required parameter: The content to encode into the QR code (e.g. a URL or a phone number)
-     * @param    width    Optional parameter: The width of the QR code (in px)
-     * @param    height    Optional parameter: The height of the QR code (in px)
-     * @param    fgColor    Optional parameter: The QR code foreground color
-     * @param    bgColor    Optional parameter: The QR code background color
-     * @return    Returns the void response from the API call 
-     */
-    public void qRCodeAsync(
-                final String content,
-                final Integer width,
-                final Integer height,
-                final String fgColor,
-                final String bgColor,
-                final APICallBack<InputStream> callBack
-    ) {
-        Runnable _responseTask = new Runnable() {
-            public void run() {
-                final HttpRequest _request;
-
-                try {
-                    //the base uri for api requests
-                    String _baseUri = Configuration.baseUri;
-
-                    //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/qr-code");
-
-                    ///process query parameters
-                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
-                    if (width != null) {
-                        _queryParameters.put("width", (width != null) ? width : 256);
-                    }
-                    _queryParameters.put("user-id", Configuration.userId);
-                    _queryParameters.put("api-key", Configuration.apiKey);
-                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
-
-                    //validate and preprocess url
-                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
-
-                    //load all headers for the outgoing API request
-                    Map<String, String> _headers = new HashMap<String, String>();
-                    _headers.put("user-agent", BaseController.userAgent);
-
-
-                    //load all fields for the outgoing API request
-                    Map<String, Object> _parameters = new HashMap<String, Object>();
-                    _parameters.put("content", content);
-                    if (height != null) {
-                        _parameters.put("height", (height != null) ? height : 256);
-                    }
-                    if (fgColor != null) {
-                        _parameters.put("fg-color", (fgColor != null) ? fgColor : "#000000");
-                    }
-                    if (bgColor != null) {
-                        _parameters.put("bg-color", (bgColor != null) ? bgColor : "#ffffff");
-                    }
-
-                    //prepare and invoke the API call request to fetch the response
-                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-                    //invoke the callback before request if its not null
-                    if (getHttpCallBack() != null) {
-                        getHttpCallBack().OnBeforeRequest(_request);
-                    }
-
-                } catch (Throwable e) {
-                    callBack.onFailure(null, e);
-                    return;
-                }
-
-                //invoke request and get response
-                getClientInstance().executeAsBinaryAsync(_request, new APICallBack<HttpResponse>() {
-                    public void onSuccess(HttpContext _context, HttpResponse _response) {
-                        try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null) {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            InputStream _result = _response.getRawBody();
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
-                        }
-                    }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
-
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
-                    }
-                });
-            }
-        };
-
-        //execute async using thread pool
-        APIHelper.getScheduler().execute(_responseTask);
-    }
-
-    /**
      * Watermark one image with another image. See: https://www.neutrinoapi.com/api/image-watermark/
      * @param    imageUrl    Required parameter: The URL to the source image
      * @param    watermarkUrl    Required parameter: The URL to the watermark image
@@ -427,8 +170,262 @@ public class Imaging extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
+                        if (getHttpCallBack() != null) {
+                            getHttpCallBack().OnAfterResponse(_context);
+                        }
+
+                        //let the caller know of the failure
+                        callBack.onFailure(_context, _error);
+                    }
+                });
+            }
+        };
+
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Generate a QR code as a PNG image. See: https://www.neutrinoapi.com/api/qr-code/
+     * @param    content    Required parameter: The content to encode into the QR code (e.g. a URL or a phone number)
+     * @param    width    Optional parameter: The width of the QR code (in px)
+     * @param    height    Optional parameter: The height of the QR code (in px)
+     * @param    fgColor    Optional parameter: The QR code foreground color
+     * @param    bgColor    Optional parameter: The QR code background color
+     * @return    Returns the InputStream response from the API call 
+     */
+    public InputStream qRCode(
+                final String content,
+                final Integer width,
+                final Integer height,
+                final String fgColor,
+                final String bgColor
+    ) throws Throwable {
+        APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
+        qRCodeAsync(content, width, height, fgColor, bgColor, callback);
+        if(!callback.isSuccess())
+            throw callback.getError();
+        return callback.getResult();
+    }
+
+    /**
+     * Generate a QR code as a PNG image. See: https://www.neutrinoapi.com/api/qr-code/
+     * @param    content    Required parameter: The content to encode into the QR code (e.g. a URL or a phone number)
+     * @param    width    Optional parameter: The width of the QR code (in px)
+     * @param    height    Optional parameter: The height of the QR code (in px)
+     * @param    fgColor    Optional parameter: The QR code foreground color
+     * @param    bgColor    Optional parameter: The QR code background color
+     * @return    Returns the void response from the API call 
+     */
+    public void qRCodeAsync(
+                final String content,
+                final Integer width,
+                final Integer height,
+                final String fgColor,
+                final String bgColor,
+                final APICallBack<InputStream> callBack
+    ) {
+        Runnable _responseTask = new Runnable() {
+            public void run() {
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/qr-code");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("content", content);
+                    if (width != null) {
+                        _parameters.put("width", (width != null) ? width : 256);
+                    }
+                    if (height != null) {
+                        _parameters.put("height", (height != null) ? height : 256);
+                    }
+                    if (fgColor != null) {
+                        _parameters.put("fg-color", (fgColor != null) ? fgColor : "#000000");
+                    }
+                    if (bgColor != null) {
+                        _parameters.put("bg-color", (bgColor != null) ? bgColor : "#ffffff");
+                    }
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
+                getClientInstance().executeAsBinaryAsync(_request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext _context, HttpResponse _response) {
+                        try {
+
+                            //invoke the callback after response if its not null
+                            if (getHttpCallBack() != null) {
+                                getHttpCallBack().OnAfterResponse(_context);
+                            }
+
+                            //handle errors defined at the API level
+                            validateResponse(_response, _context);
+
+                            //extract result from the http response
+                            InputStream _result = _response.getRawBody();
+                            //let the caller know of the success
+                            callBack.onSuccess(_context, _result);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(_context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext _context, Throwable _error) {
+                        //invoke the callback after response if its not null
+                        if (getHttpCallBack() != null) {
+                            getHttpCallBack().OnAfterResponse(_context);
+                        }
+
+                        //let the caller know of the failure
+                        callBack.onFailure(_context, _error);
+                    }
+                });
+            }
+        };
+
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Resize an image and output as either JPEG or PNG. See: https://www.neutrinoapi.com/api/image-resize/
+     * @param    imageUrl    Required parameter: The URL to the source image
+     * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
+     * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
+     * @param    format    Optional parameter: The output image format, can be either png or jpg
+     * @return    Returns the InputStream response from the API call 
+     */
+    public InputStream imageResize(
+                final String imageUrl,
+                final int width,
+                final int height,
+                final String format
+    ) throws Throwable {
+        APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
+        imageResizeAsync(imageUrl, width, height, format, callback);
+        if(!callback.isSuccess())
+            throw callback.getError();
+        return callback.getResult();
+    }
+
+    /**
+     * Resize an image and output as either JPEG or PNG. See: https://www.neutrinoapi.com/api/image-resize/
+     * @param    imageUrl    Required parameter: The URL to the source image
+     * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
+     * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
+     * @param    format    Optional parameter: The output image format, can be either png or jpg
+     * @return    Returns the void response from the API call 
+     */
+    public void imageResizeAsync(
+                final String imageUrl,
+                final int width,
+                final int height,
+                final String format,
+                final APICallBack<InputStream> callBack
+    ) {
+        Runnable _responseTask = new Runnable() {
+            public void run() {
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/image-resize");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("image-url", imageUrl);
+                    _parameters.put("width", width);
+                    _parameters.put("height", height);
+                    if (format != null) {
+                        _parameters.put("format", (format != null) ? format : "png");
+                    }
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
+                getClientInstance().executeAsBinaryAsync(_request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext _context, HttpResponse _response) {
+                        try {
+
+                            //invoke the callback after response if its not null
+                            if (getHttpCallBack() != null) {
+                                getHttpCallBack().OnAfterResponse(_context);
+                            }
+
+                            //handle errors defined at the API level
+                            validateResponse(_response, _context);
+
+                            //extract result from the http response
+                            InputStream _result = _response.getRawBody();
+                            //let the caller know of the success
+                            callBack.onSuccess(_context, _result);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(_context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext _context, Throwable _error) {
+                        //invoke the callback after response if its not null
+                        if (getHttpCallBack() != null) {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -493,7 +490,7 @@ public class Imaging extends BaseController {
                 final Integer marginTop,
                 final Integer marginBottom,
                 final Boolean landscape,
-                final Integer zoom,
+                final Double zoom,
                 final Boolean grayscale,
                 final Boolean mediaPrint,
                 final Boolean mediaQueries,
@@ -576,7 +573,7 @@ public class Imaging extends BaseController {
                 final Integer marginTop,
                 final Integer marginBottom,
                 final Boolean landscape,
-                final Integer zoom,
+                final Double zoom,
                 final Boolean grayscale,
                 final Boolean mediaPrint,
                 final Boolean mediaQueries,
@@ -660,7 +657,7 @@ public class Imaging extends BaseController {
                         _parameters.put("landscape", (landscape != null) ? landscape : false);
                     }
                     if (zoom != null) {
-                        _parameters.put("zoom", (zoom != null) ? zoom : 1.0);
+                        _parameters.put("zoom", (zoom != null) ? zoom : 1);
                     }
                     if (grayscale != null) {
                         _parameters.put("grayscale", (grayscale != null) ? grayscale : false);
@@ -772,8 +769,7 @@ public class Imaging extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
+                        if (getHttpCallBack() != null) {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

@@ -8,18 +8,21 @@ package com.neutrinoapi.sdk.models;
 import java.util.*;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.ALWAYS)
 public class IPInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4212761328805676339L;
+    private static final long serialVersionUID = 1692749608713283875L;
     private boolean valid;
     private String country;
     private String hostname;
     private String city;
     private String countryCode;
-    private int latitude;
+    private double latitude;
     private String region;
-    private int longitude;
+    private double longitude;
     private String continentCode;
     private String ip;
     private String countryCode3;
@@ -108,7 +111,7 @@ public class IPInfoResponse
      * Location latitude
      */
     @JsonGetter("latitude")
-    public int getLatitude ( ) { 
+    public double getLatitude ( ) { 
         return this.latitude;
     }
     
@@ -116,7 +119,7 @@ public class IPInfoResponse
      * Location latitude
      */
     @JsonSetter("latitude")
-    public void setLatitude (int value) { 
+    public void setLatitude (double value) { 
         this.latitude = value;
     }
  
@@ -140,7 +143,7 @@ public class IPInfoResponse
      * Location longitude
      */
     @JsonGetter("longitude")
-    public int getLongitude ( ) { 
+    public double getLongitude ( ) { 
         return this.longitude;
     }
     
@@ -148,7 +151,7 @@ public class IPInfoResponse
      * Location longitude
      */
     @JsonSetter("longitude")
-    public void setLongitude (int value) { 
+    public void setLongitude (double value) { 
         this.longitude = value;
     }
  

@@ -42,124 +42,6 @@ public class WWW extends BaseController {
     }
 
     /**
-     * Parse, analyze and retrieve content from the supplied URL. See: https://www.neutrinoapi.com/api/url-info/
-     * @param    url    Required parameter: The URL to probe
-     * @param    fetchContent    Optional parameter: If this URL responds with html, text, json or xml then return the response. This option is useful if you want to perform further processing on the URL content (e.g. with the HTML Extract or HTML Clean APIs)
-     * @return    Returns the URLInfoResponse response from the API call 
-     */
-    public URLInfoResponse uRLInfo(
-                final String url,
-                final Boolean fetchContent
-    ) throws Throwable {
-        APICallBackCatcher<URLInfoResponse> callback = new APICallBackCatcher<URLInfoResponse>();
-        uRLInfoAsync(url, fetchContent, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
-    }
-
-    /**
-     * Parse, analyze and retrieve content from the supplied URL. See: https://www.neutrinoapi.com/api/url-info/
-     * @param    url    Required parameter: The URL to probe
-     * @param    fetchContent    Optional parameter: If this URL responds with html, text, json or xml then return the response. This option is useful if you want to perform further processing on the URL content (e.g. with the HTML Extract or HTML Clean APIs)
-     * @return    Returns the void response from the API call 
-     */
-    public void uRLInfoAsync(
-                final String url,
-                final Boolean fetchContent,
-                final APICallBack<URLInfoResponse> callBack
-    ) {
-        Runnable _responseTask = new Runnable() {
-            public void run() {
-                final HttpRequest _request;
-
-                try {
-                    //the base uri for api requests
-                    String _baseUri = Configuration.baseUri;
-
-                    //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/url-info");
-
-                    ///process query parameters
-                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
-                    _queryParameters.put("user-id", Configuration.userId);
-                    _queryParameters.put("api-key", Configuration.apiKey);
-                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
-
-                    //validate and preprocess url
-                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
-
-                    //load all headers for the outgoing API request
-                    Map<String, String> _headers = new HashMap<String, String>();
-                    _headers.put("user-agent", BaseController.userAgent);
-                    _headers.put("accept", "application/json");
-
-
-                    //load all fields for the outgoing API request
-                    Map<String, Object> _parameters = new HashMap<String, Object>();
-                    _parameters.put("output-case", "camel");
-                    _parameters.put("url", url);
-                    if (fetchContent != null) {
-                        _parameters.put("fetch-content", (fetchContent != null) ? fetchContent : false);
-                    }
-
-                    //prepare and invoke the API call request to fetch the response
-                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-                    //invoke the callback before request if its not null
-                    if (getHttpCallBack() != null) {
-                        getHttpCallBack().OnBeforeRequest(_request);
-                    }
-
-                } catch (Throwable e) {
-                    callBack.onFailure(null, e);
-                    return;
-                }
-
-                //invoke request and get response
-                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
-                    public void onSuccess(HttpContext _context, HttpResponse _response) {
-                        try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null) {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            String _responseBody = ((HttpStringResponse)_response).getBody();
-                            URLInfoResponse _result = APIHelper.deserialize(_responseBody,
-                                                        new TypeReference<URLInfoResponse>(){});
-
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
-                        }
-                    }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
-
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
-                    }
-                });
-            }
-        };
-
-        //execute async using thread pool
-        APIHelper.getScheduler().execute(_responseTask);
-    }
-
-    /**
      * Browser bot can extract content, interact with keyboard and mouse events, and execute JavaScript on a website. See: https://www.neutrinoapi.com/api/browser-bot/
      * @param    url    Required parameter: The URL to load
      * @param    timeout    Optional parameter: Timeout in seconds. Give up if still trying to load the page after this number of seconds
@@ -296,8 +178,7 @@ public class WWW extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
+                        if (getHttpCallBack() != null) {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -407,8 +288,124 @@ public class WWW extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
+                        if (getHttpCallBack() != null) {
+                            getHttpCallBack().OnAfterResponse(_context);
+                        }
+
+                        //let the caller know of the failure
+                        callBack.onFailure(_context, _error);
+                    }
+                });
+            }
+        };
+
+        //execute async using thread pool
+        APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Parse, analyze and retrieve content from the supplied URL. See: https://www.neutrinoapi.com/api/url-info/
+     * @param    url    Required parameter: The URL to probe
+     * @param    fetchContent    Optional parameter: If this URL responds with html, text, json or xml then return the response. This option is useful if you want to perform further processing on the URL content (e.g. with the HTML Extract or HTML Clean APIs)
+     * @return    Returns the URLInfoResponse response from the API call 
+     */
+    public URLInfoResponse uRLInfo(
+                final String url,
+                final Boolean fetchContent
+    ) throws Throwable {
+        APICallBackCatcher<URLInfoResponse> callback = new APICallBackCatcher<URLInfoResponse>();
+        uRLInfoAsync(url, fetchContent, callback);
+        if(!callback.isSuccess())
+            throw callback.getError();
+        return callback.getResult();
+    }
+
+    /**
+     * Parse, analyze and retrieve content from the supplied URL. See: https://www.neutrinoapi.com/api/url-info/
+     * @param    url    Required parameter: The URL to probe
+     * @param    fetchContent    Optional parameter: If this URL responds with html, text, json or xml then return the response. This option is useful if you want to perform further processing on the URL content (e.g. with the HTML Extract or HTML Clean APIs)
+     * @return    Returns the void response from the API call 
+     */
+    public void uRLInfoAsync(
+                final String url,
+                final Boolean fetchContent,
+                final APICallBack<URLInfoResponse> callBack
+    ) {
+        Runnable _responseTask = new Runnable() {
+            public void run() {
+                final HttpRequest _request;
+
+                try {
+                    //the base uri for api requests
+                    String _baseUri = Configuration.baseUri;
+
+                    //prepare query string for API call
+                    StringBuilder _queryBuilder = new StringBuilder("/url-info");
+
+                    ///process query parameters
+                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
+                    _queryParameters.put("user-id", Configuration.userId);
+                    _queryParameters.put("api-key", Configuration.apiKey);
+                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+
+                    //validate and preprocess url
+                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
+
+                    //load all headers for the outgoing API request
+                    Map<String, String> _headers = new HashMap<String, String>();
+                    _headers.put("user-agent", BaseController.userAgent);
+                    _headers.put("accept", "application/json");
+
+
+                    //load all fields for the outgoing API request
+                    Map<String, Object> _parameters = new HashMap<String, Object>();
+                    _parameters.put("output-case", "camel");
+                    _parameters.put("url", url);
+                    if (fetchContent != null) {
+                        _parameters.put("fetch-content", (fetchContent != null) ? fetchContent : false);
+                    }
+
+                    //prepare and invoke the API call request to fetch the response
+                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+                    //invoke the callback before request if its not null
+                    if (getHttpCallBack() != null) {
+                        getHttpCallBack().OnBeforeRequest(_request);
+                    }
+
+                } catch (Throwable e) {
+                    callBack.onFailure(null, e);
+                    return;
+                }
+
+                //invoke request and get response
+                getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
+                    public void onSuccess(HttpContext _context, HttpResponse _response) {
+                        try {
+
+                            //invoke the callback after response if its not null
+                            if (getHttpCallBack() != null) {
+                                getHttpCallBack().OnAfterResponse(_context);
+                            }
+
+                            //handle errors defined at the API level
+                            validateResponse(_response, _context);
+
+                            //extract result from the http response
+                            String _responseBody = ((HttpStringResponse)_response).getBody();
+                            URLInfoResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<URLInfoResponse>(){});
+
+                            //let the caller know of the success
+                            callBack.onSuccess(_context, _result);
+                        } catch (Exception exception) {
+                            //let the caller know of the caught Exception
+                            callBack.onFailure(_context, exception);
+                        }
+                    }
+                    public void onFailure(HttpContext _context, Throwable _error) {
+                        //invoke the callback after response if its not null
+                        if (getHttpCallBack() != null) {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

@@ -42,36 +42,40 @@ public class Geolocation extends BaseController {
     }
 
     /**
-     * Convert a geographic coordinate (latitude and longitude) into a real world address or location. See: https://www.neutrinoapi.com/api/geocode-reverse/
-     * @param    latitude    Required parameter: The location latitude in decimal degrees format
-     * @param    longitude    Required parameter: The location longitude in decimal degrees format
+     * Geocode an address, partial address or just the name of a place. See: https://www.neutrinoapi.com/api/geocode-address/
+     * @param    address    Required parameter: The address, partial address or name of a place to try and locate
+     * @param    countryCode    Optional parameter: The ISO 2-letter country code to be biased towards (the default is no country bias)
      * @param    languageCode    Optional parameter: The language to display results in, available languages are:<ul><li>de, en, es, fr, it, pt, ru</li></ul>
-     * @return    Returns the GeocodeReverseResponse response from the API call 
+     * @param    fuzzySearch    Optional parameter: If no matches are found for the given address, start performing a recursive fuzzy search until a geolocation is found. We use a combination of approximate string matching and data cleansing to find possible location matches
+     * @return    Returns the GeocodeAddressResponse response from the API call 
      */
-    public GeocodeReverseResponse geocodeReverse(
-                final String latitude,
-                final String longitude,
-                final String languageCode
+    public GeocodeAddressResponse geocodeAddress(
+                final String address,
+                final String countryCode,
+                final String languageCode,
+                final Boolean fuzzySearch
     ) throws Throwable {
-        APICallBackCatcher<GeocodeReverseResponse> callback = new APICallBackCatcher<GeocodeReverseResponse>();
-        geocodeReverseAsync(latitude, longitude, languageCode, callback);
+        APICallBackCatcher<GeocodeAddressResponse> callback = new APICallBackCatcher<GeocodeAddressResponse>();
+        geocodeAddressAsync(address, countryCode, languageCode, fuzzySearch, callback);
         if(!callback.isSuccess())
             throw callback.getError();
         return callback.getResult();
     }
 
     /**
-     * Convert a geographic coordinate (latitude and longitude) into a real world address or location. See: https://www.neutrinoapi.com/api/geocode-reverse/
-     * @param    latitude    Required parameter: The location latitude in decimal degrees format
-     * @param    longitude    Required parameter: The location longitude in decimal degrees format
+     * Geocode an address, partial address or just the name of a place. See: https://www.neutrinoapi.com/api/geocode-address/
+     * @param    address    Required parameter: The address, partial address or name of a place to try and locate
+     * @param    countryCode    Optional parameter: The ISO 2-letter country code to be biased towards (the default is no country bias)
      * @param    languageCode    Optional parameter: The language to display results in, available languages are:<ul><li>de, en, es, fr, it, pt, ru</li></ul>
+     * @param    fuzzySearch    Optional parameter: If no matches are found for the given address, start performing a recursive fuzzy search until a geolocation is found. We use a combination of approximate string matching and data cleansing to find possible location matches
      * @return    Returns the void response from the API call 
      */
-    public void geocodeReverseAsync(
-                final String latitude,
-                final String longitude,
+    public void geocodeAddressAsync(
+                final String address,
+                final String countryCode,
                 final String languageCode,
-                final APICallBack<GeocodeReverseResponse> callBack
+                final Boolean fuzzySearch,
+                final APICallBack<GeocodeAddressResponse> callBack
     ) {
         Runnable _responseTask = new Runnable() {
             public void run() {
@@ -82,7 +86,7 @@ public class Geolocation extends BaseController {
                     String _baseUri = Configuration.baseUri;
 
                     //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/geocode-reverse");
+                    StringBuilder _queryBuilder = new StringBuilder("/geocode-address");
 
                     ///process query parameters
                     Map<String, Object> _queryParameters = new HashMap<String, Object>();
@@ -102,10 +106,15 @@ public class Geolocation extends BaseController {
                     //load all fields for the outgoing API request
                     Map<String, Object> _parameters = new HashMap<String, Object>();
                     _parameters.put("output-case", "camel");
-                    _parameters.put("latitude", latitude);
-                    _parameters.put("longitude", longitude);
+                    _parameters.put("address", address);
+                    if (countryCode != null) {
+                        _parameters.put("country-code", countryCode);
+                    }
                     if (languageCode != null) {
                         _parameters.put("language-code", (languageCode != null) ? languageCode : "en");
+                    }
+                    if (fuzzySearch != null) {
+                        _parameters.put("fuzzy-search", (fuzzySearch != null) ? fuzzySearch : false);
                     }
 
                     //prepare and invoke the API call request to fetch the response
@@ -136,8 +145,8 @@ public class Geolocation extends BaseController {
 
                             //extract result from the http response
                             String _responseBody = ((HttpStringResponse)_response).getBody();
-                            GeocodeReverseResponse _result = APIHelper.deserialize(_responseBody,
-                                                        new TypeReference<GeocodeReverseResponse>(){});
+                            GeocodeAddressResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<GeocodeAddressResponse>(){});
 
                             //let the caller know of the success
                             callBack.onSuccess(_context, _result);
@@ -148,8 +157,7 @@ public class Geolocation extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
+                        if (getHttpCallBack() != null) {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -266,8 +274,7 @@ public class Geolocation extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
+                        if (getHttpCallBack() != null) {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 
@@ -283,40 +290,36 @@ public class Geolocation extends BaseController {
     }
 
     /**
-     * Geocode an address, partial address or just the name of a place. See: https://www.neutrinoapi.com/api/geocode-address/
-     * @param    address    Required parameter: The address, partial address or name of a place to try and locate
-     * @param    countryCode    Optional parameter: The ISO 2-letter country code to be biased towards (the default is no country bias)
+     * Convert a geographic coordinate (latitude and longitude) into a real world address or location. See: https://www.neutrinoapi.com/api/geocode-reverse/
+     * @param    latitude    Required parameter: The location latitude in decimal degrees format
+     * @param    longitude    Required parameter: The location longitude in decimal degrees format
      * @param    languageCode    Optional parameter: The language to display results in, available languages are:<ul><li>de, en, es, fr, it, pt, ru</li></ul>
-     * @param    fuzzySearch    Optional parameter: If no matches are found for the given address, start performing a recursive fuzzy search until a geolocation is found. We use a combination of approximate string matching and data cleansing to find possible location matches
-     * @return    Returns the GeocodeAddressResponse response from the API call 
+     * @return    Returns the GeocodeReverseResponse response from the API call 
      */
-    public GeocodeAddressResponse geocodeAddress(
-                final String address,
-                final String countryCode,
-                final String languageCode,
-                final Boolean fuzzySearch
+    public GeocodeReverseResponse geocodeReverse(
+                final String latitude,
+                final String longitude,
+                final String languageCode
     ) throws Throwable {
-        APICallBackCatcher<GeocodeAddressResponse> callback = new APICallBackCatcher<GeocodeAddressResponse>();
-        geocodeAddressAsync(address, countryCode, languageCode, fuzzySearch, callback);
+        APICallBackCatcher<GeocodeReverseResponse> callback = new APICallBackCatcher<GeocodeReverseResponse>();
+        geocodeReverseAsync(latitude, longitude, languageCode, callback);
         if(!callback.isSuccess())
             throw callback.getError();
         return callback.getResult();
     }
 
     /**
-     * Geocode an address, partial address or just the name of a place. See: https://www.neutrinoapi.com/api/geocode-address/
-     * @param    address    Required parameter: The address, partial address or name of a place to try and locate
-     * @param    countryCode    Optional parameter: The ISO 2-letter country code to be biased towards (the default is no country bias)
+     * Convert a geographic coordinate (latitude and longitude) into a real world address or location. See: https://www.neutrinoapi.com/api/geocode-reverse/
+     * @param    latitude    Required parameter: The location latitude in decimal degrees format
+     * @param    longitude    Required parameter: The location longitude in decimal degrees format
      * @param    languageCode    Optional parameter: The language to display results in, available languages are:<ul><li>de, en, es, fr, it, pt, ru</li></ul>
-     * @param    fuzzySearch    Optional parameter: If no matches are found for the given address, start performing a recursive fuzzy search until a geolocation is found. We use a combination of approximate string matching and data cleansing to find possible location matches
      * @return    Returns the void response from the API call 
      */
-    public void geocodeAddressAsync(
-                final String address,
-                final String countryCode,
+    public void geocodeReverseAsync(
+                final String latitude,
+                final String longitude,
                 final String languageCode,
-                final Boolean fuzzySearch,
-                final APICallBack<GeocodeAddressResponse> callBack
+                final APICallBack<GeocodeReverseResponse> callBack
     ) {
         Runnable _responseTask = new Runnable() {
             public void run() {
@@ -327,7 +330,7 @@ public class Geolocation extends BaseController {
                     String _baseUri = Configuration.baseUri;
 
                     //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/geocode-address");
+                    StringBuilder _queryBuilder = new StringBuilder("/geocode-reverse");
 
                     ///process query parameters
                     Map<String, Object> _queryParameters = new HashMap<String, Object>();
@@ -347,15 +350,10 @@ public class Geolocation extends BaseController {
                     //load all fields for the outgoing API request
                     Map<String, Object> _parameters = new HashMap<String, Object>();
                     _parameters.put("output-case", "camel");
-                    _parameters.put("address", address);
-                    if (countryCode != null) {
-                        _parameters.put("country-code", countryCode);
-                    }
+                    _parameters.put("latitude", latitude);
+                    _parameters.put("longitude", longitude);
                     if (languageCode != null) {
                         _parameters.put("language-code", (languageCode != null) ? languageCode : "en");
-                    }
-                    if (fuzzySearch != null) {
-                        _parameters.put("fuzzy-search", (fuzzySearch != null) ? fuzzySearch : false);
                     }
 
                     //prepare and invoke the API call request to fetch the response
@@ -386,8 +384,8 @@ public class Geolocation extends BaseController {
 
                             //extract result from the http response
                             String _responseBody = ((HttpStringResponse)_response).getBody();
-                            GeocodeAddressResponse _result = APIHelper.deserialize(_responseBody,
-                                                        new TypeReference<GeocodeAddressResponse>(){});
+                            GeocodeReverseResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<GeocodeReverseResponse>(){});
 
                             //let the caller know of the success
                             callBack.onSuccess(_context, _result);
@@ -398,8 +396,7 @@ public class Geolocation extends BaseController {
                     }
                     public void onFailure(HttpContext _context, Throwable _error) {
                         //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null)
- {
+                        if (getHttpCallBack() != null) {
                             getHttpCallBack().OnAfterResponse(_context);
                         }
 

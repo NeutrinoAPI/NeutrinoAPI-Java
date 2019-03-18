@@ -61,7 +61,7 @@ public class IPInfoResponseBuilder {
     /**
      * Location latitude
      */
-    public IPInfoResponseBuilder latitude(int latitude) {
+    public IPInfoResponseBuilder latitude(double latitude) {
         iPInfoResponse.setLatitude(latitude);
         return this;
     }
@@ -77,7 +77,7 @@ public class IPInfoResponseBuilder {
     /**
      * Location longitude
      */
-    public IPInfoResponseBuilder longitude(int longitude) {
+    public IPInfoResponseBuilder longitude(double longitude) {
         iPInfoResponse.setLongitude(longitude);
         return this;
     }
