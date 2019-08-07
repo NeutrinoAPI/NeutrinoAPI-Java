@@ -145,6 +145,14 @@ public class IPBlocklistResponseBuilder {
         iPBlocklistResponse.setBlocklists(blocklists);
         return this;
     }
+
+    /**
+     * An array of objects containing details on which sensors were used to detect this IP
+     */
+    public IPBlocklistResponseBuilder sensors(List<String> sensors) {
+        iPBlocklistResponse.setSensors(sensors);
+        return this;
+    }
     /**
      * Build the instance with the given values
      */

@@ -51,7 +51,7 @@ public class PhoneVerifyResponse
     }
  
     /** GETTER
-     * The security code generated, you can save this code to perform your own verification or you can use the <a href='https://www.neutrinoapi.com/api/verify-security-code/'>Verify Security Code API</a>
+     * The security code generated, you can save this code to perform your own verification or you can use the <a href="https://www.neutrinoapi.com/api/verify-security-code/">Verify Security Code API</a>
      */
     @JsonGetter("securityCode")
     public String getSecurityCode ( ) { 
@@ -59,7 +59,7 @@ public class PhoneVerifyResponse
     }
     
     /** SETTER
-     * The security code generated, you can save this code to perform your own verification or you can use the <a href='https://www.neutrinoapi.com/api/verify-security-code/'>Verify Security Code API</a>
+     * The security code generated, you can save this code to perform your own verification or you can use the <a href="https://www.neutrinoapi.com/api/verify-security-code/">Verify Security Code API</a>
      */
     @JsonSetter("securityCode")
     public void setSecurityCode (String value) { 

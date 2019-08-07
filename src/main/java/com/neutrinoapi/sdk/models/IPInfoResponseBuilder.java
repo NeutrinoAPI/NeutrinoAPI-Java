@@ -35,7 +35,7 @@ public class IPInfoResponseBuilder {
     }
 
     /**
-     * The IPs hostname (only set if reverse-lookup has been used)
+     * The IPs full hostname (only set if reverse-lookup has been used)
      */
     public IPInfoResponseBuilder hostname(String hostname) {
         iPInfoResponse.setHostname(hostname);
@@ -43,7 +43,7 @@ public class IPInfoResponseBuilder {
     }
 
     /**
-     * Full city name (if detectable)
+     * Name of the city (if detectable)
      */
     public IPInfoResponseBuilder city(String city) {
         iPInfoResponse.setCity(city);
@@ -61,13 +61,13 @@ public class IPInfoResponseBuilder {
     /**
      * Location latitude
      */
-    public IPInfoResponseBuilder latitude(double latitude) {
+    public IPInfoResponseBuilder latitude(int latitude) {
         iPInfoResponse.setLatitude(latitude);
         return this;
     }
 
     /**
-     * Full region name (if detectable)
+     * Name of the region (if detectable)
      */
     public IPInfoResponseBuilder region(String region) {
         iPInfoResponse.setRegion(region);
@@ -77,7 +77,7 @@ public class IPInfoResponseBuilder {
     /**
      * Location longitude
      */
-    public IPInfoResponseBuilder longitude(double longitude) {
+    public IPInfoResponseBuilder longitude(int longitude) {
         iPInfoResponse.setLongitude(longitude);
         return this;
     }
@@ -111,6 +111,22 @@ public class IPInfoResponseBuilder {
      */
     public IPInfoResponseBuilder currencyCode(String currencyCode) {
         iPInfoResponse.setCurrencyCode(currencyCode);
+        return this;
+    }
+
+    /**
+     * The IPs host domain (only set if reverse-lookup has been used)
+     */
+    public IPInfoResponseBuilder hostDomain(String hostDomain) {
+        iPInfoResponse.setHostDomain(hostDomain);
+        return this;
+    }
+
+    /**
+     * Map containing timezone details for the location: <ul> <li>id - the time zone ID as per the IANA time zone database (tzdata)</li> <li>name - the time zone name</li> <li>abbr - the time zone abbreviation</li> <li>date - the current date within the time zone (ISO format)</li> <li>time - the current time within the time zone (ISO format)</li> </ul>
+     */
+    public IPInfoResponseBuilder timezone(LinkedHashMap<String, String> timezone) {
+        iPInfoResponse.setTimezone(timezone);
         return this;
     }
     /**

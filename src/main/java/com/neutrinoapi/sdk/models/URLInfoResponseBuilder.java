@@ -201,6 +201,14 @@ public class URLInfoResponseBuilder {
         uRLInfoResponse.setContent(content);
         return this;
     }
+
+    /**
+     * True if a timeout occurred while loading the URL. You can set the timeout with the request parameter 'timeout'
+     */
+    public URLInfoResponseBuilder isTimeout(boolean isTimeout) {
+        uRLInfoResponse.setIsTimeout(isTimeout);
+        return this;
+    }
     /**
      * Build the instance with the given values
      */

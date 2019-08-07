@@ -99,7 +99,7 @@ public class GeocodeReverseResponseBuilder {
     }
 
     /**
-     * The detected location type ordered roughly from most to least precise, possible values are:<br/><ul><li>address - indicates a precise street address</li><li>street - accurate to the street level but may not point to the exact location of the house/building number</li><li>city - accurate to the city level, this includes villages, towns, suburbs, etc</li><li>postal-code - indicates a postal code area (no house or street information present)</li><li>railway - location is part of a rail network such as a station or railway track</li><li>natural - indicates a natural feature, for example a mountain peak or a waterway</li><li>island - location is an island or archipelago</li><li>administrative - indicates an administrative boundary such as a country, state or province</li></ul>
+     * The detected location type ordered roughly from most to least precise, possible values are: <ul> <li>address - indicates a precise street address</li> <li>street - accurate to the street level but may not point to the exact location of the house/building number</li> <li>city - accurate to the city level, this includes villages, towns, suburbs, etc</li> <li>postal-code - indicates a postal code area (no house or street information present)</li> <li>railway - location is part of a rail network such as a station or railway track</li> <li>natural - indicates a natural feature, for example a mountain peak or a waterway</li> <li>island - location is an island or archipelago</li> <li>administrative - indicates an administrative boundary such as a country, state or province</li> </ul>
      */
     public GeocodeReverseResponseBuilder locationType(String locationType) {
         geocodeReverseResponse.setLocationType(locationType);
@@ -111,6 +111,30 @@ public class GeocodeReverseResponseBuilder {
      */
     public GeocodeReverseResponseBuilder locationTags(List<String> locationTags) {
         geocodeReverseResponse.setLocationTags(locationTags);
+        return this;
+    }
+
+    /**
+     * The location latitude
+     */
+    public GeocodeReverseResponseBuilder latitude(int latitude) {
+        geocodeReverseResponse.setLatitude(latitude);
+        return this;
+    }
+
+    /**
+     * The location longitude
+     */
+    public GeocodeReverseResponseBuilder longitude(int longitude) {
+        geocodeReverseResponse.setLongitude(longitude);
+        return this;
+    }
+
+    /**
+     * Map containing timezone details for the location: <ul> <li>id - the time zone ID as per the IANA time zone database (tzdata)</li> <li>name - the time zone name</li> <li>abbr - the time zone abbreviation</li> <li>date - the current date within the time zone (ISO format)</li> <li>time - the current time within the time zone (ISO format)</li> </ul>
+     */
+    public GeocodeReverseResponseBuilder timezone(LinkedHashMap<String, String> timezone) {
+        geocodeReverseResponse.setTimezone(timezone);
         return this;
     }
     /**

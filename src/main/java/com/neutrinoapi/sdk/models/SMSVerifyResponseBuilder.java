@@ -27,7 +27,7 @@ public class SMSVerifyResponseBuilder {
     }
 
     /**
-     * The security code generated, you can save this code to perform your own verification or you can use the <a href='https://www.neutrinoapi.com/api/verify-security-code/'>Verify Security Code API</a>
+     * The security code generated, you can save this code to perform your own verification or you can use the <a href="https://www.neutrinoapi.com/api/verify-security-code/">Verify Security Code API</a>
      */
     public SMSVerifyResponseBuilder securityCode(String securityCode) {
         sMSVerifyResponse.setSecurityCode(securityCode);

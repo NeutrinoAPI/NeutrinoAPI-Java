@@ -14,19 +14,21 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.ALWAYS)
 public class IPInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 1692749608713283875L;
+    private static final long serialVersionUID = 8073964692364738354L;
     private boolean valid;
     private String country;
     private String hostname;
     private String city;
     private String countryCode;
-    private double latitude;
+    private int latitude;
     private String region;
-    private double longitude;
+    private int longitude;
     private String continentCode;
     private String ip;
     private String countryCode3;
     private String currencyCode;
+    private String hostDomain;
+    private LinkedHashMap<String, String> timezone;
     /** GETTER
      * Is this a valid IPv4 or IPv6 address
      */
@@ -60,7 +62,7 @@ public class IPInfoResponse
     }
  
     /** GETTER
-     * The IPs hostname (only set if reverse-lookup has been used)
+     * The IPs full hostname (only set if reverse-lookup has been used)
      */
     @JsonGetter("hostname")
     public String getHostname ( ) { 
@@ -68,7 +70,7 @@ public class IPInfoResponse
     }
     
     /** SETTER
-     * The IPs hostname (only set if reverse-lookup has been used)
+     * The IPs full hostname (only set if reverse-lookup has been used)
      */
     @JsonSetter("hostname")
     public void setHostname (String value) { 
@@ -76,7 +78,7 @@ public class IPInfoResponse
     }
  
     /** GETTER
-     * Full city name (if detectable)
+     * Name of the city (if detectable)
      */
     @JsonGetter("city")
     public String getCity ( ) { 
@@ -84,7 +86,7 @@ public class IPInfoResponse
     }
     
     /** SETTER
-     * Full city name (if detectable)
+     * Name of the city (if detectable)
      */
     @JsonSetter("city")
     public void setCity (String value) { 
@@ -111,7 +113,7 @@ public class IPInfoResponse
      * Location latitude
      */
     @JsonGetter("latitude")
-    public double getLatitude ( ) { 
+    public int getLatitude ( ) { 
         return this.latitude;
     }
     
@@ -119,12 +121,12 @@ public class IPInfoResponse
      * Location latitude
      */
     @JsonSetter("latitude")
-    public void setLatitude (double value) { 
+    public void setLatitude (int value) { 
         this.latitude = value;
     }
  
     /** GETTER
-     * Full region name (if detectable)
+     * Name of the region (if detectable)
      */
     @JsonGetter("region")
     public String getRegion ( ) { 
@@ -132,7 +134,7 @@ public class IPInfoResponse
     }
     
     /** SETTER
-     * Full region name (if detectable)
+     * Name of the region (if detectable)
      */
     @JsonSetter("region")
     public void setRegion (String value) { 
@@ -143,7 +145,7 @@ public class IPInfoResponse
      * Location longitude
      */
     @JsonGetter("longitude")
-    public double getLongitude ( ) { 
+    public int getLongitude ( ) { 
         return this.longitude;
     }
     
@@ -151,7 +153,7 @@ public class IPInfoResponse
      * Location longitude
      */
     @JsonSetter("longitude")
-    public void setLongitude (double value) { 
+    public void setLongitude (int value) { 
         this.longitude = value;
     }
  
@@ -217,6 +219,38 @@ public class IPInfoResponse
     @JsonSetter("currencyCode")
     public void setCurrencyCode (String value) { 
         this.currencyCode = value;
+    }
+ 
+    /** GETTER
+     * The IPs host domain (only set if reverse-lookup has been used)
+     */
+    @JsonGetter("hostDomain")
+    public String getHostDomain ( ) { 
+        return this.hostDomain;
+    }
+    
+    /** SETTER
+     * The IPs host domain (only set if reverse-lookup has been used)
+     */
+    @JsonSetter("hostDomain")
+    public void setHostDomain (String value) { 
+        this.hostDomain = value;
+    }
+ 
+    /** GETTER
+     * Map containing timezone details for the location: <ul> <li>id - the time zone ID as per the IANA time zone database (tzdata)</li> <li>name - the time zone name</li> <li>abbr - the time zone abbreviation</li> <li>date - the current date within the time zone (ISO format)</li> <li>time - the current time within the time zone (ISO format)</li> </ul>
+     */
+    @JsonGetter("timezone")
+    public LinkedHashMap<String, String> getTimezone ( ) { 
+        return this.timezone;
+    }
+    
+    /** SETTER
+     * Map containing timezone details for the location: <ul> <li>id - the time zone ID as per the IANA time zone database (tzdata)</li> <li>name - the time zone name</li> <li>abbr - the time zone abbreviation</li> <li>date - the current date within the time zone (ISO format)</li> <li>time - the current time within the time zone (ISO format)</li> </ul>
+     */
+    @JsonSetter("timezone")
+    public void setTimezone (LinkedHashMap<String, String> value) { 
+        this.timezone = value;
     }
  
 }

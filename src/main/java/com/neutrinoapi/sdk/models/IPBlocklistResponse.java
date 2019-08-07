@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.ALWAYS)
 public class IPBlocklistResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = -1555136853673531388L;
+    private static final long serialVersionUID = 1675862861759315019L;
     private String ip;
     private boolean isBot;
     private boolean isExploitBot;
@@ -31,6 +31,7 @@ public class IPBlocklistResponse
     private boolean isVpn;
     private int lastSeen;
     private List<String> blocklists;
+    private List<String> sensors;
     /** GETTER
      * The IP address
      */
@@ -285,6 +286,22 @@ public class IPBlocklistResponse
     @JsonSetter("blocklists")
     public void setBlocklists (List<String> value) { 
         this.blocklists = value;
+    }
+ 
+    /** GETTER
+     * An array of objects containing details on which sensors were used to detect this IP
+     */
+    @JsonGetter("sensors")
+    public List<String> getSensors ( ) { 
+        return this.sensors;
+    }
+    
+    /** SETTER
+     * An array of objects containing details on which sensors were used to detect this IP
+     */
+    @JsonSetter("sensors")
+    public void setSensors (List<String> value) { 
+        this.sensors = value;
     }
  
 }

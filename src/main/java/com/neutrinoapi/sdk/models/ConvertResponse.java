@@ -14,12 +14,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.ALWAYS)
 public class ConvertResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = -3799666871329753926L;
+    private static final long serialVersionUID = -6596314634284941606L;
     private boolean valid;
     private String result;
     private String fromValue;
     private String toType;
     private String fromType;
+    private int resultFloat;
     /** GETTER
      * True if the coversion was successful and produced a valid result
      */
@@ -37,7 +38,7 @@ public class ConvertResponse
     }
  
     /** GETTER
-     * The result of the conversion
+     * The result of the conversion in string format
      */
     @JsonGetter("result")
     public String getResult ( ) { 
@@ -45,7 +46,7 @@ public class ConvertResponse
     }
     
     /** SETTER
-     * The result of the conversion
+     * The result of the conversion in string format
      */
     @JsonSetter("result")
     public void setResult (String value) { 
@@ -98,6 +99,22 @@ public class ConvertResponse
     @JsonSetter("fromType")
     public void setFromType (String value) { 
         this.fromType = value;
+    }
+ 
+    /** GETTER
+     * The result of the conversion as a floating-point number
+     */
+    @JsonGetter("resultFloat")
+    public int getResultFloat ( ) { 
+        return this.resultFloat;
+    }
+    
+    /** SETTER
+     * The result of the conversion as a floating-point number
+     */
+    @JsonSetter("resultFloat")
+    public void setResultFloat (int value) { 
+        this.resultFloat = value;
     }
  
 }

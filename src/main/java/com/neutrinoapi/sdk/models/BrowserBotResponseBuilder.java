@@ -125,7 +125,7 @@ public class BrowserBotResponseBuilder {
     /**
      * The number of seconds taken to load the page (from initial request until DOM ready)
      */
-    public BrowserBotResponseBuilder loadTime(double loadTime) {
+    public BrowserBotResponseBuilder loadTime(int loadTime) {
         browserBotResponse.setLoadTime(loadTime);
         return this;
     }
@@ -155,7 +155,7 @@ public class BrowserBotResponseBuilder {
     }
 
     /**
-     * Array containing all the elements matching the supplied selector.<br/>Each element object will contain the text content, HTML content and all current element attributes
+     * Array containing all the elements matching the supplied selector. Each element object will contain the text content, HTML content and all current element attributes
      */
     public BrowserBotResponseBuilder elements(List<String> elements) {
         browserBotResponse.setElements(elements);

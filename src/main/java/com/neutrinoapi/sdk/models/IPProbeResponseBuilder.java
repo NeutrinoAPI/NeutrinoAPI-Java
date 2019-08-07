@@ -35,7 +35,7 @@ public class IPProbeResponseBuilder {
     }
 
     /**
-     * The detected provider type, possible values are:<br/><ul><li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li><li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li><li>vpn - IP belongs to a VPN provider</li><li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li><li>university - IP belongs to a university/college/campus</li><li>government - IP belongs to a government department. This includes military facilities</li><li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li><li>unknown - could not identify the provider type</li></ul>
+     * The detected provider type, possible values are: <ul> <li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li> <li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li> <li>vpn - IP belongs to a VPN provider</li> <li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li> <li>university - IP belongs to a university/college/campus</li> <li>government - IP belongs to a government department. This includes military facilities</li> <li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li> <li>unknown - could not identify the provider type</li> </ul>
      */
     public IPProbeResponseBuilder providerType(String providerType) {
         iPProbeResponse.setProviderType(providerType);
@@ -51,7 +51,7 @@ public class IPProbeResponseBuilder {
     }
 
     /**
-     * The IPs hostname (PTR)
+     * The IPs full hostname (PTR)
      */
     public IPProbeResponseBuilder hostname(String hostname) {
         iPProbeResponse.setHostname(hostname);
@@ -215,6 +215,14 @@ public class IPProbeResponseBuilder {
      */
     public IPProbeResponseBuilder asAge(int asAge) {
         iPProbeResponse.setAsAge(asAge);
+        return this;
+    }
+
+    /**
+     * The IPs host domain
+     */
+    public IPProbeResponseBuilder hostDomain(String hostDomain) {
+        iPProbeResponse.setHostDomain(hostDomain);
         return this;
     }
     /**

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.ALWAYS)
 public class BrowserBotResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = -6447929778385389756L;
+    private static final long serialVersionUID = 8540875543012418758L;
     private String url;
     private String content;
     private String mimeType;
@@ -28,7 +28,7 @@ public class BrowserBotResponse
     private boolean isHttpRedirect;
     private String httpRedirectUrl;
     private String serverIp;
-    private double loadTime;
+    private int loadTime;
     private LinkedHashMap<String, String> responseHeaders;
     private boolean isSecure;
     private LinkedHashMap<String, String> securityDetails;
@@ -246,7 +246,7 @@ public class BrowserBotResponse
      * The number of seconds taken to load the page (from initial request until DOM ready)
      */
     @JsonGetter("loadTime")
-    public double getLoadTime ( ) { 
+    public int getLoadTime ( ) { 
         return this.loadTime;
     }
     
@@ -254,7 +254,7 @@ public class BrowserBotResponse
      * The number of seconds taken to load the page (from initial request until DOM ready)
      */
     @JsonSetter("loadTime")
-    public void setLoadTime (double value) { 
+    public void setLoadTime (int value) { 
         this.loadTime = value;
     }
  
@@ -307,7 +307,7 @@ public class BrowserBotResponse
     }
  
     /** GETTER
-     * Array containing all the elements matching the supplied selector.<br/>Each element object will contain the text content, HTML content and all current element attributes
+     * Array containing all the elements matching the supplied selector. Each element object will contain the text content, HTML content and all current element attributes
      */
     @JsonGetter("elements")
     public List<String> getElements ( ) { 
@@ -315,7 +315,7 @@ public class BrowserBotResponse
     }
     
     /** SETTER
-     * Array containing all the elements matching the supplied selector.<br/>Each element object will contain the text content, HTML content and all current element attributes
+     * Array containing all the elements matching the supplied selector. Each element object will contain the text content, HTML content and all current element attributes
      */
     @JsonSetter("elements")
     public void setElements (List<String> value) { 

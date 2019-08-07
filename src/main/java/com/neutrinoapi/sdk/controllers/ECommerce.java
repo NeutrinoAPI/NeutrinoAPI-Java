@@ -51,11 +51,12 @@ public class ECommerce extends BaseController {
                 final String binNumber,
                 final String customerIp
     ) throws Throwable {
-        APICallBackCatcher<BINLookupResponse> callback = new APICallBackCatcher<BINLookupResponse>();
-        bINLookupAsync(binNumber, customerIp, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
+
+        HttpRequest _request = _buildBINLookupRequest(binNumber, customerIp);
+        HttpResponse _response = getClientInstance().executeAsString(_request);
+        HttpContext _context = new HttpContext(_request, _response);
+
+        return _handleBINLookupResponse(_context);
     }
 
     /**
@@ -71,91 +72,105 @@ public class ECommerce extends BaseController {
     ) {
         Runnable _responseTask = new Runnable() {
             public void run() {
-                final HttpRequest _request;
 
+                HttpRequest _request;
                 try {
-                    //the base uri for api requests
-                    String _baseUri = Configuration.baseUri;
-
-                    //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/bin-lookup");
-
-                    ///process query parameters
-                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
-                    _queryParameters.put("user-id", Configuration.userId);
-                    _queryParameters.put("api-key", Configuration.apiKey);
-                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
-
-                    //validate and preprocess url
-                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
-
-                    //load all headers for the outgoing API request
-                    Map<String, String> _headers = new HashMap<String, String>();
-                    _headers.put("user-agent", BaseController.userAgent);
-                    _headers.put("accept", "application/json");
-
-
-                    //load all fields for the outgoing API request
-                    Map<String, Object> _parameters = new HashMap<String, Object>();
-                    _parameters.put("output-case", "camel");
-                    _parameters.put("bin-number", binNumber);
-                    if (customerIp != null) {
-                        _parameters.put("customer-ip", customerIp);
-                    }
-
-                    //prepare and invoke the API call request to fetch the response
-                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-                    //invoke the callback before request if its not null
-                    if (getHttpCallBack() != null) {
-                        getHttpCallBack().OnBeforeRequest(_request);
-                    }
-
-                } catch (Throwable e) {
+                    _request = _buildBINLookupRequest(binNumber, customerIp);
+                } catch (Exception e) {
                     callBack.onFailure(null, e);
                     return;
                 }
 
-                //invoke request and get response
+                // Invoke request and get response
                 getClientInstance().executeAsStringAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null) {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            String _responseBody = ((HttpStringResponse)_response).getBody();
-                            BINLookupResponse _result = APIHelper.deserialize(_responseBody,
-                                                        new TypeReference<BINLookupResponse>(){});
-
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
+                            BINLookupResponse returnValue = _handleBINLookupResponse(_context);
+                            callBack.onSuccess(_context, returnValue);
+                        } catch (Exception e) {
+                            callBack.onFailure(_context, e);
                         }
                     }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null) {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
 
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
+                    public void onFailure(HttpContext _context, Throwable _exception) {
+                        // Let the caller know of the failure
+                        callBack.onFailure(_context, _exception);
                     }
                 });
             }
         };
 
-        //execute async using thread pool
+        // Execute async using thread pool
         APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Builds the HttpRequest object for bINLookup
+     */
+    private HttpRequest _buildBINLookupRequest(
+                final String binNumber,
+                final String customerIp) throws IOException, APIException {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/bin-lookup");
+
+        //process query parameters
+        Map<String, Object> _queryParameters = new HashMap<String, Object>();
+        _queryParameters.put("user-id", Configuration.userId);
+        _queryParameters.put("api-key", Configuration.apiKey);
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>();
+        _headers.put("user-agent", BaseController.userAgent);
+        _headers.put("accept", "application/json");
+
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>();
+        _parameters.put("output-case", "camel");
+        _parameters.put("bin-number", binNumber);
+        if (customerIp != null) {
+            _parameters.put("customer-ip", customerIp);
+        }
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        // Invoke the callback before request if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        return _request;
+    }
+
+    /**
+     * Processes the response for bINLookup
+     * @return An object of type void
+     */
+    private BINLookupResponse _handleBINLookupResponse(HttpContext _context)
+            throws APIException, IOException {
+        HttpResponse _response = _context.getResponse();
+
+        //invoke the callback after response if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnAfterResponse(_context);
+        }
+
+        //handle errors defined at the API level
+        validateResponse(_response, _context);
+
+        //extract result from the http response
+        String _responseBody = ((HttpStringResponse)_response).getBody();
+        BINLookupResponse _result = APIHelper.deserialize(_responseBody,
+                                                        new TypeReference<BINLookupResponse>(){});
+
+        return _result;
     }
 
 }

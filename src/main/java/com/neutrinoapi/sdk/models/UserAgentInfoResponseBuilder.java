@@ -75,7 +75,7 @@ public class UserAgentInfoResponseBuilder {
     }
 
     /**
-     * The user agent type, possible values are:<br/><ul><li>desktop-browser</li><li>mobile-browser</li><li>email-client</li><li>feed-reader</li><li>software-library</li><li>media-player (includes smart TVs)</li><li>robot</li><li>unknown</li></ul>
+     * The user agent type, possible values are: <ul> <li>desktop-browser</li> <li>mobile-browser</li> <li>email-client</li> <li>feed-reader</li> <li>software-library</li> <li>media-player (includes smart TVs)</li> <li>robot</li> <li>unknown</li> </ul>
      */
     public UserAgentInfoResponseBuilder type(String type) {
         userAgentInfoResponse.setType(type);

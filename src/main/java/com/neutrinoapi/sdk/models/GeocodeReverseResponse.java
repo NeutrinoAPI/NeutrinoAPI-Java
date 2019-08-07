@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.ALWAYS)
 public class GeocodeReverseResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 2542010768122043690L;
+    private static final long serialVersionUID = 6090236805845568256L;
     private String country;
     private boolean found;
     private String address;
@@ -27,6 +27,9 @@ public class GeocodeReverseResponse
     private String currencyCode;
     private String locationType;
     private List<String> locationTags;
+    private int latitude;
+    private int longitude;
+    private LinkedHashMap<String, String> timezone;
     /** GETTER
      * The country of the location
      */
@@ -188,7 +191,7 @@ public class GeocodeReverseResponse
     }
  
     /** GETTER
-     * The detected location type ordered roughly from most to least precise, possible values are:<br/><ul><li>address - indicates a precise street address</li><li>street - accurate to the street level but may not point to the exact location of the house/building number</li><li>city - accurate to the city level, this includes villages, towns, suburbs, etc</li><li>postal-code - indicates a postal code area (no house or street information present)</li><li>railway - location is part of a rail network such as a station or railway track</li><li>natural - indicates a natural feature, for example a mountain peak or a waterway</li><li>island - location is an island or archipelago</li><li>administrative - indicates an administrative boundary such as a country, state or province</li></ul>
+     * The detected location type ordered roughly from most to least precise, possible values are: <ul> <li>address - indicates a precise street address</li> <li>street - accurate to the street level but may not point to the exact location of the house/building number</li> <li>city - accurate to the city level, this includes villages, towns, suburbs, etc</li> <li>postal-code - indicates a postal code area (no house or street information present)</li> <li>railway - location is part of a rail network such as a station or railway track</li> <li>natural - indicates a natural feature, for example a mountain peak or a waterway</li> <li>island - location is an island or archipelago</li> <li>administrative - indicates an administrative boundary such as a country, state or province</li> </ul>
      */
     @JsonGetter("locationType")
     public String getLocationType ( ) { 
@@ -196,7 +199,7 @@ public class GeocodeReverseResponse
     }
     
     /** SETTER
-     * The detected location type ordered roughly from most to least precise, possible values are:<br/><ul><li>address - indicates a precise street address</li><li>street - accurate to the street level but may not point to the exact location of the house/building number</li><li>city - accurate to the city level, this includes villages, towns, suburbs, etc</li><li>postal-code - indicates a postal code area (no house or street information present)</li><li>railway - location is part of a rail network such as a station or railway track</li><li>natural - indicates a natural feature, for example a mountain peak or a waterway</li><li>island - location is an island or archipelago</li><li>administrative - indicates an administrative boundary such as a country, state or province</li></ul>
+     * The detected location type ordered roughly from most to least precise, possible values are: <ul> <li>address - indicates a precise street address</li> <li>street - accurate to the street level but may not point to the exact location of the house/building number</li> <li>city - accurate to the city level, this includes villages, towns, suburbs, etc</li> <li>postal-code - indicates a postal code area (no house or street information present)</li> <li>railway - location is part of a rail network such as a station or railway track</li> <li>natural - indicates a natural feature, for example a mountain peak or a waterway</li> <li>island - location is an island or archipelago</li> <li>administrative - indicates an administrative boundary such as a country, state or province</li> </ul>
      */
     @JsonSetter("locationType")
     public void setLocationType (String value) { 
@@ -217,6 +220,54 @@ public class GeocodeReverseResponse
     @JsonSetter("locationTags")
     public void setLocationTags (List<String> value) { 
         this.locationTags = value;
+    }
+ 
+    /** GETTER
+     * The location latitude
+     */
+    @JsonGetter("latitude")
+    public int getLatitude ( ) { 
+        return this.latitude;
+    }
+    
+    /** SETTER
+     * The location latitude
+     */
+    @JsonSetter("latitude")
+    public void setLatitude (int value) { 
+        this.latitude = value;
+    }
+ 
+    /** GETTER
+     * The location longitude
+     */
+    @JsonGetter("longitude")
+    public int getLongitude ( ) { 
+        return this.longitude;
+    }
+    
+    /** SETTER
+     * The location longitude
+     */
+    @JsonSetter("longitude")
+    public void setLongitude (int value) { 
+        this.longitude = value;
+    }
+ 
+    /** GETTER
+     * Map containing timezone details for the location: <ul> <li>id - the time zone ID as per the IANA time zone database (tzdata)</li> <li>name - the time zone name</li> <li>abbr - the time zone abbreviation</li> <li>date - the current date within the time zone (ISO format)</li> <li>time - the current time within the time zone (ISO format)</li> </ul>
+     */
+    @JsonGetter("timezone")
+    public LinkedHashMap<String, String> getTimezone ( ) { 
+        return this.timezone;
+    }
+    
+    /** SETTER
+     * Map containing timezone details for the location: <ul> <li>id - the time zone ID as per the IANA time zone database (tzdata)</li> <li>name - the time zone name</li> <li>abbr - the time zone abbreviation</li> <li>date - the current date within the time zone (ISO format)</li> <li>time - the current time within the time zone (ISO format)</li> </ul>
+     */
+    @JsonSetter("timezone")
+    public void setTimezone (LinkedHashMap<String, String> value) { 
+        this.timezone = value;
     }
  
 }

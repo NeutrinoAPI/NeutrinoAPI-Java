@@ -27,7 +27,7 @@ public class ConvertResponseBuilder {
     }
 
     /**
-     * The result of the conversion
+     * The result of the conversion in string format
      */
     public ConvertResponseBuilder result(String result) {
         convertResponse.setResult(result);
@@ -55,6 +55,14 @@ public class ConvertResponseBuilder {
      */
     public ConvertResponseBuilder fromType(String fromType) {
         convertResponse.setFromType(fromType);
+        return this;
+    }
+
+    /**
+     * The result of the conversion as a floating-point number
+     */
+    public ConvertResponseBuilder resultFloat(int resultFloat) {
+        convertResponse.setResultFloat(resultFloat);
         return this;
     }
     /**

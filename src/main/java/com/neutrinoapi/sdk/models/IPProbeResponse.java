@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.ALWAYS)
 public class IPProbeResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 4977469777968548673L;
+    private static final long serialVersionUID = 9097730618338615766L;
     private boolean valid;
     private String country;
     private String providerType;
@@ -40,6 +40,7 @@ public class IPProbeResponse
     private List<String> asDomains;
     private String asDescription;
     private int asAge;
+    private String hostDomain;
     /** GETTER
      * Is this a valid IPv4 or IPv6 address
      */
@@ -73,7 +74,7 @@ public class IPProbeResponse
     }
  
     /** GETTER
-     * The detected provider type, possible values are:<br/><ul><li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li><li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li><li>vpn - IP belongs to a VPN provider</li><li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li><li>university - IP belongs to a university/college/campus</li><li>government - IP belongs to a government department. This includes military facilities</li><li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li><li>unknown - could not identify the provider type</li></ul>
+     * The detected provider type, possible values are: <ul> <li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li> <li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li> <li>vpn - IP belongs to a VPN provider</li> <li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li> <li>university - IP belongs to a university/college/campus</li> <li>government - IP belongs to a government department. This includes military facilities</li> <li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li> <li>unknown - could not identify the provider type</li> </ul>
      */
     @JsonGetter("providerType")
     public String getProviderType ( ) { 
@@ -81,7 +82,7 @@ public class IPProbeResponse
     }
     
     /** SETTER
-     * The detected provider type, possible values are:<br/><ul><li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li><li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li><li>vpn - IP belongs to a VPN provider</li><li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li><li>university - IP belongs to a university/college/campus</li><li>government - IP belongs to a government department. This includes military facilities</li><li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li><li>unknown - could not identify the provider type</li></ul>
+     * The detected provider type, possible values are: <ul> <li>isp - IP belongs to an internet service provider. This includes both mobile, home and business internet providers</li> <li>hosting - IP belongs to a hosting company. This includes website hosting, cloud computing platforms and colocation facilities</li> <li>vpn - IP belongs to a VPN provider</li> <li>proxy - IP belongs to a proxy service. This includes HTTP/SOCKS proxies and browser based proxies</li> <li>university - IP belongs to a university/college/campus</li> <li>government - IP belongs to a government department. This includes military facilities</li> <li>commercial - IP belongs to a commercial entity such as a corporate headquarters or company office</li> <li>unknown - could not identify the provider type</li> </ul>
      */
     @JsonSetter("providerType")
     public void setProviderType (String value) { 
@@ -105,7 +106,7 @@ public class IPProbeResponse
     }
  
     /** GETTER
-     * The IPs hostname (PTR)
+     * The IPs full hostname (PTR)
      */
     @JsonGetter("hostname")
     public String getHostname ( ) { 
@@ -113,7 +114,7 @@ public class IPProbeResponse
     }
     
     /** SETTER
-     * The IPs hostname (PTR)
+     * The IPs full hostname (PTR)
      */
     @JsonSetter("hostname")
     public void setHostname (String value) { 
@@ -438,6 +439,22 @@ public class IPProbeResponse
     @JsonSetter("asAge")
     public void setAsAge (int value) { 
         this.asAge = value;
+    }
+ 
+    /** GETTER
+     * The IPs host domain
+     */
+    @JsonGetter("hostDomain")
+    public String getHostDomain ( ) { 
+        return this.hostDomain;
+    }
+    
+    /** SETTER
+     * The IPs host domain
+     */
+    @JsonSetter("hostDomain")
+    public void setHostDomain (String value) { 
+        this.hostDomain = value;
     }
  
 }

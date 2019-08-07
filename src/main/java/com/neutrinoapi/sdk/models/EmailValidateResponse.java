@@ -106,7 +106,7 @@ public class EmailValidateResponse
     }
  
     /** GETTER
-     * The full email address (this could be different to the supplied address if typos-fixed is true)
+     * The email address. If you have used the fix-typos option then this will be the fixed address
      */
     @JsonGetter("email")
     public String getEmail ( ) { 
@@ -114,7 +114,7 @@ public class EmailValidateResponse
     }
     
     /** SETTER
-     * The full email address (this could be different to the supplied address if typos-fixed is true)
+     * The email address. If you have used the fix-typos option then this will be the fixed address
      */
     @JsonSetter("email")
     public void setEmail (String value) { 

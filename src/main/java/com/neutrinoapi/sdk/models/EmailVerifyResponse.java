@@ -63,7 +63,7 @@ public class EmailVerifyResponse
     }
  
     /** GETTER
-     * The full email address (this could be different to the supplied address if typos-fixed is true)
+     * The email address. If you have used the fix-typos option then this will be the fixed address
      */
     @JsonGetter("email")
     public String getEmail ( ) { 
@@ -71,7 +71,7 @@ public class EmailVerifyResponse
     }
     
     /** SETTER
-     * The full email address (this could be different to the supplied address if typos-fixed is true)
+     * The email address. If you have used the fix-typos option then this will be the fixed address
      */
     @JsonSetter("email")
     public void setEmail (String value) { 
@@ -207,7 +207,7 @@ public class EmailVerifyResponse
     }
  
     /** GETTER
-     * The SMTP verification status for the address:<br/><ul><li>ok - SMTP verification was successful, this is a real address that can receive mail</li><li>invalid - this is not a valid email address (has either a domain or syntax error)</li><li>absent - this address is not registered with the email service provider</li><li>unresponsive - the mail server(s) for this address timed-out or refused to open an SMTP connection</li><li>unknown - sorry, we could not reliably determine the real status of this address (this address may or may not exist)</li></ul>
+     * The SMTP verification status for the address: <ul> <li>ok - SMTP verification was successful, this is a real address that can receive mail</li> <li>invalid - this is not a valid email address (has either a domain or syntax error)</li> <li>absent - this address is not registered with the email service provider</li> <li>unresponsive - the mail server(s) for this address timed-out or refused to open an SMTP connection</li> <li>unknown - sorry, we could not reliably determine the real status of this address (this address may or may not exist)</li> </ul>
      */
     @JsonGetter("smtpStatus")
     public String getSmtpStatus ( ) { 
@@ -215,7 +215,7 @@ public class EmailVerifyResponse
     }
     
     /** SETTER
-     * The SMTP verification status for the address:<br/><ul><li>ok - SMTP verification was successful, this is a real address that can receive mail</li><li>invalid - this is not a valid email address (has either a domain or syntax error)</li><li>absent - this address is not registered with the email service provider</li><li>unresponsive - the mail server(s) for this address timed-out or refused to open an SMTP connection</li><li>unknown - sorry, we could not reliably determine the real status of this address (this address may or may not exist)</li></ul>
+     * The SMTP verification status for the address: <ul> <li>ok - SMTP verification was successful, this is a real address that can receive mail</li> <li>invalid - this is not a valid email address (has either a domain or syntax error)</li> <li>absent - this address is not registered with the email service provider</li> <li>unresponsive - the mail server(s) for this address timed-out or refused to open an SMTP connection</li> <li>unknown - sorry, we could not reliably determine the real status of this address (this address may or may not exist)</li> </ul>
      */
     @JsonSetter("smtpStatus")
     public void setSmtpStatus (String value) { 

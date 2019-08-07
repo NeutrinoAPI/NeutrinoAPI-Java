@@ -5,6 +5,7 @@
  */
 package com.neutrinoapi.sdk.controllers;
 
+
 import com.neutrinoapi.sdk.exceptions.*;
 import com.neutrinoapi.sdk.http.client.HttpClient;
 import com.neutrinoapi.sdk.http.client.HttpContext;
@@ -50,7 +51,7 @@ public abstract class BaseController {
             synchronized (syncObject) {
                 if (null == clientInstance) {
                     clientInstance = OkClient.getSharedInstance();
-                    clientInstance.setTimeout(45000);
+                    clientInstance.setTimeout(90000);
                 }
             }
         }
@@ -70,26 +71,29 @@ public abstract class BaseController {
             }
         }
     }
-
     /**
      * Validates the response against HTTP errors defined at the API level
-     * @param   response    The response recieved
+     * @param   _response    The response recieved
      * @param   context     Context of the request and the recieved response 
      */
-    protected void validateResponse(HttpResponse response, HttpContext context) 
+    protected void validateResponse(HttpResponse _response, HttpContext context) 
             throws APIException {
         //get response status code to validate
-        int responseCode = response.getStatusCode();
-        if (responseCode == 400)
-            throw new APIErrorException("Your API request has been rejected. Check the error code for details", context);
+        int responseCode = _response.getStatusCode();
+        if (responseCode == 400) {
+            throw new APIErrorException("Your API request has been rejected. Check error code for details", context);
+        }
 
-        if (responseCode == 403)
-            throw new APIException("You have failed to authenticate or are using an invalid API path", context);
+        if (responseCode == 403) {
+            throw new APIErrorException("You have failed to authenticate", context);
+        }
 
-        if (responseCode == 500)
-            throw new APIException("We messed up, sorry! Your request has caused a fatal exception", context);
+        if (responseCode == 500) {
+            throw new APIErrorException("We messed up, sorry! Your request has caused a fatal exception", context);
+        }
 
-        if ((responseCode < 200) || (responseCode > 208)) //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", context);
+        if ((responseCode < 200) || (responseCode > 208)) { //[200,208] = HTTP OK
+            throw new APIErrorException("We messed up, sorry! Your request has caused an error", context);
+        }
     }
 }

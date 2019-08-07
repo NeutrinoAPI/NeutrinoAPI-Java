@@ -41,148 +41,142 @@ public class Imaging extends BaseController {
     }
 
     /**
-     * Watermark one image with another image. See: https://www.neutrinoapi.com/api/image-watermark/
+     * Resize an image and output as either JPEG or PNG. See: https://www.neutrinoapi.com/api/image-resize/
      * @param    imageUrl    Required parameter: The URL to the source image
-     * @param    watermarkUrl    Required parameter: The URL to the watermark image
-     * @param    opacity    Optional parameter: The opacity of the watermark (0 to 100)
+     * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
+     * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
      * @param    format    Optional parameter: The output image format, can be either png or jpg
-     * @param    position    Optional parameter: The position of the watermark image, possible values are:<br/>center, top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
-     * @param    width    Optional parameter: If set resize the resulting image to this width (in px) while preserving aspect ratio
-     * @param    height    Optional parameter: If set resize the resulting image to this height (in px) while preserving aspect ratio
      * @return    Returns the InputStream response from the API call 
      */
-    public InputStream imageWatermark(
+    public InputStream imageResize(
                 final String imageUrl,
-                final String watermarkUrl,
-                final Integer opacity,
-                final String format,
-                final String position,
-                final Integer width,
-                final Integer height
+                final int width,
+                final int height,
+                final String format
     ) throws Throwable {
-        APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
-        imageWatermarkAsync(imageUrl, watermarkUrl, opacity, format, position, width, height, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
+
+        HttpRequest _request = _buildImageResizeRequest(imageUrl, width, height, format);
+        HttpResponse _response = getClientInstance().executeAsBinary(_request);
+        HttpContext _context = new HttpContext(_request, _response);
+
+        return _handleImageResizeResponse(_context);
     }
 
     /**
-     * Watermark one image with another image. See: https://www.neutrinoapi.com/api/image-watermark/
+     * Resize an image and output as either JPEG or PNG. See: https://www.neutrinoapi.com/api/image-resize/
      * @param    imageUrl    Required parameter: The URL to the source image
-     * @param    watermarkUrl    Required parameter: The URL to the watermark image
-     * @param    opacity    Optional parameter: The opacity of the watermark (0 to 100)
+     * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
+     * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
      * @param    format    Optional parameter: The output image format, can be either png or jpg
-     * @param    position    Optional parameter: The position of the watermark image, possible values are:<br/>center, top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
-     * @param    width    Optional parameter: If set resize the resulting image to this width (in px) while preserving aspect ratio
-     * @param    height    Optional parameter: If set resize the resulting image to this height (in px) while preserving aspect ratio
      * @return    Returns the void response from the API call 
      */
-    public void imageWatermarkAsync(
+    public void imageResizeAsync(
                 final String imageUrl,
-                final String watermarkUrl,
-                final Integer opacity,
+                final int width,
+                final int height,
                 final String format,
-                final String position,
-                final Integer width,
-                final Integer height,
                 final APICallBack<InputStream> callBack
     ) {
         Runnable _responseTask = new Runnable() {
             public void run() {
-                final HttpRequest _request;
 
+                HttpRequest _request;
                 try {
-                    //the base uri for api requests
-                    String _baseUri = Configuration.baseUri;
-
-                    //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/image-watermark");
-
-                    ///process query parameters
-                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
-                    _queryParameters.put("user-id", Configuration.userId);
-                    _queryParameters.put("api-key", Configuration.apiKey);
-                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
-
-                    //validate and preprocess url
-                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
-
-                    //load all headers for the outgoing API request
-                    Map<String, String> _headers = new HashMap<String, String>();
-                    _headers.put("user-agent", BaseController.userAgent);
-
-
-                    //load all fields for the outgoing API request
-                    Map<String, Object> _parameters = new HashMap<String, Object>();
-                    _parameters.put("image-url", imageUrl);
-                    _parameters.put("watermark-url", watermarkUrl);
-                    if (opacity != null) {
-                        _parameters.put("opacity", (opacity != null) ? opacity : 50);
-                    }
-                    if (format != null) {
-                        _parameters.put("format", (format != null) ? format : "png");
-                    }
-                    if (position != null) {
-                        _parameters.put("position", (position != null) ? position : "center");
-                    }
-                    if (width != null) {
-                        _parameters.put("width", width);
-                    }
-                    if (height != null) {
-                        _parameters.put("height", height);
-                    }
-
-                    //prepare and invoke the API call request to fetch the response
-                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-                    //invoke the callback before request if its not null
-                    if (getHttpCallBack() != null) {
-                        getHttpCallBack().OnBeforeRequest(_request);
-                    }
-
-                } catch (Throwable e) {
+                    _request = _buildImageResizeRequest(imageUrl, width, height, format);
+                } catch (Exception e) {
                     callBack.onFailure(null, e);
                     return;
                 }
 
-                //invoke request and get response
+                // Invoke request and get response
                 getClientInstance().executeAsBinaryAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null) {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            InputStream _result = _response.getRawBody();
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
+                            InputStream returnValue = _handleImageResizeResponse(_context);
+                            callBack.onSuccess(_context, returnValue);
+                        } catch (Exception e) {
+                            callBack.onFailure(_context, e);
                         }
                     }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null) {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
 
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
+                    public void onFailure(HttpContext _context, Throwable _exception) {
+                        // Let the caller know of the failure
+                        callBack.onFailure(_context, _exception);
                     }
                 });
             }
         };
 
-        //execute async using thread pool
+        // Execute async using thread pool
         APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Builds the HttpRequest object for imageResize
+     */
+    private HttpRequest _buildImageResizeRequest(
+                final String imageUrl,
+                final int width,
+                final int height,
+                final String format) throws IOException, APIException {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/image-resize");
+
+        //process query parameters
+        Map<String, Object> _queryParameters = new HashMap<String, Object>();
+        _queryParameters.put("user-id", Configuration.userId);
+        _queryParameters.put("api-key", Configuration.apiKey);
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>();
+        _headers.put("user-agent", BaseController.userAgent);
+
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>();
+        _parameters.put("image-url", imageUrl);
+        _parameters.put("width", width);
+        _parameters.put("height", height);
+        if (format != null) {
+            _parameters.put("format", (format != null) ? format : "png");
+        }
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        // Invoke the callback before request if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        return _request;
+    }
+
+    /**
+     * Processes the response for imageResize
+     * @return An object of type void
+     */
+    private InputStream _handleImageResizeResponse(HttpContext _context)
+            throws APIException, IOException {
+        HttpResponse _response = _context.getResponse();
+
+        //invoke the callback after response if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnAfterResponse(_context);
+        }
+
+        //handle errors defined at the API level
+        validateResponse(_response, _context);
+
+        //extract result from the http response
+        InputStream _result = _response.getRawBody();
+        return _result;
     }
 
     /**
@@ -201,11 +195,12 @@ public class Imaging extends BaseController {
                 final String fgColor,
                 final String bgColor
     ) throws Throwable {
-        APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
-        qRCodeAsync(content, width, height, fgColor, bgColor, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
+
+        HttpRequest _request = _buildQRCodeRequest(content, width, height, fgColor, bgColor);
+        HttpResponse _response = getClientInstance().executeAsBinary(_request);
+        HttpContext _context = new HttpContext(_request, _response);
+
+        return _handleQRCodeResponse(_context);
     }
 
     /**
@@ -227,217 +222,277 @@ public class Imaging extends BaseController {
     ) {
         Runnable _responseTask = new Runnable() {
             public void run() {
-                final HttpRequest _request;
 
+                HttpRequest _request;
                 try {
-                    //the base uri for api requests
-                    String _baseUri = Configuration.baseUri;
-
-                    //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/qr-code");
-
-                    ///process query parameters
-                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
-                    _queryParameters.put("user-id", Configuration.userId);
-                    _queryParameters.put("api-key", Configuration.apiKey);
-                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
-
-                    //validate and preprocess url
-                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
-
-                    //load all headers for the outgoing API request
-                    Map<String, String> _headers = new HashMap<String, String>();
-                    _headers.put("user-agent", BaseController.userAgent);
-
-
-                    //load all fields for the outgoing API request
-                    Map<String, Object> _parameters = new HashMap<String, Object>();
-                    _parameters.put("content", content);
-                    if (width != null) {
-                        _parameters.put("width", (width != null) ? width : 256);
-                    }
-                    if (height != null) {
-                        _parameters.put("height", (height != null) ? height : 256);
-                    }
-                    if (fgColor != null) {
-                        _parameters.put("fg-color", (fgColor != null) ? fgColor : "#000000");
-                    }
-                    if (bgColor != null) {
-                        _parameters.put("bg-color", (bgColor != null) ? bgColor : "#ffffff");
-                    }
-
-                    //prepare and invoke the API call request to fetch the response
-                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-                    //invoke the callback before request if its not null
-                    if (getHttpCallBack() != null) {
-                        getHttpCallBack().OnBeforeRequest(_request);
-                    }
-
-                } catch (Throwable e) {
+                    _request = _buildQRCodeRequest(content, width, height, fgColor, bgColor);
+                } catch (Exception e) {
                     callBack.onFailure(null, e);
                     return;
                 }
 
-                //invoke request and get response
+                // Invoke request and get response
                 getClientInstance().executeAsBinaryAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null) {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            InputStream _result = _response.getRawBody();
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
+                            InputStream returnValue = _handleQRCodeResponse(_context);
+                            callBack.onSuccess(_context, returnValue);
+                        } catch (Exception e) {
+                            callBack.onFailure(_context, e);
                         }
                     }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null) {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
 
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
+                    public void onFailure(HttpContext _context, Throwable _exception) {
+                        // Let the caller know of the failure
+                        callBack.onFailure(_context, _exception);
                     }
                 });
             }
         };
 
-        //execute async using thread pool
+        // Execute async using thread pool
         APIHelper.getScheduler().execute(_responseTask);
     }
 
     /**
-     * Resize an image and output as either JPEG or PNG. See: https://www.neutrinoapi.com/api/image-resize/
-     * @param    imageUrl    Required parameter: The URL to the source image
-     * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
-     * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
-     * @param    format    Optional parameter: The output image format, can be either png or jpg
-     * @return    Returns the InputStream response from the API call 
+     * Builds the HttpRequest object for qRCode
      */
-    public InputStream imageResize(
-                final String imageUrl,
-                final int width,
-                final int height,
-                final String format
-    ) throws Throwable {
-        APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
-        imageResizeAsync(imageUrl, width, height, format, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
+    private HttpRequest _buildQRCodeRequest(
+                final String content,
+                final Integer width,
+                final Integer height,
+                final String fgColor,
+                final String bgColor) throws IOException, APIException {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/qr-code");
+
+        //process query parameters
+        Map<String, Object> _queryParameters = new HashMap<String, Object>();
+        _queryParameters.put("user-id", Configuration.userId);
+        _queryParameters.put("api-key", Configuration.apiKey);
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>();
+        _headers.put("user-agent", BaseController.userAgent);
+
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>();
+        _parameters.put("content", content);
+        if (width != null) {
+            _parameters.put("width", (width != null) ? width : 256);
+        }
+        if (height != null) {
+            _parameters.put("height", (height != null) ? height : 256);
+        }
+        if (fgColor != null) {
+            _parameters.put("fg-color", (fgColor != null) ? fgColor : "#000000");
+        }
+        if (bgColor != null) {
+            _parameters.put("bg-color", (bgColor != null) ? bgColor : "#ffffff");
+        }
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        // Invoke the callback before request if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        return _request;
     }
 
     /**
-     * Resize an image and output as either JPEG or PNG. See: https://www.neutrinoapi.com/api/image-resize/
+     * Processes the response for qRCode
+     * @return An object of type void
+     */
+    private InputStream _handleQRCodeResponse(HttpContext _context)
+            throws APIException, IOException {
+        HttpResponse _response = _context.getResponse();
+
+        //invoke the callback after response if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnAfterResponse(_context);
+        }
+
+        //handle errors defined at the API level
+        validateResponse(_response, _context);
+
+        //extract result from the http response
+        InputStream _result = _response.getRawBody();
+        return _result;
+    }
+
+    /**
+     * Watermark one image with another image. See: https://www.neutrinoapi.com/api/image-watermark/
      * @param    imageUrl    Required parameter: The URL to the source image
-     * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
-     * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
+     * @param    watermarkUrl    Required parameter: The URL to the watermark image
+     * @param    opacity    Optional parameter: The opacity of the watermark (0 to 100)
      * @param    format    Optional parameter: The output image format, can be either png or jpg
+     * @param    position    Optional parameter: The position of the watermark image, possible values are: center, top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
+     * @param    width    Optional parameter: If set resize the resulting image to this width (in px) while preserving aspect ratio
+     * @param    height    Optional parameter: If set resize the resulting image to this height (in px) while preserving aspect ratio
+     * @return    Returns the InputStream response from the API call 
+     */
+    public InputStream imageWatermark(
+                final String imageUrl,
+                final String watermarkUrl,
+                final Integer opacity,
+                final String format,
+                final String position,
+                final Integer width,
+                final Integer height
+    ) throws Throwable {
+
+        HttpRequest _request = _buildImageWatermarkRequest(imageUrl, watermarkUrl, opacity, format, position, width, height);
+        HttpResponse _response = getClientInstance().executeAsBinary(_request);
+        HttpContext _context = new HttpContext(_request, _response);
+
+        return _handleImageWatermarkResponse(_context);
+    }
+
+    /**
+     * Watermark one image with another image. See: https://www.neutrinoapi.com/api/image-watermark/
+     * @param    imageUrl    Required parameter: The URL to the source image
+     * @param    watermarkUrl    Required parameter: The URL to the watermark image
+     * @param    opacity    Optional parameter: The opacity of the watermark (0 to 100)
+     * @param    format    Optional parameter: The output image format, can be either png or jpg
+     * @param    position    Optional parameter: The position of the watermark image, possible values are: center, top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
+     * @param    width    Optional parameter: If set resize the resulting image to this width (in px) while preserving aspect ratio
+     * @param    height    Optional parameter: If set resize the resulting image to this height (in px) while preserving aspect ratio
      * @return    Returns the void response from the API call 
      */
-    public void imageResizeAsync(
+    public void imageWatermarkAsync(
                 final String imageUrl,
-                final int width,
-                final int height,
+                final String watermarkUrl,
+                final Integer opacity,
                 final String format,
+                final String position,
+                final Integer width,
+                final Integer height,
                 final APICallBack<InputStream> callBack
     ) {
         Runnable _responseTask = new Runnable() {
             public void run() {
-                final HttpRequest _request;
 
+                HttpRequest _request;
                 try {
-                    //the base uri for api requests
-                    String _baseUri = Configuration.baseUri;
-
-                    //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/image-resize");
-
-                    ///process query parameters
-                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
-                    _queryParameters.put("user-id", Configuration.userId);
-                    _queryParameters.put("api-key", Configuration.apiKey);
-                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
-
-                    //validate and preprocess url
-                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
-
-                    //load all headers for the outgoing API request
-                    Map<String, String> _headers = new HashMap<String, String>();
-                    _headers.put("user-agent", BaseController.userAgent);
-
-
-                    //load all fields for the outgoing API request
-                    Map<String, Object> _parameters = new HashMap<String, Object>();
-                    _parameters.put("image-url", imageUrl);
-                    _parameters.put("width", width);
-                    _parameters.put("height", height);
-                    if (format != null) {
-                        _parameters.put("format", (format != null) ? format : "png");
-                    }
-
-                    //prepare and invoke the API call request to fetch the response
-                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-                    //invoke the callback before request if its not null
-                    if (getHttpCallBack() != null) {
-                        getHttpCallBack().OnBeforeRequest(_request);
-                    }
-
-                } catch (Throwable e) {
+                    _request = _buildImageWatermarkRequest(imageUrl, watermarkUrl, opacity, format, position, width, height);
+                } catch (Exception e) {
                     callBack.onFailure(null, e);
                     return;
                 }
 
-                //invoke request and get response
+                // Invoke request and get response
                 getClientInstance().executeAsBinaryAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null) {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            InputStream _result = _response.getRawBody();
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
+                            InputStream returnValue = _handleImageWatermarkResponse(_context);
+                            callBack.onSuccess(_context, returnValue);
+                        } catch (Exception e) {
+                            callBack.onFailure(_context, e);
                         }
                     }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null) {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
 
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
+                    public void onFailure(HttpContext _context, Throwable _exception) {
+                        // Let the caller know of the failure
+                        callBack.onFailure(_context, _exception);
                     }
                 });
             }
         };
 
-        //execute async using thread pool
+        // Execute async using thread pool
         APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Builds the HttpRequest object for imageWatermark
+     */
+    private HttpRequest _buildImageWatermarkRequest(
+                final String imageUrl,
+                final String watermarkUrl,
+                final Integer opacity,
+                final String format,
+                final String position,
+                final Integer width,
+                final Integer height) throws IOException, APIException {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/image-watermark");
+
+        //process query parameters
+        Map<String, Object> _queryParameters = new HashMap<String, Object>();
+        _queryParameters.put("user-id", Configuration.userId);
+        _queryParameters.put("api-key", Configuration.apiKey);
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>();
+        _headers.put("user-agent", BaseController.userAgent);
+
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>();
+        _parameters.put("image-url", imageUrl);
+        _parameters.put("watermark-url", watermarkUrl);
+        if (opacity != null) {
+            _parameters.put("opacity", (opacity != null) ? opacity : 50);
+        }
+        if (format != null) {
+            _parameters.put("format", (format != null) ? format : "png");
+        }
+        if (position != null) {
+            _parameters.put("position", (position != null) ? position : "center");
+        }
+        if (width != null) {
+            _parameters.put("width", width);
+        }
+        if (height != null) {
+            _parameters.put("height", height);
+        }
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        // Invoke the callback before request if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        return _request;
+    }
+
+    /**
+     * Processes the response for imageWatermark
+     * @return An object of type void
+     */
+    private InputStream _handleImageWatermarkResponse(HttpContext _context)
+            throws APIException, IOException {
+        HttpResponse _response = _context.getResponse();
+
+        //invoke the callback after response if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnAfterResponse(_context);
+        }
+
+        //handle errors defined at the API level
+        validateResponse(_response, _context);
+
+        //extract result from the http response
+        InputStream _result = _response.getRawBody();
+        return _result;
     }
 
     /**
@@ -490,7 +545,7 @@ public class Imaging extends BaseController {
                 final Integer marginTop,
                 final Integer marginBottom,
                 final Boolean landscape,
-                final Double zoom,
+                final Integer zoom,
                 final Boolean grayscale,
                 final Boolean mediaPrint,
                 final Boolean mediaQueries,
@@ -516,11 +571,12 @@ public class Imaging extends BaseController {
                 final Integer pageWidth,
                 final Integer pageHeight
     ) throws Throwable {
-        APICallBackCatcher<InputStream> callback = new APICallBackCatcher<InputStream>();
-        hTML5RenderAsync(content, format, pageSize, title, margin, marginLeft, marginRight, marginTop, marginBottom, landscape, zoom, grayscale, mediaPrint, mediaQueries, forms, css, imageWidth, imageHeight, renderDelay, headerTextLeft, headerTextCenter, headerTextRight, headerSize, headerFont, headerFontSize, headerLine, footerTextLeft, footerTextCenter, footerTextRight, footerSize, footerFont, footerFontSize, footerLine, pageWidth, pageHeight, callback);
-        if(!callback.isSuccess())
-            throw callback.getError();
-        return callback.getResult();
+
+        HttpRequest _request = _buildHTML5RenderRequest(content, format, pageSize, title, margin, marginLeft, marginRight, marginTop, marginBottom, landscape, zoom, grayscale, mediaPrint, mediaQueries, forms, css, imageWidth, imageHeight, renderDelay, headerTextLeft, headerTextCenter, headerTextRight, headerSize, headerFont, headerFontSize, headerLine, footerTextLeft, footerTextCenter, footerTextRight, footerSize, footerFont, footerFontSize, footerLine, pageWidth, pageHeight);
+        HttpResponse _response = getClientInstance().executeAsBinary(_request);
+        HttpContext _context = new HttpContext(_request, _response);
+
+        return _handleHTML5RenderResponse(_context);
     }
 
     /**
@@ -573,7 +629,7 @@ public class Imaging extends BaseController {
                 final Integer marginTop,
                 final Integer marginBottom,
                 final Boolean landscape,
-                final Double zoom,
+                final Integer zoom,
                 final Boolean grayscale,
                 final Boolean mediaPrint,
                 final Boolean mediaQueries,
@@ -602,186 +658,233 @@ public class Imaging extends BaseController {
     ) {
         Runnable _responseTask = new Runnable() {
             public void run() {
-                final HttpRequest _request;
 
+                HttpRequest _request;
                 try {
-                    //the base uri for api requests
-                    String _baseUri = Configuration.baseUri;
-
-                    //prepare query string for API call
-                    StringBuilder _queryBuilder = new StringBuilder("/html5-render");
-
-                    ///process query parameters
-                    Map<String, Object> _queryParameters = new HashMap<String, Object>();
-                    _queryParameters.put("user-id", Configuration.userId);
-                    _queryParameters.put("api-key", Configuration.apiKey);
-                    APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
-
-                    //validate and preprocess url
-                    String _queryUrl = APIHelper.cleanUrl(new StringBuilder(_baseUri).append(_queryBuilder));
-
-                    //load all headers for the outgoing API request
-                    Map<String, String> _headers = new HashMap<String, String>();
-                    _headers.put("user-agent", BaseController.userAgent);
-
-
-                    //load all fields for the outgoing API request
-                    Map<String, Object> _parameters = new HashMap<String, Object>();
-                    _parameters.put("output-case", "camel");
-                    _parameters.put("content", content);
-                    if (format != null) {
-                        _parameters.put("format", (format != null) ? format : "PDF");
-                    }
-                    if (pageSize != null) {
-                        _parameters.put("page-size", (pageSize != null) ? pageSize : "A4");
-                    }
-                    if (title != null) {
-                        _parameters.put("title", title);
-                    }
-                    if (margin != null) {
-                        _parameters.put("margin", (margin != null) ? margin : 0);
-                    }
-                    if (marginLeft != null) {
-                        _parameters.put("margin-left", (marginLeft != null) ? marginLeft : 0);
-                    }
-                    if (marginRight != null) {
-                        _parameters.put("margin-right", (marginRight != null) ? marginRight : 0);
-                    }
-                    if (marginTop != null) {
-                        _parameters.put("margin-top", (marginTop != null) ? marginTop : 0);
-                    }
-                    if (marginBottom != null) {
-                        _parameters.put("margin-bottom", (marginBottom != null) ? marginBottom : 0);
-                    }
-                    if (landscape != null) {
-                        _parameters.put("landscape", (landscape != null) ? landscape : false);
-                    }
-                    if (zoom != null) {
-                        _parameters.put("zoom", (zoom != null) ? zoom : 1);
-                    }
-                    if (grayscale != null) {
-                        _parameters.put("grayscale", (grayscale != null) ? grayscale : false);
-                    }
-                    if (mediaPrint != null) {
-                        _parameters.put("media-print", (mediaPrint != null) ? mediaPrint : false);
-                    }
-                    if (mediaQueries != null) {
-                        _parameters.put("media-queries", (mediaQueries != null) ? mediaQueries : false);
-                    }
-                    if (forms != null) {
-                        _parameters.put("forms", (forms != null) ? forms : false);
-                    }
-                    if (css != null) {
-                        _parameters.put("css", css);
-                    }
-                    if (imageWidth != null) {
-                        _parameters.put("image-width", (imageWidth != null) ? imageWidth : 1024);
-                    }
-                    if (imageHeight != null) {
-                        _parameters.put("image-height", imageHeight);
-                    }
-                    if (renderDelay != null) {
-                        _parameters.put("render-delay", (renderDelay != null) ? renderDelay : 0);
-                    }
-                    if (headerTextLeft != null) {
-                        _parameters.put("header-text-left", headerTextLeft);
-                    }
-                    if (headerTextCenter != null) {
-                        _parameters.put("header-text-center", headerTextCenter);
-                    }
-                    if (headerTextRight != null) {
-                        _parameters.put("header-text-right", headerTextRight);
-                    }
-                    if (headerSize != null) {
-                        _parameters.put("header-size", (headerSize != null) ? headerSize : 9);
-                    }
-                    if (headerFont != null) {
-                        _parameters.put("header-font", (headerFont != null) ? headerFont : "Courier");
-                    }
-                    if (headerFontSize != null) {
-                        _parameters.put("header-font-size", (headerFontSize != null) ? headerFontSize : 11);
-                    }
-                    if (headerLine != null) {
-                        _parameters.put("header-line", (headerLine != null) ? headerLine : false);
-                    }
-                    if (footerTextLeft != null) {
-                        _parameters.put("footer-text-left", footerTextLeft);
-                    }
-                    if (footerTextCenter != null) {
-                        _parameters.put("footer-text-center", footerTextCenter);
-                    }
-                    if (footerTextRight != null) {
-                        _parameters.put("footer-text-right", footerTextRight);
-                    }
-                    if (footerSize != null) {
-                        _parameters.put("footer-size", (footerSize != null) ? footerSize : 9);
-                    }
-                    if (footerFont != null) {
-                        _parameters.put("footer-font", (footerFont != null) ? footerFont : "Courier");
-                    }
-                    if (footerFontSize != null) {
-                        _parameters.put("footer-font-size", (footerFontSize != null) ? footerFontSize : 11);
-                    }
-                    if (footerLine != null) {
-                        _parameters.put("footer-line", (footerLine != null) ? footerLine : false);
-                    }
-                    if (pageWidth != null) {
-                        _parameters.put("page-width", pageWidth);
-                    }
-                    if (pageHeight != null) {
-                        _parameters.put("page-height", pageHeight);
-                    }
-
-                    //prepare and invoke the API call request to fetch the response
-                    _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
-
-                    //invoke the callback before request if its not null
-                    if (getHttpCallBack() != null) {
-                        getHttpCallBack().OnBeforeRequest(_request);
-                    }
-
-                } catch (Throwable e) {
+                    _request = _buildHTML5RenderRequest(content, format, pageSize, title, margin, marginLeft, marginRight, marginTop, marginBottom, landscape, zoom, grayscale, mediaPrint, mediaQueries, forms, css, imageWidth, imageHeight, renderDelay, headerTextLeft, headerTextCenter, headerTextRight, headerSize, headerFont, headerFontSize, headerLine, footerTextLeft, footerTextCenter, footerTextRight, footerSize, footerFont, footerFontSize, footerLine, pageWidth, pageHeight);
+                } catch (Exception e) {
                     callBack.onFailure(null, e);
                     return;
                 }
 
-                //invoke request and get response
+                // Invoke request and get response
                 getClientInstance().executeAsBinaryAsync(_request, new APICallBack<HttpResponse>() {
                     public void onSuccess(HttpContext _context, HttpResponse _response) {
                         try {
-
-                            //invoke the callback after response if its not null
-                            if (getHttpCallBack() != null) {
-                                getHttpCallBack().OnAfterResponse(_context);
-                            }
-
-                            //handle errors defined at the API level
-                            validateResponse(_response, _context);
-
-                            //extract result from the http response
-                            InputStream _result = _response.getRawBody();
-                            //let the caller know of the success
-                            callBack.onSuccess(_context, _result);
-                        } catch (Exception exception) {
-                            //let the caller know of the caught Exception
-                            callBack.onFailure(_context, exception);
+                            InputStream returnValue = _handleHTML5RenderResponse(_context);
+                            callBack.onSuccess(_context, returnValue);
+                        } catch (Exception e) {
+                            callBack.onFailure(_context, e);
                         }
                     }
-                    public void onFailure(HttpContext _context, Throwable _error) {
-                        //invoke the callback after response if its not null
-                        if (getHttpCallBack() != null) {
-                            getHttpCallBack().OnAfterResponse(_context);
-                        }
 
-                        //let the caller know of the failure
-                        callBack.onFailure(_context, _error);
+                    public void onFailure(HttpContext _context, Throwable _exception) {
+                        // Let the caller know of the failure
+                        callBack.onFailure(_context, _exception);
                     }
                 });
             }
         };
 
-        //execute async using thread pool
+        // Execute async using thread pool
         APIHelper.getScheduler().execute(_responseTask);
+    }
+
+    /**
+     * Builds the HttpRequest object for hTML5Render
+     */
+    private HttpRequest _buildHTML5RenderRequest(
+                final String content,
+                final String format,
+                final String pageSize,
+                final String title,
+                final Integer margin,
+                final Integer marginLeft,
+                final Integer marginRight,
+                final Integer marginTop,
+                final Integer marginBottom,
+                final Boolean landscape,
+                final Integer zoom,
+                final Boolean grayscale,
+                final Boolean mediaPrint,
+                final Boolean mediaQueries,
+                final Boolean forms,
+                final String css,
+                final Integer imageWidth,
+                final Integer imageHeight,
+                final Integer renderDelay,
+                final String headerTextLeft,
+                final String headerTextCenter,
+                final String headerTextRight,
+                final Integer headerSize,
+                final String headerFont,
+                final Integer headerFontSize,
+                final Boolean headerLine,
+                final String footerTextLeft,
+                final String footerTextCenter,
+                final String footerTextRight,
+                final Integer footerSize,
+                final String footerFont,
+                final Integer footerFontSize,
+                final Boolean footerLine,
+                final Integer pageWidth,
+                final Integer pageHeight) throws IOException, APIException {
+        //the base uri for api requests
+        String _baseUri = Configuration.baseUri;
+
+        //prepare query string for API call
+        StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/html5-render");
+
+        //process query parameters
+        Map<String, Object> _queryParameters = new HashMap<String, Object>();
+        _queryParameters.put("user-id", Configuration.userId);
+        _queryParameters.put("api-key", Configuration.apiKey);
+        APIHelper.appendUrlWithQueryParameters(_queryBuilder, _queryParameters);
+        //validate and preprocess url
+        String _queryUrl = APIHelper.cleanUrl(_queryBuilder);
+
+        //load all headers for the outgoing API request
+        Map<String, String> _headers = new HashMap<String, String>();
+        _headers.put("user-agent", BaseController.userAgent);
+
+
+        //load all fields for the outgoing API request
+        Map<String, Object> _parameters = new HashMap<String, Object>();
+        _parameters.put("output-case", "camel");
+        _parameters.put("content", content);
+        if (format != null) {
+            _parameters.put("format", (format != null) ? format : "PDF");
+        }
+        if (pageSize != null) {
+            _parameters.put("page-size", (pageSize != null) ? pageSize : "A4");
+        }
+        if (title != null) {
+            _parameters.put("title", title);
+        }
+        if (margin != null) {
+            _parameters.put("margin", (margin != null) ? margin : 0);
+        }
+        if (marginLeft != null) {
+            _parameters.put("margin-left", (marginLeft != null) ? marginLeft : 0);
+        }
+        if (marginRight != null) {
+            _parameters.put("margin-right", (marginRight != null) ? marginRight : 0);
+        }
+        if (marginTop != null) {
+            _parameters.put("margin-top", (marginTop != null) ? marginTop : 0);
+        }
+        if (marginBottom != null) {
+            _parameters.put("margin-bottom", (marginBottom != null) ? marginBottom : 0);
+        }
+        if (landscape != null) {
+            _parameters.put("landscape", (landscape != null) ? landscape : false);
+        }
+        if (zoom != null) {
+            _parameters.put("zoom", (zoom != null) ? zoom : 1);
+        }
+        if (grayscale != null) {
+            _parameters.put("grayscale", (grayscale != null) ? grayscale : false);
+        }
+        if (mediaPrint != null) {
+            _parameters.put("media-print", (mediaPrint != null) ? mediaPrint : false);
+        }
+        if (mediaQueries != null) {
+            _parameters.put("media-queries", (mediaQueries != null) ? mediaQueries : false);
+        }
+        if (forms != null) {
+            _parameters.put("forms", (forms != null) ? forms : false);
+        }
+        if (css != null) {
+            _parameters.put("css", css);
+        }
+        if (imageWidth != null) {
+            _parameters.put("image-width", (imageWidth != null) ? imageWidth : 1024);
+        }
+        if (imageHeight != null) {
+            _parameters.put("image-height", imageHeight);
+        }
+        if (renderDelay != null) {
+            _parameters.put("render-delay", (renderDelay != null) ? renderDelay : 0);
+        }
+        if (headerTextLeft != null) {
+            _parameters.put("header-text-left", headerTextLeft);
+        }
+        if (headerTextCenter != null) {
+            _parameters.put("header-text-center", headerTextCenter);
+        }
+        if (headerTextRight != null) {
+            _parameters.put("header-text-right", headerTextRight);
+        }
+        if (headerSize != null) {
+            _parameters.put("header-size", (headerSize != null) ? headerSize : 9);
+        }
+        if (headerFont != null) {
+            _parameters.put("header-font", (headerFont != null) ? headerFont : "Courier");
+        }
+        if (headerFontSize != null) {
+            _parameters.put("header-font-size", (headerFontSize != null) ? headerFontSize : 11);
+        }
+        if (headerLine != null) {
+            _parameters.put("header-line", (headerLine != null) ? headerLine : false);
+        }
+        if (footerTextLeft != null) {
+            _parameters.put("footer-text-left", footerTextLeft);
+        }
+        if (footerTextCenter != null) {
+            _parameters.put("footer-text-center", footerTextCenter);
+        }
+        if (footerTextRight != null) {
+            _parameters.put("footer-text-right", footerTextRight);
+        }
+        if (footerSize != null) {
+            _parameters.put("footer-size", (footerSize != null) ? footerSize : 9);
+        }
+        if (footerFont != null) {
+            _parameters.put("footer-font", (footerFont != null) ? footerFont : "Courier");
+        }
+        if (footerFontSize != null) {
+            _parameters.put("footer-font-size", (footerFontSize != null) ? footerFontSize : 11);
+        }
+        if (footerLine != null) {
+            _parameters.put("footer-line", (footerLine != null) ? footerLine : false);
+        }
+        if (pageWidth != null) {
+            _parameters.put("page-width", pageWidth);
+        }
+        if (pageHeight != null) {
+            _parameters.put("page-height", pageHeight);
+        }
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest _request = getClientInstance().post(_queryUrl, _headers, APIHelper.prepareFormFields(_parameters));
+
+        // Invoke the callback before request if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnBeforeRequest(_request);
+        }
+
+        return _request;
+    }
+
+    /**
+     * Processes the response for hTML5Render
+     * @return An object of type void
+     */
+    private InputStream _handleHTML5RenderResponse(HttpContext _context)
+            throws APIException, IOException {
+        HttpResponse _response = _context.getResponse();
+
+        //invoke the callback after response if its not null
+        if (getHttpCallBack() != null) {
+            getHttpCallBack().OnAfterResponse(_context);
+        }
+
+        //handle errors defined at the API level
+        validateResponse(_response, _context);
+
+        //extract result from the http response
+        InputStream _result = _response.getRawBody();
+        return _result;
     }
 
 }

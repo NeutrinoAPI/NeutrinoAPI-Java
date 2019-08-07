@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.ALWAYS)
 public class URLInfoResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 6643852703878624010L;
+    private static final long serialVersionUID = 1553462061705019977L;
     private int httpStatusMessage;
     private String serverRegion;
     private LinkedHashMap<String, String> query;
@@ -38,6 +38,7 @@ public class URLInfoResponse
     private String contentType;
     private boolean httpRedirect;
     private String content;
+    private boolean isTimeout;
     /** GETTER
      * The HTTP status message assoicated with the status code
      */
@@ -404,6 +405,22 @@ public class URLInfoResponse
     @JsonSetter("content")
     public void setContent (String value) { 
         this.content = value;
+    }
+ 
+    /** GETTER
+     * True if a timeout occurred while loading the URL. You can set the timeout with the request parameter 'timeout'
+     */
+    @JsonGetter("isTimeout")
+    public boolean getIsTimeout ( ) { 
+        return this.isTimeout;
+    }
+    
+    /** SETTER
+     * True if a timeout occurred while loading the URL. You can set the timeout with the request parameter 'timeout'
+     */
+    @JsonSetter("isTimeout")
+    public void setIsTimeout (boolean value) { 
+        this.isTimeout = value;
     }
  
 }
