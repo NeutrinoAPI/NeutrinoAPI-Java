@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.ALWAYS)
 public class IPProbeResponse 
         implements java.io.Serializable {
-    private static final long serialVersionUID = 9097730618338615766L;
+    private static final long serialVersionUID = -361431626173355651L;
     private boolean valid;
     private String country;
     private String providerType;
@@ -41,6 +41,7 @@ public class IPProbeResponse
     private String asDescription;
     private int asAge;
     private String hostDomain;
+    private String vpnDomain;
     /** GETTER
      * Is this a valid IPv4 or IPv6 address
      */
@@ -455,6 +456,22 @@ public class IPProbeResponse
     @JsonSetter("hostDomain")
     public void setHostDomain (String value) { 
         this.hostDomain = value;
+    }
+ 
+    /** GETTER
+     * The domain of the VPN provider (may be empty if the VPN domain is not detectable)
+     */
+    @JsonGetter("vpnDomain")
+    public String getVpnDomain ( ) { 
+        return this.vpnDomain;
+    }
+    
+    /** SETTER
+     * The domain of the VPN provider (may be empty if the VPN domain is not detectable)
+     */
+    @JsonSetter("vpnDomain")
+    public void setVpnDomain (String value) { 
+        this.vpnDomain = value;
     }
  
 }

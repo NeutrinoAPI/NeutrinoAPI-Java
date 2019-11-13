@@ -225,6 +225,14 @@ public class IPProbeResponseBuilder {
         iPProbeResponse.setHostDomain(hostDomain);
         return this;
     }
+
+    /**
+     * The domain of the VPN provider (may be empty if the VPN domain is not detectable)
+     */
+    public IPProbeResponseBuilder vpnDomain(String vpnDomain) {
+        iPProbeResponse.setVpnDomain(vpnDomain);
+        return this;
+    }
     /**
      * Build the instance with the given values
      */

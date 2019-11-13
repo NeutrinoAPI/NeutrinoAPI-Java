@@ -63,7 +63,6 @@ public class ECommerce extends BaseController {
      * Perform a BIN (Bank Identification Number) or IIN (Issuer Identification Number) lookup. See: https://www.neutrinoapi.com/api/bin-lookup/
      * @param    binNumber    Required parameter: The BIN or IIN number (the first 6 digits of a credit card number)
      * @param    customerIp    Optional parameter: Pass in the customers IP address and we will return some extra information about them
-     * @return    Returns the void response from the API call 
      */
     public void bINLookupAsync(
                 final String binNumber,
@@ -111,7 +110,7 @@ public class ECommerce extends BaseController {
                 final String binNumber,
                 final String customerIp) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/bin-lookup");
@@ -151,7 +150,7 @@ public class ECommerce extends BaseController {
 
     /**
      * Processes the response for bINLookup
-     * @return An object of type void
+     * @return An object of type BINLookupResponse
      */
     private BINLookupResponse _handleBINLookupResponse(HttpContext _context)
             throws APIException, IOException {

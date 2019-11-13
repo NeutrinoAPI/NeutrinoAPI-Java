@@ -60,7 +60,6 @@ public class SecurityAndNetworking extends BaseController {
     /**
      * Analyze and extract provider information for an IP address. See: https://www.neutrinoapi.com/api/ip-probe/
      * @param    ip    Required parameter: IPv4 or IPv6 address
-     * @return    Returns the void response from the API call 
      */
     public void iPProbeAsync(
                 final String ip,
@@ -106,7 +105,7 @@ public class SecurityAndNetworking extends BaseController {
     private HttpRequest _buildIPProbeRequest(
                 final String ip) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/ip-probe");
@@ -143,7 +142,7 @@ public class SecurityAndNetworking extends BaseController {
 
     /**
      * Processes the response for iPProbe
-     * @return An object of type void
+     * @return An object of type IPProbeResponse
      */
     private IPProbeResponse _handleIPProbeResponse(HttpContext _context)
             throws APIException, IOException {
@@ -187,7 +186,6 @@ public class SecurityAndNetworking extends BaseController {
      * SMTP based email address verification. See: https://www.neutrinoapi.com/api/email-verify/
      * @param    email    Required parameter: An email address
      * @param    fixTypos    Optional parameter: Automatically attempt to fix typos in the address
-     * @return    Returns the void response from the API call 
      */
     public void emailVerifyAsync(
                 final String email,
@@ -235,7 +233,7 @@ public class SecurityAndNetworking extends BaseController {
                 final String email,
                 final Boolean fixTypos) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/email-verify");
@@ -275,7 +273,7 @@ public class SecurityAndNetworking extends BaseController {
 
     /**
      * Processes the response for emailVerify
-     * @return An object of type void
+     * @return An object of type EmailVerifyResponse
      */
     private EmailVerifyResponse _handleEmailVerifyResponse(HttpContext _context)
             throws APIException, IOException {
@@ -316,7 +314,6 @@ public class SecurityAndNetworking extends BaseController {
     /**
      * The IP Blocklist API will detect potentially malicious or dangerous IP addresses. See: https://www.neutrinoapi.com/api/ip-blocklist/
      * @param    ip    Required parameter: An IPv4 or IPv6 address
-     * @return    Returns the void response from the API call 
      */
     public void iPBlocklistAsync(
                 final String ip,
@@ -362,7 +359,7 @@ public class SecurityAndNetworking extends BaseController {
     private HttpRequest _buildIPBlocklistRequest(
                 final String ip) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/ip-blocklist");
@@ -399,7 +396,7 @@ public class SecurityAndNetworking extends BaseController {
 
     /**
      * Processes the response for iPBlocklist
-     * @return An object of type void
+     * @return An object of type IPBlocklistResponse
      */
     private IPBlocklistResponse _handleIPBlocklistResponse(HttpContext _context)
             throws APIException, IOException {
@@ -443,7 +440,6 @@ public class SecurityAndNetworking extends BaseController {
      * Check the reputation of an IP address, domain name, FQDN or URL against a comprehensive list of blacklists and blocklists. See: https://www.neutrinoapi.com/api/host-reputation/
      * @param    host    Required parameter: An IP address, domain name, FQDN or URL. If you supply a domain/URL it will be checked against the URI DNSBL lists
      * @param    listRating    Optional parameter: Only check lists with this rating or better
-     * @return    Returns the void response from the API call 
      */
     public void hostReputationAsync(
                 final String host,
@@ -491,7 +487,7 @@ public class SecurityAndNetworking extends BaseController {
                 final String host,
                 final Integer listRating) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/host-reputation");
@@ -531,7 +527,7 @@ public class SecurityAndNetworking extends BaseController {
 
     /**
      * Processes the response for hostReputation
-     * @return An object of type void
+     * @return An object of type HostReputationResponse
      */
     private HostReputationResponse _handleHostReputationResponse(HttpContext _context)
             throws APIException, IOException {

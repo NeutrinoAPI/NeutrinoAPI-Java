@@ -75,8 +75,8 @@ void imageResizeAsync(
 
 ```java
 String imageUrl = "image-url";
-int width = 66;
-int height = 66;
+int width = 27;
+int height = 27;
 String format = "png";
 // Invoking the API call with sample inputs
 imaging.imageResizeAsync(imageUrl, width, height, format, new APICallBack<InputStream>() {
@@ -176,8 +176,8 @@ String watermarkUrl = "watermark-url";
 Integer opacity = 50;
 String format = "png";
 String position = "center";
-Integer width = 66;
-Integer height = 66;
+Integer width = 27;
+Integer height = 27;
 // Invoking the API call with sample inputs
 imaging.imageWatermarkAsync(imageUrl, watermarkUrl, opacity, format, position, width, height, new APICallBack<InputStream>() {
     public void onSuccess(HttpContext context, InputStream response) {
@@ -297,7 +297,7 @@ Boolean mediaQueries = false;
 Boolean forms = false;
 String css = "css";
 Integer imageWidth = 1024;
-Integer imageHeight = 66;
+Integer imageHeight = 27;
 Integer renderDelay = 0;
 String headerTextLeft = "header-text-left";
 String headerTextCenter = "header-text-center";
@@ -313,8 +313,8 @@ Integer footerSize = 9;
 String footerFont = "Courier";
 Integer footerFontSize = 11;
 Boolean footerLine = false;
-Integer pageWidth = 66;
-Integer pageHeight = 66;
+Integer pageWidth = 118;
+Integer pageHeight = 118;
 // Invoking the API call with sample inputs
 imaging.hTML5RenderAsync(content, format, pageSize, title, margin, marginLeft, marginRight, marginTop, marginBottom, landscape, zoom, grayscale, mediaPrint, mediaQueries, forms, css, imageWidth, imageHeight, renderDelay, headerTextLeft, headerTextCenter, headerTextRight, headerSize, headerFont, headerFontSize, headerLine, footerTextLeft, footerTextCenter, footerTextRight, footerSize, footerFont, footerFontSize, footerLine, pageWidth, pageHeight, new APICallBack<InputStream>() {
     public void onSuccess(HttpContext context, InputStream response) {
@@ -482,7 +482,7 @@ void sMSVerifyAsync(
 ```java
 String number = "number";
 Integer codeLength = 5;
-Integer securityCode = 66;
+Integer securityCode = 118;
 String countryCode = "country-code";
 String languageCode = "en";
 // Invoking the API call with sample inputs
@@ -572,7 +572,7 @@ void phoneVerifyAsync(
 ```java
 String number = "number";
 Integer codeLength = 6;
-Integer securityCode = 66;
+Integer securityCode = 118;
 Integer playbackDelay = 800;
 String countryCode = "country-code";
 String languageCode = "en";
@@ -1259,7 +1259,7 @@ void browserBotAsync(
 | timeout |  ``` Optional ```  ``` DefaultValue ```  | Timeout in seconds. Give up if still trying to load the page after this number of seconds |
 | delay |  ``` Optional ```  ``` DefaultValue ```  | Delay in seconds to wait before capturing any page data, executing selectors or JavaScript |
 | selector |  ``` Optional ```  | Extract content from the page DOM using this selector. Commonly known as a CSS selector, you can find a good reference <a href="https://www.w3schools.com/cssref/css_selectors.asp">here</a> |
-| exec |  ``` Optional ```  ``` Collection ```  ``` DefaultValue ```  | Execute JavaScript on the page. Each array element should contain a valid JavaScript statement in string form. If a statement returns any kind of value it will be returned in the 'exec-results' response. For your convenience you can also use the following special shortcut functions: <div> sleep(seconds); Just wait/sleep for the specified number of seconds. click('selector'); Click on the first element matching the given selector. focus('selector'); Focus on the first element matching the given selector. keys('characters'); Send the specified keyboard characters. Use click() or focus() first to send keys to a specific element. enter(); Send the Enter key. tab(); Send the Tab key. </div> Example: <div> [ "click('#button-id')", "sleep(1)", "click('.field-class')", "keys('1234')", "enter()" ] </div> |
+| exec |  ``` Optional ```  ``` Collection ```  | Execute JavaScript on the page. Each array element should contain a valid JavaScript statement in string form. If a statement returns any kind of value it will be returned in the 'exec-results' response. For your convenience you can also use the following special shortcut functions: <div> sleep(seconds); Just wait/sleep for the specified number of seconds. click('selector'); Click on the first element matching the given selector. focus('selector'); Focus on the first element matching the given selector. keys('characters'); Send the specified keyboard characters. Use click() or focus() first to send keys to a specific element. enter(); Send the Enter key. tab(); Send the Tab key. </div> Example: <div> [ "click('#button-id')", "sleep(1)", "click('.field-class')", "keys('1234')", "enter()" ] </div> |
 | userAgent |  ``` Optional ```  | Override the browsers default user-agent string with this one |
 | ignoreCertificateErrors |  ``` Optional ```  ``` DefaultValue ```  | Ignore any TLS/SSL certificate errors and load the page anyway |
 
@@ -1271,8 +1271,7 @@ String url = "url";
 Integer timeout = 30;
 Integer delay = 3;
 String selector = "selector";
-String execValue = "[]";
-List<String> exec = mapper.readValue(execValue,new TypeReference<List<String>> (){});
+List<String> exec = new LinkedList<String>(Arrays.asList("exec"));
 String userAgent = "user-agent";
 Boolean ignoreCertificateErrors = false;
 // Invoking the API call with sample inputs

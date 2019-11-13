@@ -123,7 +123,7 @@ public class IPBlocklistResponseBuilder {
     }
 
     /**
-     * IP has been detected as belonging to a VPN provider
+     * IP belongs to a VPN provider. This field is only kept for backward compatibility, for VPN detection use the <a href="https://www.neutrinoapi.com/api/ip-probe/">IP Probe</a> API
      */
     public IPBlocklistResponseBuilder isVpn(boolean isVpn) {
         iPBlocklistResponse.setIsVpn(isVpn);

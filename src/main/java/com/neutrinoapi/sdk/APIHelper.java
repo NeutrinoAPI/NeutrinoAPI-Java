@@ -344,7 +344,7 @@ public class APIHelper {
     /**
      * Tries Url encode using UTF-8
      * @param value The value to url encode
-     * @return
+     * @return The encoded url
      */
     private static String tryUrlEncode(String value) {
         try {

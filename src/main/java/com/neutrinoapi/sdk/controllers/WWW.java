@@ -69,7 +69,6 @@ public class WWW extends BaseController {
      * @param    fetchContent    Optional parameter: If this URL responds with html, text, json or xml then return the response. This option is useful if you want to perform further processing on the URL content (e.g. with the HTML Extract or HTML Clean APIs)
      * @param    ignoreCertificateErrors    Optional parameter: Ignore any TLS/SSL certificate errors and load the URL anyway
      * @param    timeout    Optional parameter: Timeout in seconds. Give up if still trying to load the URL after this number of seconds
-     * @return    Returns the void response from the API call 
      */
     public void uRLInfoAsync(
                 final String url,
@@ -121,7 +120,7 @@ public class WWW extends BaseController {
                 final Boolean ignoreCertificateErrors,
                 final Integer timeout) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/url-info");
@@ -167,7 +166,7 @@ public class WWW extends BaseController {
 
     /**
      * Processes the response for uRLInfo
-     * @return An object of type void
+     * @return An object of type URLInfoResponse
      */
     private URLInfoResponse _handleURLInfoResponse(HttpContext _context)
             throws APIException, IOException {
@@ -211,7 +210,6 @@ public class WWW extends BaseController {
      * Clean and sanitize untrusted HTML. See: https://www.neutrinoapi.com/api/html-clean/
      * @param    content    Required parameter: The HTML content. This can be either a URL to load HTML from or an actual HTML content string
      * @param    outputType    Required parameter: The level of sanitization, possible values are: <b>plain-text</b>: reduce the content to plain text only (no HTML tags at all) <b>simple-text</b>: allow only very basic text formatting tags like b, em, i, strong, u <b>basic-html</b>: allow advanced text formatting and hyper links <b>basic-html-with-images</b>: same as basic html but also allows image tags <b>advanced-html</b>: same as basic html with images but also allows many more common HTML tags like table, ul, dl, pre
-     * @return    Returns the void response from the API call 
      */
     public void hTMLCleanAsync(
                 final String content,
@@ -259,7 +257,7 @@ public class WWW extends BaseController {
                 final String content,
                 final String outputType) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/html-clean");
@@ -295,7 +293,7 @@ public class WWW extends BaseController {
 
     /**
      * Processes the response for hTMLClean
-     * @return An object of type void
+     * @return An object of type InputStream
      */
     private InputStream _handleHTMLCleanResponse(HttpContext _context)
             throws APIException, IOException {
@@ -351,7 +349,6 @@ public class WWW extends BaseController {
      * @param    exec    Optional parameter: Execute JavaScript on the page. Each array element should contain a valid JavaScript statement in string form. If a statement returns any kind of value it will be returned in the 'exec-results' response. For your convenience you can also use the following special shortcut functions: <div> sleep(seconds); Just wait/sleep for the specified number of seconds. click('selector'); Click on the first element matching the given selector. focus('selector'); Focus on the first element matching the given selector. keys('characters'); Send the specified keyboard characters. Use click() or focus() first to send keys to a specific element. enter(); Send the Enter key. tab(); Send the Tab key. </div> Example: <div> [ "click('#button-id')", "sleep(1)", "click('.field-class')", "keys('1234')", "enter()" ] </div>
      * @param    userAgent    Optional parameter: Override the browsers default user-agent string with this one
      * @param    ignoreCertificateErrors    Optional parameter: Ignore any TLS/SSL certificate errors and load the page anyway
-     * @return    Returns the void response from the API call 
      */
     public void browserBotAsync(
                 final String url,
@@ -409,7 +406,7 @@ public class WWW extends BaseController {
                 final String userAgent,
                 final Boolean ignoreCertificateErrors) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/browser-bot");
@@ -442,7 +439,7 @@ public class WWW extends BaseController {
             _parameters.put("selector", selector);
         }
         if (exec != null) {
-            _parameters.put("exec", (exec != null) ? exec : "[]");
+            _parameters.put("exec", exec);
         }
         if (userAgent != null) {
             _parameters.put("user-agent", userAgent);
@@ -464,7 +461,7 @@ public class WWW extends BaseController {
 
     /**
      * Processes the response for browserBot
-     * @return An object of type void
+     * @return An object of type BrowserBotResponse
      */
     private BrowserBotResponse _handleBrowserBotResponse(HttpContext _context)
             throws APIException, IOException {

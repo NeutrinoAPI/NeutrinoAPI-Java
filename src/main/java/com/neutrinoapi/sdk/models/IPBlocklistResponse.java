@@ -241,7 +241,7 @@ public class IPBlocklistResponse
     }
  
     /** GETTER
-     * IP has been detected as belonging to a VPN provider
+     * IP belongs to a VPN provider. This field is only kept for backward compatibility, for VPN detection use the <a href="https://www.neutrinoapi.com/api/ip-probe/">IP Probe</a> API
      */
     @JsonGetter("isVpn")
     public boolean getIsVpn ( ) { 
@@ -249,7 +249,7 @@ public class IPBlocklistResponse
     }
     
     /** SETTER
-     * IP has been detected as belonging to a VPN provider
+     * IP belongs to a VPN provider. This field is only kept for backward compatibility, for VPN detection use the <a href="https://www.neutrinoapi.com/api/ip-probe/">IP Probe</a> API
      */
     @JsonSetter("isVpn")
     public void setIsVpn (boolean value) { 

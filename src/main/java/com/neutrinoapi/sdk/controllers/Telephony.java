@@ -60,7 +60,6 @@ public class Telephony extends BaseController {
     /**
      * Check if a security code from one of the verify APIs is valid. See: https://www.neutrinoapi.com/api/verify-security-code/
      * @param    securityCode    Required parameter: The security code to verify
-     * @return    Returns the void response from the API call 
      */
     public void verifySecurityCodeAsync(
                 final String securityCode,
@@ -106,7 +105,7 @@ public class Telephony extends BaseController {
     private HttpRequest _buildVerifySecurityCodeRequest(
                 final String securityCode) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/verify-security-code");
@@ -143,7 +142,7 @@ public class Telephony extends BaseController {
 
     /**
      * Processes the response for verifySecurityCode
-     * @return An object of type void
+     * @return An object of type VerifySecurityCodeResponse
      */
     private VerifySecurityCodeResponse _handleVerifySecurityCodeResponse(HttpContext _context)
             throws APIException, IOException {
@@ -187,7 +186,6 @@ public class Telephony extends BaseController {
      * Connect to the global mobile cellular network and retrieve the status of a mobile device. See: https://www.neutrinoapi.com/api/hlr-lookup/
      * @param    number    Required parameter: A phone number
      * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
-     * @return    Returns the void response from the API call 
      */
     public void hLRLookupAsync(
                 final String number,
@@ -235,7 +233,7 @@ public class Telephony extends BaseController {
                 final String number,
                 final String countryCode) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/hlr-lookup");
@@ -275,7 +273,7 @@ public class Telephony extends BaseController {
 
     /**
      * Processes the response for hLRLookup
-     * @return An object of type void
+     * @return An object of type HLRLookupResponse
      */
     private HLRLookupResponse _handleHLRLookupResponse(HttpContext _context)
             throws APIException, IOException {
@@ -319,7 +317,6 @@ public class Telephony extends BaseController {
      * Make an automated call to any valid phone number and playback an audio message. See: https://www.neutrinoapi.com/api/phone-playback/
      * @param    number    Required parameter: The phone number to call. Must be in valid international format
      * @param    audioUrl    Required parameter: A URL to a valid audio file. Accepted audio formats are: <ul> <li>MP3</li> <li>WAV</li> <li>OGG</li> </ul>You can use the following MP3 URL for testing: https://www.neutrinoapi.com/test-files/test1.mp3
-     * @return    Returns the void response from the API call 
      */
     public void phonePlaybackAsync(
                 final String number,
@@ -367,7 +364,7 @@ public class Telephony extends BaseController {
                 final String number,
                 final String audioUrl) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/phone-playback");
@@ -405,7 +402,7 @@ public class Telephony extends BaseController {
 
     /**
      * Processes the response for phonePlayback
-     * @return An object of type void
+     * @return An object of type PhonePlaybackResponse
      */
     private PhonePlaybackResponse _handlePhonePlaybackResponse(HttpContext _context)
             throws APIException, IOException {
@@ -458,7 +455,6 @@ public class Telephony extends BaseController {
      * @param    securityCode    Optional parameter: Pass in your own security code. This is useful if you have implemented TOTP or similar 2FA methods. If not set then we will generate a secure random code
      * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
      * @param    languageCode    Optional parameter: The language to send the verification code in, available languages are: <ul> <li>de - German</li> <li>en - English</li> <li>es - Spanish</li> <li>fr - French</li> <li>it - Italian</li> <li>pt - Portuguese</li> <li>ru - Russian</li> </ul>
-     * @return    Returns the void response from the API call 
      */
     public void sMSVerifyAsync(
                 final String number,
@@ -512,7 +508,7 @@ public class Telephony extends BaseController {
                 final String countryCode,
                 final String languageCode) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/sms-verify");
@@ -561,7 +557,7 @@ public class Telephony extends BaseController {
 
     /**
      * Processes the response for sMSVerify
-     * @return An object of type void
+     * @return An object of type SMSVerifyResponse
      */
     private SMSVerifyResponse _handleSMSVerifyResponse(HttpContext _context)
             throws APIException, IOException {
@@ -608,7 +604,6 @@ public class Telephony extends BaseController {
      * @param    number    Required parameter: The phone number to send a message to
      * @param    message    Required parameter: The SMS message to send. Messages are truncated to a maximum of 150 characters for ASCII content OR 70 characters for UTF content
      * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
-     * @return    Returns the void response from the API call 
      */
     public void sMSMessageAsync(
                 final String number,
@@ -658,7 +653,7 @@ public class Telephony extends BaseController {
                 final String message,
                 final String countryCode) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/sms-message");
@@ -699,7 +694,7 @@ public class Telephony extends BaseController {
 
     /**
      * Processes the response for sMSMessage
-     * @return An object of type void
+     * @return An object of type SMSMessageResponse
      */
     private SMSMessageResponse _handleSMSMessageResponse(HttpContext _context)
             throws APIException, IOException {
@@ -755,7 +750,6 @@ public class Telephony extends BaseController {
      * @param    playbackDelay    Optional parameter: The delay in milliseconds between the playback of each security code
      * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
      * @param    languageCode    Optional parameter: The language to playback the verification code in, available languages are: <ul> <li>de - German</li> <li>en - English</li> <li>es - Spanish</li> <li>fr - French</li> <li>it - Italian</li> <li>pt - Portuguese</li> <li>ru - Russian</li> </ul>
-     * @return    Returns the void response from the API call 
      */
     public void phoneVerifyAsync(
                 final String number,
@@ -811,7 +805,7 @@ public class Telephony extends BaseController {
                 final String countryCode,
                 final String languageCode) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/phone-verify");
@@ -863,7 +857,7 @@ public class Telephony extends BaseController {
 
     /**
      * Processes the response for phoneVerify
-     * @return An object of type void
+     * @return An object of type PhoneVerifyResponse
      */
     private PhoneVerifyResponse _handlePhoneVerifyResponse(HttpContext _context)
             throws APIException, IOException {

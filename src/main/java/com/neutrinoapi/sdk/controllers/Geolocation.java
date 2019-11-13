@@ -69,7 +69,6 @@ public class Geolocation extends BaseController {
      * @param    longitude    Required parameter: The location longitude in decimal degrees format
      * @param    languageCode    Optional parameter: The language to display results in, available languages are: <ul> <li>de, en, es, fr, it, pt, ru</li> </ul>
      * @param    zoom    Optional parameter: The zoom level to respond with: <ul> <li>address - the most precise address available</li> <li>street - the street level</li> <li>city - the city level</li> <li>state - the state level</li> <li>country - the country level</li> </ul>
-     * @return    Returns the void response from the API call 
      */
     public void geocodeReverseAsync(
                 final String latitude,
@@ -121,7 +120,7 @@ public class Geolocation extends BaseController {
                 final String languageCode,
                 final String zoom) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/geocode-reverse");
@@ -165,7 +164,7 @@ public class Geolocation extends BaseController {
 
     /**
      * Processes the response for geocodeReverse
-     * @return An object of type void
+     * @return An object of type GeocodeReverseResponse
      */
     private GeocodeReverseResponse _handleGeocodeReverseResponse(HttpContext _context)
             throws APIException, IOException {
@@ -209,7 +208,6 @@ public class Geolocation extends BaseController {
      * Get location information about an IP address and do reverse DNS (PTR) lookups. See: https://www.neutrinoapi.com/api/ip-info/
      * @param    ip    Required parameter: IPv4 or IPv6 address
      * @param    reverseLookup    Optional parameter: Do a reverse DNS (PTR) lookup. This option can add extra delay to the request so only use it if you need it
-     * @return    Returns the void response from the API call 
      */
     public void iPInfoAsync(
                 final String ip,
@@ -257,7 +255,7 @@ public class Geolocation extends BaseController {
                 final String ip,
                 final Boolean reverseLookup) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/ip-info");
@@ -297,7 +295,7 @@ public class Geolocation extends BaseController {
 
     /**
      * Processes the response for iPInfo
-     * @return An object of type void
+     * @return An object of type IPInfoResponse
      */
     private IPInfoResponse _handleIPInfoResponse(HttpContext _context)
             throws APIException, IOException {
@@ -347,7 +345,6 @@ public class Geolocation extends BaseController {
      * @param    countryCode    Optional parameter: The ISO 2-letter country code to be biased towards (the default is no country bias)
      * @param    languageCode    Optional parameter: The language to display results in, available languages are: <ul> <li>de, en, es, fr, it, pt, ru</li> </ul>
      * @param    fuzzySearch    Optional parameter: If no matches are found for the given address, start performing a recursive fuzzy search until a geolocation is found. This option is recommended for processing user input or implementing auto-complete. We use a combination of approximate string matching and data cleansing to find possible location matches
-     * @return    Returns the void response from the API call 
      */
     public void geocodeAddressAsync(
                 final String address,
@@ -399,7 +396,7 @@ public class Geolocation extends BaseController {
                 final String languageCode,
                 final Boolean fuzzySearch) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/geocode-address");
@@ -445,7 +442,7 @@ public class Geolocation extends BaseController {
 
     /**
      * Processes the response for geocodeAddress
-     * @return An object of type void
+     * @return An object of type GeocodeAddressResponse
      */
     private GeocodeAddressResponse _handleGeocodeAddressResponse(HttpContext _context)
             throws APIException, IOException {

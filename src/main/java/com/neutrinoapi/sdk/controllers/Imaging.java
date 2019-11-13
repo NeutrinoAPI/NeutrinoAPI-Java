@@ -68,7 +68,6 @@ public class Imaging extends BaseController {
      * @param    width    Required parameter: The width to resize to (in px) while preserving aspect ratio
      * @param    height    Required parameter: The height to resize to (in px) while preserving aspect ratio
      * @param    format    Optional parameter: The output image format, can be either png or jpg
-     * @return    Returns the void response from the API call 
      */
     public void imageResizeAsync(
                 final String imageUrl,
@@ -120,7 +119,7 @@ public class Imaging extends BaseController {
                 final int height,
                 final String format) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/image-resize");
@@ -160,7 +159,7 @@ public class Imaging extends BaseController {
 
     /**
      * Processes the response for imageResize
-     * @return An object of type void
+     * @return An object of type InputStream
      */
     private InputStream _handleImageResizeResponse(HttpContext _context)
             throws APIException, IOException {
@@ -210,7 +209,6 @@ public class Imaging extends BaseController {
      * @param    height    Optional parameter: The height of the QR code (in px)
      * @param    fgColor    Optional parameter: The QR code foreground color
      * @param    bgColor    Optional parameter: The QR code background color
-     * @return    Returns the void response from the API call 
      */
     public void qRCodeAsync(
                 final String content,
@@ -264,7 +262,7 @@ public class Imaging extends BaseController {
                 final String fgColor,
                 final String bgColor) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/qr-code");
@@ -311,7 +309,7 @@ public class Imaging extends BaseController {
 
     /**
      * Processes the response for qRCode
-     * @return An object of type void
+     * @return An object of type InputStream
      */
     private InputStream _handleQRCodeResponse(HttpContext _context)
             throws APIException, IOException {
@@ -367,7 +365,6 @@ public class Imaging extends BaseController {
      * @param    position    Optional parameter: The position of the watermark image, possible values are: center, top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
      * @param    width    Optional parameter: If set resize the resulting image to this width (in px) while preserving aspect ratio
      * @param    height    Optional parameter: If set resize the resulting image to this height (in px) while preserving aspect ratio
-     * @return    Returns the void response from the API call 
      */
     public void imageWatermarkAsync(
                 final String imageUrl,
@@ -425,7 +422,7 @@ public class Imaging extends BaseController {
                 final Integer width,
                 final Integer height) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/image-watermark");
@@ -476,7 +473,7 @@ public class Imaging extends BaseController {
 
     /**
      * Processes the response for imageWatermark
-     * @return An object of type void
+     * @return An object of type InputStream
      */
     private InputStream _handleImageWatermarkResponse(HttpContext _context)
             throws APIException, IOException {
@@ -616,7 +613,6 @@ public class Imaging extends BaseController {
      * @param    footerLine    Optional parameter: Draw a full page width horizontal line above your footer
      * @param    pageWidth    Optional parameter: Set the PDF page width explicitly (in mm)
      * @param    pageHeight    Optional parameter: Set the PDF page height explicitly (in mm)
-     * @return    Returns the void response from the API call 
      */
     public void hTML5RenderAsync(
                 final String content,
@@ -730,7 +726,7 @@ public class Imaging extends BaseController {
                 final Integer pageWidth,
                 final Integer pageHeight) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/html5-render");
@@ -868,7 +864,7 @@ public class Imaging extends BaseController {
 
     /**
      * Processes the response for hTML5Render
-     * @return An object of type void
+     * @return An object of type InputStream
      */
     private InputStream _handleHTML5RenderResponse(HttpContext _context)
             throws APIException, IOException {

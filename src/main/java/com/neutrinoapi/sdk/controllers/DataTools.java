@@ -63,7 +63,6 @@ public class DataTools extends BaseController {
      * Parse, validate and clean an email address. See: https://www.neutrinoapi.com/api/email-validate/
      * @param    email    Required parameter: An email address
      * @param    fixTypos    Optional parameter: Automatically attempt to fix typos in the address
-     * @return    Returns the void response from the API call 
      */
     public void emailValidateAsync(
                 final String email,
@@ -111,7 +110,7 @@ public class DataTools extends BaseController {
                 final String email,
                 final Boolean fixTypos) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/email-validate");
@@ -151,7 +150,7 @@ public class DataTools extends BaseController {
 
     /**
      * Processes the response for emailValidate
-     * @return An object of type void
+     * @return An object of type EmailValidateResponse
      */
     private EmailValidateResponse _handleEmailValidateResponse(HttpContext _context)
             throws APIException, IOException {
@@ -192,7 +191,6 @@ public class DataTools extends BaseController {
     /**
      * Parse, validate and get detailed user-agent information from a user agent string. See: https://www.neutrinoapi.com/api/user-agent-info/
      * @param    userAgent    Required parameter: A user agent string
-     * @return    Returns the void response from the API call 
      */
     public void userAgentInfoAsync(
                 final String userAgent,
@@ -238,7 +236,7 @@ public class DataTools extends BaseController {
     private HttpRequest _buildUserAgentInfoRequest(
                 final String userAgent) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/user-agent-info");
@@ -275,7 +273,7 @@ public class DataTools extends BaseController {
 
     /**
      * Processes the response for userAgentInfo
-     * @return An object of type void
+     * @return An object of type UserAgentInfoResponse
      */
     private UserAgentInfoResponse _handleUserAgentInfoResponse(HttpContext _context)
             throws APIException, IOException {
@@ -319,7 +317,6 @@ public class DataTools extends BaseController {
      * Detect bad words, swear words and profanity in a given text. See: https://www.neutrinoapi.com/api/bad-word-filter/
      * @param    content    Required parameter: The content to scan. This can be either a URL to load content from or an actual content string
      * @param    censorCharacter    Optional parameter: The character to use to censor out the bad words found
-     * @return    Returns the void response from the API call 
      */
     public void badWordFilterAsync(
                 final String content,
@@ -367,7 +364,7 @@ public class DataTools extends BaseController {
                 final String content,
                 final String censorCharacter) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/bad-word-filter");
@@ -407,7 +404,7 @@ public class DataTools extends BaseController {
 
     /**
      * Processes the response for badWordFilter
-     * @return An object of type void
+     * @return An object of type BadWordFilterResponse
      */
     private BadWordFilterResponse _handleBadWordFilterResponse(HttpContext _context)
             throws APIException, IOException {
@@ -454,7 +451,6 @@ public class DataTools extends BaseController {
      * @param    fromValue    Required parameter: The value to convert from (e.g. 10.95)
      * @param    fromType    Required parameter: The type of the value to convert from (e.g. USD)
      * @param    toType    Required parameter: The type to convert to (e.g. EUR)
-     * @return    Returns the void response from the API call 
      */
     public void convertAsync(
                 final String fromValue,
@@ -504,7 +500,7 @@ public class DataTools extends BaseController {
                 final String fromType,
                 final String toType) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/convert");
@@ -543,7 +539,7 @@ public class DataTools extends BaseController {
 
     /**
      * Processes the response for convert
-     * @return An object of type void
+     * @return An object of type ConvertResponse
      */
     private ConvertResponse _handleConvertResponse(HttpContext _context)
             throws APIException, IOException {
@@ -590,7 +586,6 @@ public class DataTools extends BaseController {
      * @param    number    Required parameter: A phone number. This can be in international format (E.164) or local format. If passing local format you should use the 'country-code' or 'ip' options as well
      * @param    countryCode    Optional parameter: ISO 2-letter country code, assume numbers are based in this country. If not set numbers are assumed to be in international format (with or without the leading + sign)
      * @param    ip    Optional parameter: Pass in a users IP address and we will assume numbers are based in the country of the IP address
-     * @return    Returns the void response from the API call 
      */
     public void phoneValidateAsync(
                 final String number,
@@ -640,7 +635,7 @@ public class DataTools extends BaseController {
                 final String countryCode,
                 final String ip) throws IOException, APIException {
         //the base uri for api requests
-        String _baseUri = Configuration.baseUri;
+        String _baseUri = Configuration.getBaseUri();
 
         //prepare query string for API call
         StringBuilder _queryBuilder = new StringBuilder(_baseUri + "/phone-validate");
@@ -683,7 +678,7 @@ public class DataTools extends BaseController {
 
     /**
      * Processes the response for phoneValidate
-     * @return An object of type void
+     * @return An object of type PhoneValidateResponse
      */
     private PhoneValidateResponse _handlePhoneValidateResponse(HttpContext _context)
             throws APIException, IOException {
